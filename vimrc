@@ -15,15 +15,11 @@ filetype plugin indent on
 runtime macros/matchit.vim  " enables % to cycle through `if/else/endif`
 
 syntax enable
-if has('gui_running')
-  set background=light
-else
-  set background=dark
-endif
+set background=dark
 let g:solarized_termcolors=256
 colorscheme solarized
 
-set nonumber    " line numbers aren't needed
+set number      " line numbers aren't needed
 set ruler       " show the cursor position all the time
 set cursorline  " highlight the line of the cursor
 set showcmd     " show partial commands below the status line
