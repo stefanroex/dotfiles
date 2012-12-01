@@ -4,46 +4,48 @@ set encoding=utf-8
 call pathogen#infect()
 filetype plugin indent on
 
-runtime macros/matchit.vim  " enables % to cycle through `if/else/endif`
+runtime macros/matchit.vim
 
 syntax enable
-set background=dark
-let g:solarized_termcolors=256
-colorscheme solarized
+" set background=dark
+" let g:solarized_termcolors=256
+" let g:solarized_visibility='low'
+colorscheme railscasts
 
-set number      " line numbers aren't needed
-set ruler       " show the cursor position all the time
-set cursorline  " highlight the line of the cursor
-set showcmd     " show partial commands below the status line
-set shell=bash  " avoids munging PATH under zsh
-let g:is_bash=1 " default shell syntax
-set history=200 " remember more Ex commands
-set scrolloff=3 " have some context around the current line always on screen
-
-" Allow backgrounding buffers without writing them, and remember marks/undo
-" for backgrounded buffers
+set number
+set ruler
+set cursorline
+set history=200
+set scrolloff=5
+set guioptions-=L
+set guioptions-=r
+set guioptions-=T
+set backupdir=~/.vim/_backup
+set directory=~/.vim/_temp
+set nobackup
+set nowritebackup
 set hidden
 
 "" Whitespace
-set nowrap                        " don't wrap lines
-set tabstop=2                     " a tab is two spaces
-set shiftwidth=2                  " an autoindent (with <<) is two spaces
-set expandtab                     " use spaces, not tabs
-set list                          " Show invisible characters
-set backspace=indent,eol,start    " backspace through everything in insert mode
-" List chars
-set listchars=""                  " Reset the listchars
-set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
-set listchars+=trail:.            " show trailing spaces as dots
-set listchars+=extends:>          " The character to show in the last column when wrap is
-                                  " off and the line continues beyond the right of the screen
-set listchars+=precedes:<         " The character to show in the first column when wrap is
-                                  " off and the line continues beyond the left of the screen
-"" Searching
-set hlsearch                      " highlight matches
-set incsearch                     " incremental searching
-set ignorecase                    " searches are case insensitive...
-set smartcase                     " ... unless they contain at least one capital letter
+set nowrap
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set list
+set backspace=indent,eol,start
+set listchars=trail:⋅,nbsp:⋅,tab:▸\
+
+" Searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+" Windows
+set winwidth=84
+set winheight=10
+set winminheight=10
+set winheight=999
 
 if has("autocmd")
   " In Makefiles, use real tabs, not tabs expanded to spaces
@@ -79,23 +81,6 @@ nmap <leader>p pV`]=
 nmap <leader>P PV`]=
 
 map <leader>gr :topleft :split config/routes.rb<cr>
-function! ShowRoutes()
-  " Requires 'scratch' plugin
-  :topleft 100 :split __Routes__
-  " Make sure Vim doesn't write __Routes__ as a file
-  :set buftype=nofile
-  " Delete everything
-  :normal 1GdG
-  " Put routes output in buffer
-  :0r! rake -s routes
-  " Size window to number of lines (1 plus rake output length)
-  :exec ":normal " . line("$") . "_ "
-  " Move cursor to bottom
-  :normal 1GG
-  " Delete empty trailing line
-  :normal dd
-endfunction
-map <leader>gR :call ShowRoutes()<cr>
 map <leader>gv :CommandTFlush<cr>\|:CommandT app/views<cr>
 map <leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
 map <leader>gm :CommandTFlush<cr>\|:CommandT app/models<cr>
@@ -112,7 +97,7 @@ let g:CommandTMaxHeight=10
 let g:CommandTMinHeight=4
 
 " ignore Rubinius, Sass cache files
-set wildignore+=tmp/**,*.rbc,.rbx,*.scssc,*.sassc
+set wildignore+=tmp/**,*.rbc,.rbx,*.scssc,*.sassc,vendor/**
 
 nnoremap <leader><leader> <c-^>
 
@@ -120,6 +105,7 @@ nnoremap <leader><leader> <c-^>
 nmap <silent> <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
 command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
+nmap <silent> <leader>W :KillWhitespace<CR>
 
 " easier navigation between split windows
 nnoremap <c-j> <c-w>j
@@ -133,24 +119,8 @@ map <Right> :echo "no!"<cr>
 map <Up>    :echo "no!"<cr>
 map <Down>  :echo "no!"<cr>
 
-set backupdir=~/.vim/_backup    " where to put backup files.
-set directory=~/.vim/_temp      " where to put swap files.
-
-if has("statusline") && !&cp
-  set laststatus=2  " always show the status bar
-
-  " Start the status line
-  set statusline=%f\ %m\ %r
-
-  " Add fugitive
-  set statusline+=%{fugitive#statusline()}
-
-  " Finish the statusline
-  set statusline+=Line:%l/%L[%p%%]
-  set statusline+=Col:%v
-  set statusline+=Buf:#%n
-  set statusline+=[%b][0x%B]
-endif
+set laststatus=2
+set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
 " Make editing vimrc simple
 nmap <leader>v :e $MYVIMRC<CR>
@@ -158,6 +128,14 @@ nmap <leader>v :e $MYVIMRC<CR>
 map <silent> <Leader>z :bp<CR>
 map <silent> <Leader>x :bn<CR>
 map <silent> <Leader>q :bd<CR>
+map <silent> <Leader>w :bp<CR>:bd#<CR>
+imap <c-l> <space>=><space>
 
-" Simple command to go to rails projects
-" command! -bang -nargs=* -complete=file GF :cd ~/Dropbox/Rails/<q-args>
+" Open current dir in finder
+nmap <silent> <Leader>o :! open .<CR><CR>
+nmap <silent> <Leader>O :! open %%<CR><CR>
+
+" Can't be bothered to understand ESC vs <c-c> in insert mode
+map <c-c> <esc>
+
+autocmd BufRead,BufNewFile *.erb set filetype=eruby.html

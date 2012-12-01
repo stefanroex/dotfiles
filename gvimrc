@@ -1,4 +1,4 @@
-set guifont=Menlo\ Regular:h14
+set guifont=Menlo\ Regular:h13
 set linespace=2
 set antialias
 
