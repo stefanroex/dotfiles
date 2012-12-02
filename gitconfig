@@ -99,7 +99,7 @@
 [core]
   autocrlf = false
   editor = vim
-  excludesfile = /Users/stefanroex/.gitignore
+  excludesfile = ~/.gitignore
 [advice]
   statusHints = false
 [diff]
@@ -110,11 +110,17 @@
   # Remember my merges
   # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
   enabled = true
+
 [user]
-	email = info@stefanroex.nl
-	name = Stefan Roex
+  email = info@stefanroex.nl
+  name = Stefan Roex
+
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
+
 [heroku]
   remote = origin
-	account = brightin
+  account = brightin
+
+[github]
+  user = stexy
