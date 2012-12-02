@@ -1,17 +1,11 @@
-set nocompatible
-set encoding=utf-8
-
 call pathogen#infect()
 filetype plugin indent on
 
 runtime macros/matchit.vim
 
 syntax enable
-" set background=dark
-" let g:solarized_termcolors=256
-" let g:solarized_visibility='low'
-colorscheme railscasts
 
+set nocompatible
 set number
 set ruler
 set cursorline
