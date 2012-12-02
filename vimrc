@@ -1,11 +1,26 @@
-call pathogen#infect()
-filetype plugin indent on
+set nocompatible
+filetype off
 
-runtime macros/matchit.vim
+" ========================================================================
+" Vundle stuff
+" ========================================================================
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" My bundles
+Bundle 'ervandew/supertab'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'wincent/Command-T'
 
 syntax enable
-
-set nocompatible
+filetype plugin indent on
 set number
 set ruler
 set cursorline

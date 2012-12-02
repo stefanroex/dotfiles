@@ -1,5 +1,6 @@
-/_temp
-/_backup
-/doc/tags
-.netrwhist
-.DS_Store
+vim/.netrwhist
+vim/bundle
+vim/doc/tags-ja
+vim/_temp
+vim/_backup
+vim/doc/tags

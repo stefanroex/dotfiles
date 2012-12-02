@@ -1,43 +1,41 @@
-task :default => [:tmp_dirs, :update, :command_t, :link]
+require 'rake'
 
-desc %(Bring bundles up to date)
-task :update do
-  sh "git submodule sync >/dev/null"
-  sh "git submodule update --init"
-end
-
-desc %(Update each submodule from its upstream)
-task :submodule_pull do
-  system %[git submodule foreach '
-        git pull --quiet --ff-only --no-rebase origin master &&
-        git log --no-merges --pretty=format:"%s %Cgreen(%ar)%Creset" --date=relative master@{1}..
-        echo
-      ']
-end
-
-desc %(Make ~/.vimrc and ~/.gvimrc symlinks)
-task :link do
-  %w[vimrc gvimrc].each do |script|
-    dotfile = File.join(ENV['HOME'], ".#{script}")
-    if File.exist? dotfile
-      warn "~/.#{script} already exists"
+desc "install the dot files into user's home directory"
+task :install do
+  replace_all = true
+  Dir['*'].each do |file|
+    next if %w[Rakefile README.md].include? file
+    
+    if File.exist?(File.join(ENV['HOME'], ".#{file}"))
+      if replace_all
+        replace_file(file)
+      else
+        print "overwrite ~/.#{file}? [ynaq] "
+        case $stdin.gets.chomp
+        when 'a'
+          replace_all = true
+          replace_file(file)
+        when 'y'
+          replace_file(file)
+        when 'q'
+          exit
+        else
+          puts "skipping ~/.#{file}"
+        end
+      end
     else
-      ln_s File.join('.vim', script), dotfile
+      link_file(file)
     end
   end
 end
 
-task :tmp_dirs do
-  mkdir_p "_backup"
-  mkdir_p "_temp"
-end
 
-desc %(Compile Command-T plugin)
+desc "Compile Command-T plugin"
 task :command_t => :macvim_check do
   vim = which('mvim') || which('vim') or abort "vim not found on your system"
   ruby = read_ruby_version(vim)
 
-  Dir.chdir "bundle/command-t/ruby/command-t" do
+  Dir.chdir "vim/bundle/Command-T/ruby/command-t" do
     if ruby
       puts "Compiling Command-T plugin..."
       sh(*Array(ruby).concat(%w[extconf.rb]))
@@ -56,22 +54,22 @@ task :macvim_check do
   end
 end
 
+def replace_file(file)
+  system %Q{rm "$HOME/.#{file}"}
+  link_file(file)
+end
+
+def link_file(file)
+  puts "linking ~/.#{file}"
+  system %Q{ln -s "$PWD/#{file}" "$HOME/.#{file}"}
+end
+
 def color msg, code
   if $stderr.tty? then "\e[1;#{code}m#{msg}\e[m"
   else msg
   end
 end
 
-# Read which ruby version is vim compiled against
-def read_ruby_version vim
-  script = %{require "rbconfig"; print File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"])}
-  version = `#{vim} --nofork --cmd 'ruby #{script}' --cmd 'q' 2>&1 >/dev/null | grep -v 'Vim: Warning'`.strip
-  version unless version.empty? or version.include?("command is not available")
-end
-
-# Cross-platform way of finding an executable in the $PATH.
-#
-#   which('ruby') #=> /usr/bin/ruby
 def which cmd
   exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
   ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
@@ -81,4 +79,10 @@ def which cmd
     }
   end
   return nil
+end
+
+def read_ruby_version vim
+  script = %{require "rbconfig"; print File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["ruby_install_name"])}
+  version = `#{vim} --nofork --cmd 'ruby #{script}' --cmd 'q' 2>&1 >/dev/null | grep -v 'Vim: Warning'`.strip
+  version unless version.empty? or version.include?("command is not available")
 end

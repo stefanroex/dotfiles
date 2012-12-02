@@ -1,0 +1,8 @@
+.DS_Store
+._*
+.Trashes
+tags
+vendor/bundle
+zeus.json
+log/
+db/*.sqlite3
