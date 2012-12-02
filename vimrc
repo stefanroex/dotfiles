@@ -83,10 +83,6 @@ map Q gq
 
 let mapleader=","
 
-" paste lines from unnamed register and fix indentation
-nmap <leader>p pV`]=
-nmap <leader>P PV`]=
-
 map <leader>gr :topleft :split config/routes.rb<cr>
 map <leader>gv :CommandTFlush<cr>\|:CommandT app/views<cr>
 map <leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
@@ -145,7 +141,66 @@ nmap <silent> <Leader>O :! open %%<CR><CR>
 " Can't be bothered to understand ESC vs <c-c> in insert mode
 map <c-c> <esc>
 
-autocmd BufRead,BufNewFile *.erb set filetype=eruby.html
+map <Leader>T :call RunCurrentTest()<CR>
+map <Leader>t :call RunCurrentLineInTest()<CR>
+map <Leader>u :Runittest<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Test-running stuff
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RunCurrentTest()
+  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
+  if in_test_file
+    call SetTestFile()
+
+    if match(expand('%'), '\.feature$') != -1
+      call SetTestRunner("!cucumber")
+      exec g:bjo_test_runner g:bjo_test_file
+    elseif match(expand('%'), '_spec\.rb$') != -1
+      call SetTestRunner("!rspec")
+      exec g:bjo_test_runner g:bjo_test_file
+    else
+      call SetTestRunner("!ruby -Itest")
+      exec g:bjo_test_runner g:bjo_test_file
+    endif
+  else
+    exec g:bjo_test_runner g:bjo_test_file
+  endif
+endfunction
+
+function! SetTestRunner(runner)
+  let g:bjo_test_runner=a:runner
+endfunction
+
+function! RunCurrentLineInTest()
+  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
+  if in_test_file
+    call SetTestFileWithLine()
+  end
+
+  exec "!rspec" g:bjo_test_file . ":" . g:bjo_test_file_line
+endfunction
+
+function! SetTestFile()
+  let g:bjo_test_file=@%
+endfunction
+
+function! SetTestFileWithLine()
+  let g:bjo_test_file=@%
+  let g:bjo_test_file_line=line(".")
+endfunction
+
+function! CorrectTestRunner()
+  if match(expand('%'), '\.feature$') != -1
+    return "cucumber"
+  elseif match(expand('%'), '_spec\.rb$') != -1
+    return "rspec"
+  else
+    return "ruby"
+  endif
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has("autocmd")
   " Treat JSON files like JavaScript
@@ -158,4 +213,7 @@ if has("autocmd")
 
   " mark Jekyll YAML frontmatter as comment
   au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
+
+  " Treat ERB as ruby erb file
+  au BufRead,BufNewFile *.erb set filetype=eruby.html
 endif
