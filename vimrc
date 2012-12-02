@@ -144,6 +144,21 @@ map <c-c> <esc>
 map <Leader>T :call RunCurrentTest()<CR>
 map <Leader>t :call RunCurrentLineInTest()<CR>
 map <Leader>u :Runittest<cr>
+map <Leader>f :call OpenFactoryFile()<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" RENAME CURRENT FILE (thanks Gary Bernhardt)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+map <leader>n :call RenameFile()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Test-running stuff
@@ -198,6 +213,14 @@ function! CorrectTestRunner()
   else
     return "ruby"
   endif
+endfunction
+
+function! OpenFactoryFile()
+  if filereadable("test/factories.rb")
+    execute ":sp test/factories.rb"
+  else
+    execute ":sp spec/factories.rb"
+  end
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
