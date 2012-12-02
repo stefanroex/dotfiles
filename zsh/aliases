@@ -1,6 +1,6 @@
 alias a='ls -lrthG'
 alias amend="git commit --amend"
-alias aliases='vim ~/.dotfiles/bash/aliases'
+alias aliases='vim ~/.dotfiles/zsh/aliases'
 alias bake='bundle exec rake'
 alias be='bundle exec'
 alias bi='bundle install'
