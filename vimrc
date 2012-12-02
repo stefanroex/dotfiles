@@ -67,6 +67,9 @@ set noesckeys
 set ttimeout
 set ttimeoutlen=1
 
+" When at 3 spaces and I hit >>, go to 4, not 5.
+set shiftround
+
 " Set up some useful Rails.vim bindings for working with Backbone.js
 autocmd User Rails Rnavcommand template    app/assets/templates               -glob=**/*  -suffix=.jst.ejs
 autocmd User Rails Rnavcommand jmodel      app/assets/javascripts/models      -glob=**/*  -suffix=.coffee
