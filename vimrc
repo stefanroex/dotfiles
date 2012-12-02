@@ -62,26 +62,18 @@ set winheight=999
 " Use Ack instead of grep
 set grepprg=ack
 
-if has("autocmd")
-  " In Makefiles, use real tabs, not tabs expanded to spaces
-  au FileType make set noexpandtab
+" (Hopefully) removes the delay when hitting esc in insert mode
+set noesckeys
+set ttimeout
+set ttimeoutlen=1
 
-  " Treat JSON files like JavaScript
-  au BufNewFile,BufRead *.json set ft=javascript
-
-  " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-  au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
-
-  " Remember last location in file, but not for commit messages.
-  " see :help last-position-jump
-  au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g`\"" | endif
-
-  " mark Jekyll YAML frontmatter as comment
-  au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
-
-  autocmd bufwritepost .vimrc source $MYVIMRC
-endif
+" Set up some useful Rails.vim bindings for working with Backbone.js
+autocmd User Rails Rnavcommand template    app/assets/templates               -glob=**/*  -suffix=.jst.ejs
+autocmd User Rails Rnavcommand jmodel      app/assets/javascripts/models      -glob=**/*  -suffix=.coffee
+autocmd User Rails Rnavcommand jview       app/assets/javascripts/views       -glob=**/*  -suffix=.coffee
+autocmd User Rails Rnavcommand jcollection app/assets/javascripts/collections -glob=**/*  -suffix=.coffee
+autocmd User Rails Rnavcommand jrouter     app/assets/javascripts/routers     -glob=**/*  -suffix=.coffee
+autocmd User Rails Rnavcommand jspec       spec/javascripts                   -glob=**/*  -suffix=.coffee
 
 " don't use Ex mode, use Q for formatting
 map Q gq
@@ -154,3 +146,16 @@ nmap <silent> <Leader>O :! open %%<CR><CR>
 map <c-c> <esc>
 
 autocmd BufRead,BufNewFile *.erb set filetype=eruby.html
+
+if has("autocmd")
+  " Treat JSON files like JavaScript
+  au BufNewFile,BufRead *.json set ft=javascript
+
+  " Remember last location in file, but not for commit messages.
+  " see :help last-position-jump
+  au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g`\"" | endif
+
+  " mark Jekyll YAML frontmatter as comment
+  au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
+endif
