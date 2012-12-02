@@ -9,16 +9,12 @@ function sgi {
 sudo gem install $1
 }
 
-function sagi {
-sudo apt-get -y install $1 
-}
-
-function syi {
-sudo yum -y install $1
-}
-
 function glg { 
 gem list | grep $1
+}
+
+function c {
+cd ~/code/$1
 }
 
 
