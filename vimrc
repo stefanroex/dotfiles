@@ -18,6 +18,7 @@ Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'wincent/Command-T'
+Bundle 'mileszs/ack.vim'
 
 colorscheme railscasts
 
@@ -57,6 +58,9 @@ set winwidth=84
 set winheight=10
 set winminheight=10
 set winheight=999
+
+" Use Ack instead of grep
+set grepprg=ack
 
 if has("autocmd")
   " In Makefiles, use real tabs, not tabs expanded to spaces
