@@ -89,8 +89,6 @@ map <leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
 map <leader>gm :CommandTFlush<cr>\|:CommandT app/models<cr>
 map <leader>gh :CommandTFlush<cr>\|:CommandT app/helpers<cr>
 map <leader>gl :CommandTFlush<cr>\|:CommandT lib<cr>
-map <leader>gf :CommandTFlush<cr>\|:CommandT features<cr>
-map <leader>gg :topleft 100 :split Gemfile<cr>
 map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -144,7 +142,7 @@ map <c-c> <esc>
 map <Leader>T :call RunCurrentTest()<CR>
 map <Leader>t :call RunCurrentLineInTest()<CR>
 map <Leader>u :Runittest<cr>
-map <Leader>f :call OpenFactoryFile()<CR>
+map <leader>n :call RenameFile()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RENAME CURRENT FILE (thanks Gary Bernhardt)
@@ -158,7 +156,6 @@ function! RenameFile()
         redraw!
     endif
 endfunction
-map <leader>n :call RenameFile()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Test-running stuff
@@ -239,4 +236,7 @@ if has("autocmd")
 
   " Treat ERB as ruby erb file
   au BufRead,BufNewFile *.erb set filetype=eruby.html
+
+  " Reload vimrc on save
+  autocmd bufwritepost .vimrc source $MYVIMRC
 endif
