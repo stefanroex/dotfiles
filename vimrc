@@ -19,6 +19,8 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'wincent/Command-T'
 
+colorscheme railscasts
+
 syntax enable
 filetype plugin indent on
 set number
