@@ -35,7 +35,7 @@ alias rc='rails console'
 alias remigrate='rake db:migrate && rake db:migrate:redo && rake db:schema:dump && rake db:test:prepare'
 alias rdm="be rake db:migrate"
 alias rdtp="be rake db:test:prepare"
-alias rs='bundle install && rails server -p 3001'
+alias rs='rails server'
 alias sc='staging-console'
 alias so='source ~/.dotfiles/zsh/aliases'
 alias startpostgres='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
@@ -57,3 +57,6 @@ alias db-pull-production='heroku db:pull --remote production --confirm `basename
 alias db-copy-production-to-staging='heroku pgbackups:restore DATABASE `heroku pgbackups:url --remote production` --remote origin  --confirm `basename $PWD`-staging'
 alias db-backup-production='heroku pgbackups:capture --remote production'
 alias db-backups='heroku pgbackups --remote production'
+
+# Network
+alias ip="curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+'"
