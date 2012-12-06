@@ -17,8 +17,8 @@ Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'wincent/Command-T'
 Bundle 'mileszs/ack.vim'
+Bundle 'wincent/Command-T'
 
 " https://github.com/ecomba/vim-ruby-refactoring
 
@@ -95,13 +95,16 @@ nnoremap <silent> <CR> :nohlsearch<cr>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " ignore Rubinius, Sass cache files
-set wildignore+=tmp/**,*.rbc,.rbx,*.scssc,*.sassc,vendor/**
+set wildignore+=*/tmp/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**
 
 " disable cursor keys in normal mode
 map <Left>  :echo "no!"<cr>
 map <Right> :echo "no!"<cr>
 map <Up>    :echo "no!"<cr>
 map <Down>  :echo "no!"<cr>
+
+" No difference between ; and ;
+map ; :
 
 command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
 
@@ -115,6 +118,7 @@ let mapleader=","
 " ========================================================================
 
 nnoremap <leader><leader> <c-^>
+map <leader>b :CommandTBuffer<cr>
 map <leader>f :CommandT<cr>
 map <leader>F :CommandT %%<cr>
 map <leader>.v :CommandT app/views<cr>
@@ -129,6 +133,7 @@ map <leader>.s :CommandT app/assets/stylesheets<cr>
 map <leader>/t :CommandT app/assets/javascripts/templates<cr>
 map <leader>/m :CommandT app/assets/javascripts/models<cr>
 map <leader>/v :CommandT app/assets/javascripts/views<cr>
+map <leader>/c :CommandT app/assets/javascripts/views<cr>
 map <leader>/r :topleft :split app/assets/javascripts/router.js.coffee<cr>
 
 " find merge conflict markers
@@ -166,8 +171,6 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-
-
 
 " ========================================================================
 "  Autocmd
@@ -219,7 +222,7 @@ function! RunCurrentTest()
       call SetTestRunner("!cucumber")
       exec g:bjo_test_runner g:bjo_test_file
     elseif match(expand('%'), '_spec\.rb$') != -1
-      call SetTestRunner("!rspec")
+      call SetTestRunner("!bundle exec rspec")
       exec g:bjo_test_runner g:bjo_test_file
     else
       call SetTestRunner("!ruby -Itest")
@@ -240,7 +243,7 @@ function! RunCurrentLineInTest()
     call SetTestFileWithLine()
   end
 
-  exec "!rspec" g:bjo_test_file . ":" . g:bjo_test_file_line
+  exec "!bundle exec rspec" g:bjo_test_file . ":" . g:bjo_test_file_line
 endfunction
 
 function! SetTestFile()

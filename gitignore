@@ -1,6 +1,7 @@
 .DS_Store
 ._*
 .Trashes
+.bundle
 tags
 vendor/bundle
 zeus.json
