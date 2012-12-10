@@ -127,6 +127,7 @@ map <leader>.m :CommandT app/models<cr>
 map <leader>.h :CommandT app/helpers<cr>
 map <leader>.k :CommandT config<cr>
 map <leader>.l :CommandT lib<cr>
+map <leader>.t :CommandT spec<cr>
 map <leader>.r :topleft :split config/routes.rb<cr>
 map <leader>.j :CommandT app/assets/javascripts<cr>
 map <leader>.s :CommandT app/assets/stylesheets<cr>
