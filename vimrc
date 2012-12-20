@@ -15,6 +15,7 @@ Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-haml'
+Bundle 'bbommarito/vim-slim'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'mileszs/ack.vim'
@@ -142,6 +143,9 @@ nmap <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
 " Clear whitespace
 nmap <leader>W :KillWhitespace<CR>
+
+" Tabs to spaces
+map <leader>tt :%s/\t/  /g<CR>
 
 " Easy commenting
 map <leader>cc :TComment<cr>

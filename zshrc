@@ -10,7 +10,7 @@ SAVEHIST=10000
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rake bundler brew gem)
+plugins=(git rake bundler brew gem osx)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/aliases
@@ -28,6 +28,8 @@ export EDITOR=mvim
 # Customize to your needs...
 #export PATH=/usr/local/bin:/Users/stefanroex/.rbenv/shims:/Users/stefanroex/.rbenv/bin:~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/git/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/oracle/instantclient_10_2
 export PATH="/usr/local/bin:$PATH"
+export PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
+
 
 # No rbenv init for faster login (needs manual rehash)
 export PATH="$HOME/.rbenv/bin:$PATH"
