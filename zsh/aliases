@@ -36,7 +36,7 @@ alias repush="gpr && gpush"
 alias rbh="rbenv rehash"
 alias rc='rails console'
 alias remigrate='rake db:migrate && rake db:migrate:redo && rake db:schema:dump && rake db:test:prepare'
-alias rdm="be rake db:migrate"
+alias rdm="be rake db:migrate && be rake db:migrate RAILS_ENV=test"
 alias rdtp="be rake db:test:prepare"
 alias rs='rails server'
 alias sc='staging-console'

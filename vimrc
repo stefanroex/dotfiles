@@ -145,7 +145,7 @@ nmap <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 nmap <leader>W :KillWhitespace<CR>
 
 " Tabs to spaces
-map <leader>tt :%s/\t/  /g<CR>
+map <leader>i :%s/\t/  /g<CR>
 
 " Easy commenting
 map <leader>cc :TComment<cr>
