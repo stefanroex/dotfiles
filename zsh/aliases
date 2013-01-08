@@ -20,11 +20,14 @@ alias hls='staging-tail'
 alias hlp='production-tail'
 alias irb='pry'
 alias killruby='killall -9 ruby'
+alias lo='powder applog'
 alias pc='production-console'
+alias pow='powder'
 alias rc='pry'
+alias re='powder restart'
 alias retag='ctags -R --exclude=.svn --exclude=.git --exclude=log *'
 alias rbh="rbenv rehash"
-alias rdm="be rake db:migrate && be rake db:migrate RAILS_ENV=test"
+alias rdm="be rake db:migrate db:test:prepare"
 alias rs='rails server'
 alias sc='staging-console'
 alias so='source ~/.dotfiles/zsh/aliases'

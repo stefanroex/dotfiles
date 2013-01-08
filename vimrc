@@ -20,6 +20,7 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'mileszs/ack.vim'
 Bundle 'wincent/Command-T'
+Bundle 'altercation/vim-colors-solarized'
 
 " https://github.com/ecomba/vim-ruby-refactoring
 
@@ -27,8 +28,8 @@ Bundle 'wincent/Command-T'
 "  Settings
 " ========================================================================
 
-colorscheme railscasts
 syntax enable
+color railscasts
 filetype plugin indent on
 set number
 set ruler
@@ -109,8 +110,6 @@ map ; :
 
 command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
 
-let g:CommandTMaxHeight=10
-let g:CommandTMinHeight=4
 let g:CommandTCancelMap=['<ESC>','<C-c>']
 
 let mapleader=","
@@ -167,7 +166,7 @@ nmap <leader>O :! open %%<cr><cr>
 " Tests
 map <Leader>T :call RunCurrentTest()<CR>
 map <Leader>t :call RunCurrentLineInTest()<CR>
-map <Leader>u :Runittest<cr>
+map <Leader>a :!rspec<CR>
 
 "Rename File
 map <leader>n :call RenameFile()<cr>
@@ -180,6 +179,7 @@ nnoremap <c-l> <c-w>l
 
 " Insert Launchy
 nmap <leader>s A<cr>save_and_open_page<esc>
+
 " ========================================================================
 "  Autocmd
 " ========================================================================

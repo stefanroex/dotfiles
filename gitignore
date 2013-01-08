@@ -8,3 +8,4 @@ zeus.json
 log/
 db/*.sqlite3
 .rbenv-version
+.powder
