@@ -21,8 +21,7 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'mileszs/ack.vim'
 Bundle 'wincent/Command-T'
 Bundle 'altercation/vim-colors-solarized'
-
-" https://github.com/ecomba/vim-ruby-refactoring
+Bundle 'https://github.com/ecomba/vim-ruby-refactoring'
 
 " ========================================================================
 "  Settings
