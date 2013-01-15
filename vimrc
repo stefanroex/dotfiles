@@ -20,8 +20,6 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'mileszs/ack.vim'
 Bundle 'wincent/Command-T'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'https://github.com/ecomba/vim-ruby-refactoring'
 
 " ========================================================================
 "  Settings
@@ -111,6 +109,8 @@ command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
 
 let g:CommandTCancelMap=['<ESC>','<C-c>']
 
+let g:ConqueTerm_CWInsert = 1
+
 let mapleader=","
 
 " ========================================================================
@@ -163,9 +163,8 @@ nmap <leader>o :! open .<cr><cr>
 nmap <leader>O :! open %%<cr><cr>
 
 " Tests
-map <Leader>T :call RunCurrentTest()<CR>
-map <Leader>t :call RunCurrentLineInTest()<CR>
-map <Leader>a :!rspec<CR>
+map <Leader>t :call RunCurrentTest()<CR>
+map <Leader>T :call RunCurrentLineInTest()<CR>
 
 "Rename File
 map <leader>n :call RenameFile()<cr>
@@ -175,9 +174,6 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-
-" Insert Launchy
-nmap <leader>s A<cr>save_and_open_page<esc>
 
 " ========================================================================
 "  Autocmd
@@ -226,13 +222,13 @@ function! RunCurrentTest()
     call SetTestFile()
 
     if match(expand('%'), '\.feature$') != -1
-      call SetTestRunner("!cucumber")
+      call SetTestRunner("ConqueTermSplit cucumber")
       exec g:bjo_test_runner g:bjo_test_file
     elseif match(expand('%'), '_spec\.rb$') != -1
-      call SetTestRunner("!rspec")
+      call SetTestRunner("ConqueTermSplit rspec")
       exec g:bjo_test_runner g:bjo_test_file
     else
-      call SetTestRunner("!ruby -Itest")
+      call SetTestRunner("ConqueTermSplit ruby -Itest")
       exec g:bjo_test_runner g:bjo_test_file
     endif
   else
@@ -272,10 +268,10 @@ function! CorrectTestRunner()
   endif
 endfunction
 
-function! OpenFactoryFile()
-  if filereadable("test/factories.rb")
-    execute ":sp test/factories.rb"
-  else
-    execute ":sp spec/factories.rb"
-  end
+function! RubyConqueControls(single_conque)
+  :setlocal nolist
+  :map <buffer> <Esc> <Esc><C-w>c
+  :imap <buffer> <Esc> <Esc><C-w>c
 endfunction
+
+call conque_term#register_function('after_startup', 'RubyConqueControls')
