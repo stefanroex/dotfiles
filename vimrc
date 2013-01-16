@@ -225,7 +225,7 @@ function! RunCurrentTest()
       call SetTestRunner("ConqueTermSplit cucumber")
       exec g:bjo_test_runner g:bjo_test_file
     elseif match(expand('%'), '_spec\.rb$') != -1
-      call SetTestRunner("ConqueTermSplit rspec")
+      call SetTestRunner("!rspec --no-color")
       exec g:bjo_test_runner g:bjo_test_file
     else
       call SetTestRunner("ConqueTermSplit ruby -Itest")
@@ -269,9 +269,8 @@ function! CorrectTestRunner()
 endfunction
 
 function! RubyConqueControls(single_conque)
-  :setlocal nolist
-  :map <buffer> <Esc> <Esc><C-w>c
-  :imap <buffer> <Esc> <Esc><C-w>c
+  setlocal nolist
+  map <buffer> q :bd<cr>
 endfunction
 
 call conque_term#register_function('after_startup', 'RubyConqueControls')
