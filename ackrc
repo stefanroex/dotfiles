@@ -1,5 +1,5 @@
 --type-add
-ruby=.haml,.feature,.scss,.coffee
+ruby=.haml,slim,.feature,.scss,.coffee
 --ignore-dir=vendor
 --ignore-dir=log
 --ignore-dir=tmp
