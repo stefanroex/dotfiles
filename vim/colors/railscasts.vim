@@ -118,7 +118,11 @@ hi String                    guifg=#A5C261
 hi Title                     guifg=#FFFFFF
 
 "rubyConstant
-hi Type                      guifg=#DA4939 gui=NONE
+" hi Type                      guifg=#DA4939 gui=NONE
+hi Type                      guifg=#FFFFFF gui=NONE
+
+" ruby: interpolation
+hi rubyInterpolation         guifg=#509E4F
 
 hi DiffAdd                   guifg=#E6E1DC guibg=#144212
 hi DiffDelete                guifg=#E6E1DC guibg=#660000
