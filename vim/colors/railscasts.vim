@@ -1,30 +1,10 @@
-" Vim color scheme
-"
-" Name:        railscast.vim
-" Maintainer:  Josh O'Rourke <joshorourke@me.com>
-" License:     public domain
-"
-" A GUI Only port of the RailsCasts TextMate theme [1] to Vim.
-" Some parts of this theme were borrowed from the well-documented Lucius theme [2].
-"
-" [1] http://railscasts.com/about
-" [2] http://www.vim.org/scripts/script.php?script_id=2536
-
 set background=dark
 hi clear
 if exists("syntax_on")
   syntax reset
 endif
-let g:colors_name = "railscasts"
 
-" Colors
-" Brown        #BC9458
-" Dark Blue    #6D9CBE
-" Dark Green   #519F50
-" Dark Orange  #CC7833
-" Light Blue   #D0D0FF
-" Light Green  #A5C261
-" Tan          #FFC66D
+let g:colors_name = "railscasts"
 
 hi Normal                    guifg=#E6E1DC guibg=#2B2B2B
 hi Cursor                    guibg=#FFFFFF
@@ -84,6 +64,9 @@ hi Error                     guifg=#FFFFFF guibg=#990000
 "rubyFunction
 hi Function                  guifg=#FFC66D gui=NONE
 
+" Coffee Function
+hi def link coffeeObjAssign Function
+
 "rubyIdentifier
 "@var, @@var, $var, etc
 hi Identifier                guifg=#D0D0FF gui=NONE
@@ -118,8 +101,8 @@ hi String                    guifg=#A5C261
 hi Title                     guifg=#FFFFFF
 
 "rubyConstant
-" hi Type                      guifg=#DA4939 gui=NONE
-hi Type                      guifg=#FFFFFF gui=NONE
+hi Type                      guifg=#DA4939 gui=NONE
+" hi Type                      guifg=#FFFFFF gui=NONE
 
 " ruby: interpolation
 hi rubyInterpolation         guifg=#509E4F
