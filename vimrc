@@ -4,22 +4,28 @@ filetype off
 " ========================================================================
 " Vundle stuff
 " ========================================================================
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
 
-Bundle 'ervandew/supertab'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-haml'
-Bundle 'bbommarito/vim-slim'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'mileszs/ack.vim'
-Bundle 'wincent/Command-T'
+call neobundle#rc(expand('~/.vim/bundle/'))
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'ervandew/supertab'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'slim-template/vim-slim'
+NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'tpope/vim-cucumber'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-haml'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'wincent/Command-T'
+NeoBundleCheck
 
 " ========================================================================
 "  Settings
@@ -277,4 +283,4 @@ function! RubyConqueControls(single_conque)
   map <buffer> q :bd<cr>
 endfunction
 
-call conque_term#register_function('after_startup', 'RubyConqueControls')
+" call conque_term#register_function('after_startup', 'RubyConqueControls')
