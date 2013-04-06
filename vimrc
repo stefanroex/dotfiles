@@ -10,21 +10,26 @@ endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 
+" Plugins
+NeoBundle 'wincent/Command-T'
 NeoBundle 'ervandew/supertab'
-NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'mileszs/ack.vim'
-NeoBundle 'nono/vim-handlebars'
-NeoBundle 'slim-template/vim-slim'
 NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'tpope/vim-cucumber'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-haml'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'wincent/Command-T'
+NeoBundle 'scrooloose/nerdtree'
+
+" Syntax
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'nono/vim-handlebars'
+NeoBundle 'slim-template/vim-slim'
+NeoBundle 'tpope/vim-cucumber'
+NeoBundle 'tpope/vim-haml'
+
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundleCheck
 
@@ -171,6 +176,10 @@ map <Leader>z :bp<CR>
 map <Leader>x :bn<CR>
 map <Leader>q :bd<CR>
 map <Leader>w :bp<CR>:bd#<CR>
+
+" NERDTree
+map <Leader>a :NERDTreeToggle<cr>
+map <Leader>A :NERDTreeFind<cr>
 
 " Open current dir in finder
 nmap <leader>o :! open .<cr><cr>
