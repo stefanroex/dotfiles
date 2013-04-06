@@ -10,10 +10,10 @@ endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 
-NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'mileszs/ack.vim'
+NeoBundle 'nono/vim-handlebars'
 NeoBundle 'slim-template/vim-slim'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-cucumber'
@@ -25,11 +25,13 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'wincent/Command-T'
+NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundleCheck
 
 " ========================================================================
 "  Settings
 " ========================================================================
+
 
 syntax enable
 color railscasts
@@ -123,6 +125,8 @@ let g:ConqueTerm_CWInsert = 1
 
 let mapleader=","
 
+let g:vimshell_cat_command="Applications/MacVim.app/Contents/MacOS/Vim"
+
 " ========================================================================
 "  Mappings
 " ========================================================================
@@ -204,6 +208,9 @@ if has("autocmd")
   " Treat ERB as ruby erb file
   au BufRead,BufNewFile *.erb set filetype=eruby.html
 
+  " Treat ERB as ruby erb file
+  au BufRead,BufNewFile *.skim set filetype=slim
+
   " Reload vimrc on save
   au BufWritePost .vimrc source $MYVIMRC
 
@@ -277,10 +284,3 @@ function! CorrectTestRunner()
     return "ruby"
   endif
 endfunction
-
-function! RubyConqueControls(single_conque)
-  setlocal nolist
-  map <buffer> q :bd<cr>
-endfunction
-
-" call conque_term#register_function('after_startup', 'RubyConqueControls')

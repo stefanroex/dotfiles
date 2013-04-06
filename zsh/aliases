@@ -1,5 +1,5 @@
 alias a='ls -lrthG'
-alias aliases='vim ~/.dotfiles/zsh/aliases'
+alias aliases='e ~/.dotfiles/zsh/aliases'
 alias amend="git commit --amend"
 alias bake='bundle exec rake'
 alias be='bundle exec'
@@ -35,7 +35,6 @@ alias rsync='rsync --progress'
 alias sc='staging-console'
 alias so='source ~/.dotfiles/zsh/aliases'
 alias u='cd ..'
-alias vim='mvim'
 
 # Heroku staging
 alias staging-console='heroku run console'
