@@ -20,6 +20,7 @@ NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'tpope/vim-sensible'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'scrooloose/nerdtree'
 
@@ -37,20 +38,16 @@ NeoBundleCheck
 "  Settings
 " ========================================================================
 
-
-syntax enable
 color railscasts
-filetype plugin indent on
 set number
-set ruler
 set cursorline
 set history=200
-set scrolloff=5
 set guioptions-=L
 set guioptions-=r
 set guioptions-=T
 set backupdir=~/.vim/_backup
 set directory=~/.vim/_temp
+set undodir^=~/.vim/undo/
 set nobackup
 set nowritebackup
 set hidden
@@ -59,13 +56,12 @@ set ttyfast " u got a fast terminal
 set ttyscroll=3
 set lazyredraw " to avoid scrolling problems
 
-"" Whitespace
+" Whitespace
 set nowrap
 set tabstop=2
 set shiftwidth=2
 set expandtab
 set list
-set backspace=indent,eol,start
 set listchars=trail:⋅,nbsp:⋅,tab:▸\
 
 " Searching
@@ -95,14 +91,10 @@ set ttimeoutlen=1
 set wildmode=list:full
 
 " Statusline
-set laststatus=2
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
-" When at 3 spaces and I hit >>, go to 4, not 5.
-set shiftround
-
-" don't use Ex mode, use Q for formatting
-map Q gq
+map Q <Nop>
+map K <Nop>
 
 " clear the search buffer when hitting return
 nnoremap <silent> <CR> :nohlsearch<cr>
@@ -114,10 +106,10 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 set wildignore+=*/tmp/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,node_modules
 
 " disable cursor keys in normal mode
-map <Left>  :echo "no!"<cr>
-map <Right> :echo "no!"<cr>
-map <Up>    :echo "no!"<cr>
-map <Down>  :echo "no!"<cr>
+map <Left> <Nop>
+map <Right> <Nop>a
+map <Up> <Nop>
+map <Down> <Nop>
 
 " No difference between ; and ;
 map ; :
@@ -126,77 +118,71 @@ command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
 
 let g:CommandTCancelMap=['<ESC>','<C-c>']
 
-let g:ConqueTerm_CWInsert = 1
-
-let mapleader=","
-
-let g:vimshell_cat_command="Applications/MacVim.app/Contents/MacOS/Vim"
+augroup myfiletypes
+  autocmd!
+  autocmd FileType ruby,eruby,yaml set ai sw=2 sts=2 et
+augroup END
 
 " ========================================================================
 "  Mappings
 " ========================================================================
 
+let mapleader=","
+
 nnoremap <leader><leader> <c-^>
-map <leader>b :CommandTBuffer<cr>
-map <leader>f :CommandT<cr>
-map <leader>F :CommandT %%<cr>
-map <leader>.v :CommandT app/views<cr>
+
 map <leader>.c :CommandT app/controllers<cr>
-map <leader>.m :CommandT app/models<cr>
 map <leader>.h :CommandT app/helpers<cr>
+map <leader>.j :CommandT app/assets/javascripts<cr>
 map <leader>.k :CommandT config<cr>
 map <leader>.l :CommandT lib<cr>
-map <leader>.t :CommandT spec<cr>
+map <leader>.m :CommandT app/models<cr>
 map <leader>.r :topleft :split config/routes.rb<cr>
-map <leader>.j :CommandT app/assets/javascripts<cr>
 map <leader>.s :CommandT app/assets/stylesheets<cr>
-map <leader>/t :CommandT app/assets/javascripts/templates<cr>
-map <leader>/m :CommandT app/assets/javascripts/models<cr>
-map <leader>/v :CommandT app/assets/javascripts/views<cr>
+map <leader>.t :CommandT spec<cr>
+map <leader>.v :CommandT app/views<cr>
 map <leader>/c :CommandT app/assets/javascripts/views<cr>
+map <leader>/m :CommandT app/assets/javascripts/models<cr>
 map <leader>/r :topleft :split app/assets/javascripts/router.js.coffee<cr>
-
-" find merge conflict markers
-nmap <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
-
-" Clear whitespace
-nmap <leader>W :KillWhitespace<CR>
-
-" Tabs to spaces
-map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
-
-" Easy commenting
+map <leader>/t :CommandT app/assets/javascripts/templates<cr>
+map <leader>/v :CommandT app/assets/javascripts/views<cr>
+map <leader>A :NERDTreeFind<cr>
+map <leader>F :CommandT %%<cr>
+map <leader>O :! open %%<cr><cr>
+map <leader>T :call RunCurrentLineInTest()<CR>
+map <leader>W :KillWhitespace<CR>
+map <leader>a :NERDTreeToggle<cr>
+map <leader>b :Gblame<cr>
 map <leader>cc :TComment<cr>
-
-" Make editing vimrc simple
-nmap <leader>v :e $MYVIMRC<CR>
-
-" Window management
-map <Leader>z :bp<CR>
-map <Leader>x :bn<CR>
-map <Leader>q :bd<CR>
-map <Leader>w :bp<CR>:bd#<CR>
-
-" NERDTree
-map <Leader>a :NERDTreeToggle<cr>
-map <Leader>A :NERDTreeFind<cr>
-
-" Open current dir in finder
-nmap <leader>o :! open .<cr><cr>
-nmap <leader>O :! open %%<cr><cr>
-
-" Tests
-map <Leader>t :call RunCurrentTest()<CR>
-map <Leader>T :call RunCurrentLineInTest()<CR>
-
-"Rename File
+map <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
+map <leader>f :CommandT<cr>
+map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
+map <leader>o :! open .<cr><cr>
+map <leader>q :bd<CR>
+map <leader>t :call RunCurrentTest()<CR>
+map <leader>v :tabe $MYVIMRC<CR>
+map <leader>w :bp<CR>:bd#<CR>
+map <leader>x :bn<CR>
+map <leader>z :bp<CR>
 
-" easier navigation between split windows
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+
+map <C-h> :nohl<cr>
+imap <C-l> :<Space>
+map <C-s> <esc>:w<CR>
+imap <C-s> <esc>:w<CR>
+map <C-t> <esc>:tabnew<CR>
+map <C-x> <C-w>c
+map <C-n> :cn<CR>
+map <C-p> :cp<CR>
+
+" Emacs-like beginning and end of line.
+imap <c-e> <c-o>$
+imap <c-a> <c-o>^
 
 " ========================================================================
 "  Autocmd
