@@ -13,7 +13,7 @@ Bundle 'gmarik/vundle'
 " Plugins
 Bundle 'wincent/Command-T'
 Bundle 'ervandew/supertab'
-Bundle 'mileszs/ack.vim'
+Bundle 'rking/ag.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
@@ -42,7 +42,7 @@ else
 endif
 
 set number
-set cursorline
+" set cursorline
 set history=200
 set guioptions-=L
 set guioptions-=r
@@ -81,7 +81,7 @@ set winminheight=10
 set winheight=999
 
 " Use Ack instead of grep
-set grepprg=ack
+set grepprg=ag
 
 " Able to 'gf' files
 set suffixesadd=.rb,.coffee,.js

@@ -4,6 +4,7 @@ alias amend="git commit --amend"
 alias bake='bundle exec rake'
 alias be='bundle exec'
 alias bunbang='bundle install && !!'
+alias cbundle='rm -rf vendor/bundle && bundle'
 alias d='cd ~/.dotfiles'
 alias e='mvim .'
 alias ga='git add . && gs'
