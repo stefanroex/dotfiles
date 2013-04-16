@@ -78,11 +78,6 @@
 
   # tag
   t = tag -n                        # show tags with <n> lines of each tag message
-
-  # svn helpers
-  svnr = svn rebase
-  svnd = svn dcommit
-  svnl = svn log --oneline --show-commit
 [format]
   pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 [merge]
@@ -93,8 +88,6 @@
 [branch]
   autosetupmerge = true
 [push]
-  # 'git push' will push the current branch to its tracking branch
-  # the usual default is to push all branches
   default = tracking
 [core]
   autocrlf = false
@@ -119,7 +112,7 @@
   helper = osxkeychain
 
 [heroku]
-  remote = origin
+  remote = staging
   account = brightin
 
 [github]

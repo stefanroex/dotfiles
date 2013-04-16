@@ -1,42 +1,38 @@
+alias ...='../..'
 alias a='ls -lrthG'
 alias aliases='mvim ~/.dotfiles/zsh/aliases'
 alias amend="git commit --amend"
-alias bake='bundle exec rake'
-alias be='bundle exec'
-alias bunbang='bundle install && !!'
 alias cbundle='rm -rf vendor/bundle && bundle'
 alias d='cd ~/.dotfiles'
 alias e='mvim .'
-alias ga='git add . && gs'
+alias ga='git add . && git add -u && gs'
 alias gc='git commit'
+alias gci="git pull --rebase && rake && git push"
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias gm='git commit -m'
 alias gph='git push && heroku run rake db:migrate && heroku open'
 alias gphp='git push production master && heroku run rake db:migrate --remote production && heroku open --remote production'
-alias gpush='git push'
 alias gs='git status'
-alias gstats='git statistics'
-alias gu='git add -u && gs'
-alias hlp='production-tail'
-alias hls='staging-tail'
-alias irb='pry'
+alias ip="curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+'"
 alias killruby='killall -9 ruby'
-alias lo='powder applog'
+alias logs='powder applog'
+alias mkdir='mkdir -p'
 alias pc='production-console'
 alias pow='powder'
 alias rbh="rbenv rehash"
-alias rc='pry'
 alias rdm="be rake db:migrate db:test:prepare"
 alias re='powder restart'
+alias restart_postgres="stoppostgres && startpostgres"
 alias restore='pg_restore --verbose --clean --no-acl --no-owner -h localhost -d'
 alias retag='ctags -R --exclude=vendor * --exclude=.git --exclude=log *'
-alias rs='rails server'
+alias rk="rake"
 alias rsync='rsync --progress'
-alias sc='staging-console'
+alias s="rspec"
 alias so='source ~/.dotfiles/zsh/aliases'
-alias u='cd ..'
+alias startredis='redis-server /usr/local/etc/redis.conf &'
 alias vi='mvim -v'
+alias z="zeus"
 
 # Heroku staging
 alias staging-console='heroku run console'
@@ -46,12 +42,8 @@ alias staging-tail='heroku logs --tail'
 alias production-console='heroku run console --remote production'
 alias production-tail='heroku logs --tail --remote production'
 
-# # Heroku databases
-alias db-pull-staging='heroku db:pull --remote origin --confirm `basename $PWD`-staging'
-alias db-pull-production='heroku db:pull --remote production --confirm `basename $PWD`-production'
-alias db-copy-production-to-staging='heroku pgbackups:restore DATABASE `heroku pgbackups:url --remote production` --remote origin  --confirm `basename $PWD`-staging'
-alias db-backup-production='heroku pgbackups:capture --remote production'
+# Heroku databases
+alias db-pull-production='heroku pgbackups:url | xargs curl backup.sql -o'
+alias db-copy-production-to-staging='heroku pgbackups:restore DATABASE `heroku pgbackups:url --remote production` --remote staging --confirm `basename $PWD`-staging'
+alias db-backups-capture='heroku pgbackups:capture --remote production'
 alias db-backups='heroku pgbackups --remote production'
-
-# Network
-alias ip="curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+'"

@@ -54,11 +54,9 @@ set nobackup
 set nowritebackup
 set hidden
 
-set synmaxcol=128
-
-set ttyfast " u got a fast terminal
-set ttyscroll=3
-set lazyredraw " to avoid scrolling problems
+set ttyfast
+set ttyscroll=5
+set lazyredraw
 
 " Whitespace
 set nowrap
