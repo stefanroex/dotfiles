@@ -4,35 +4,32 @@ filetype off
 " ========================================================================
 " Vundle stuff
 " ========================================================================
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
 
 " Plugins
-NeoBundle 'wincent/Command-T'
-NeoBundle 'ervandew/supertab'
-NeoBundle 'mileszs/ack.vim'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'tpope/vim-sensible'
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'scrooloose/nerdtree'
+Bundle 'wincent/Command-T'
+Bundle 'ervandew/supertab'
+Bundle 'mileszs/ack.vim'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-sensible'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'scrooloose/nerdtree'
 
 " Syntax
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'nono/vim-handlebars'
-NeoBundle 'slim-template/vim-slim'
-NeoBundle 'tpope/vim-cucumber'
-NeoBundle 'tpope/vim-haml'
-
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundleCheck
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'nono/vim-handlebars'
+Bundle 'slim-template/vim-slim'
+Bundle 'tpope/vim-cucumber'
+Bundle 'tpope/vim-haml'
 
 " ========================================================================
 "  Settings
@@ -45,14 +42,14 @@ else
 endif
 
 set number
-" set cursorline
+set cursorline
 set history=200
 set guioptions-=L
 set guioptions-=r
 set guioptions-=T
 set backupdir=~/.vim/_backup
 set directory=~/.vim/_temp
-set undodir^=~/.vim/undo/
+set undodir^=~/.vim/_undo/
 set nobackup
 set nowritebackup
 set hidden
@@ -98,8 +95,7 @@ set notimeout
 set wildmode=list:full
 
 " Statusline
-" set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
-set rtp+=~/Library/Python/2.7/bin/powerline/bindings/vim
+set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
 map Q <Nop>
 map K <Nop>

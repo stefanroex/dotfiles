@@ -27,13 +27,9 @@ export RUBY_HEAP_FREE_MIN=500000
 
 export ZSH_TMUX_AUTOSTART=true
 
-export EDITOR=mvim
-export TERM=xterm-256color
-
 # Customize to your needs...
 #export PATH=/usr/local/bin:/Users/stefanroex/.rbenv/shims:/Users/stefanroex/.rbenv/bin:~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/git/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/oracle/instantclient_10_2
 export PATH="/usr/local/bin:$PATH"
-export PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
 
 # No rbenv init for faster login (needs manual rehash)
 export PATH="$HOME/.rbenv/bin:$PATH"

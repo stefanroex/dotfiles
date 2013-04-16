@@ -3,6 +3,6 @@ vim/bundle
 vim/doc/tags-ja
 vim/_temp
 vim/_backup
-vim/undo
+vim/_undo
 vim/doc/tags
 *.un~
