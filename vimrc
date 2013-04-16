@@ -38,9 +38,14 @@ NeoBundleCheck
 "  Settings
 " ========================================================================
 
-color railscasts
+if has("gui_running")
+  color railscasts
+else
+  color railscasts2
+endif
+
 set number
-set cursorline
+" set cursorline
 set history=200
 set guioptions-=L
 set guioptions-=r
@@ -51,6 +56,8 @@ set undodir^=~/.vim/undo/
 set nobackup
 set nowritebackup
 set hidden
+
+set synmaxcol=128
 
 set ttyfast " u got a fast terminal
 set ttyscroll=3
@@ -83,15 +90,16 @@ set grepprg=ack
 set suffixesadd=.rb,.coffee,.js
 
 " (Hopefully) removes the delay when hitting esc in insert mode
-set noesckeys
 set ttimeout
-set ttimeoutlen=1
+set ttimeoutlen=20
+set notimeout
 
 " View full list when tab-complete in command mode
 set wildmode=list:full
 
 " Statusline
-set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+" set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+set rtp+=~/Library/Python/2.7/bin/powerline/bindings/vim
 
 map Q <Nop>
 map K <Nop>
@@ -122,6 +130,8 @@ augroup myfiletypes
   autocmd!
   autocmd FileType ruby,eruby,yaml set ai sw=2 sts=2 et
 augroup END
+
+set mouse=a
 
 " ========================================================================
 "  Mappings
@@ -234,13 +244,13 @@ function! RunCurrentTest()
     call SetTestFile()
 
     if match(expand('%'), '\.feature$') != -1
-      call SetTestRunner("ConqueTermSplit cucumber")
+      call SetTestRunner("!cucumber")
       exec g:bjo_test_runner g:bjo_test_file
     elseif match(expand('%'), '_spec\.rb$') != -1
-      call SetTestRunner("!rspec --no-color")
+      call SetTestRunner("!rspec")
       exec g:bjo_test_runner g:bjo_test_file
     else
-      call SetTestRunner("ConqueTermSplit ruby -Itest")
+      call SetTestRunner("!ruby -Itest")
       exec g:bjo_test_runner g:bjo_test_file
     endif
   else

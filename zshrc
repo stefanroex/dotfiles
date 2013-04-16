@@ -6,12 +6,13 @@ HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=10000
 
+
 unsetopt correct_all
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rake bundler brew gem osx)
+plugins=(git rake bundler brew gem osx vi-mode tmux heroku)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/aliases
@@ -24,7 +25,10 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
 
+export ZSH_TMUX_AUTOSTART=true
+
 export EDITOR=mvim
+export TERM=xterm-256color
 
 # Customize to your needs...
 #export PATH=/usr/local/bin:/Users/stefanroex/.rbenv/shims:/Users/stefanroex/.rbenv/bin:~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/git/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/oracle/instantclient_10_2
