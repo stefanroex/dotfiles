@@ -10,3 +10,4 @@ db/*.sqlite3
 .rbenv-version
 .powder
 *.dump
+*.sql

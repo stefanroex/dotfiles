@@ -24,7 +24,7 @@ alias rbh="rbenv rehash"
 alias rdm="be rake db:migrate db:test:prepare"
 alias re='powder restart'
 alias restart_postgres="stoppostgres && startpostgres"
-alias restore='pg_restore --verbose --clean --no-acl --no-owner -h localhost -d'
+alias restore='pg_restore --verbose --clean --no-acl --no-owner -h localhost -d `basename $PWD`_development '
 alias retag='ctags -R --exclude=vendor * --exclude=.git --exclude=log *'
 alias rk="rake"
 alias rsync='rsync --progress'
@@ -33,6 +33,9 @@ alias so='source ~/.dotfiles/zsh/aliases'
 alias startredis='redis-server /usr/local/etc/redis.conf &'
 alias vi='mvim -v'
 alias z="zeus"
+
+alias -g M='| more'
+alias -g L='| less'
 
 # Heroku staging
 alias staging-console='heroku run console'
@@ -43,7 +46,8 @@ alias production-console='heroku run console --remote production'
 alias production-tail='heroku logs --tail --remote production'
 
 # Heroku databases
-alias db-pull-production='heroku pgbackups:url | xargs curl backup.sql -o'
+alias db-pull-staging='heroku pgbackups:url | xargs curl -o staging.sql'
+alias db-pull-production='heroku pgbackups:url --remote production | xargs curl -o production.sql'
 alias db-copy-production-to-staging='heroku pgbackups:restore DATABASE `heroku pgbackups:url --remote production` --remote staging --confirm `basename $PWD`-staging'
 alias db-backups-capture='heroku pgbackups:capture --remote production'
 alias db-backups='heroku pgbackups --remote production'
