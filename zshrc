@@ -2,8 +2,8 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="fwalch"
 
 # Save a ton of history
-HISTSIZE=10000
 HISTFILE=~/.zsh_history
+HISTSIZE=10000
 SAVEHIST=10000
 
 plugins=(git rake bundler brew gem osx vi-mode tmux heroku)
