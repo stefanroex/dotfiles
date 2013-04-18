@@ -21,9 +21,7 @@ export RUBY_HEAP_FREE_MIN=500000
 export RUBY_FREE_MIN=500000
 
 # Customize to your needs...
-#export PATH=/usr/local/bin:/Users/stefanroex/.rbenv/shims:/Users/stefanroex/.rbenv/bin:~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/git/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/oracle/instantclient_10_2
 export PATH="/usr/local/bin:$PATH"
-
-# No rbenv init for faster login (needs manual rehash)
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.rbenv/shims:$PATH"
+export PATH="./bin:$PATH"
