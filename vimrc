@@ -11,21 +11,22 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Plugins
-Bundle 'wincent/Command-T'
 Bundle 'ervandew/supertab'
 Bundle 'rking/ag.vim'
+Bundle 'scrooloose/nerdtree'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-sensible'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-sensible'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'scrooloose/nerdtree'
+Bundle 'wincent/Command-T'
 
 " Syntax
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'heartsentwined/vim-ember-script'
 Bundle 'nono/vim-handlebars'
 Bundle 'slim-template/vim-slim'
 Bundle 'tpope/vim-cucumber'
