@@ -117,3 +117,7 @@ hi link htmlEndTag           xmlEndTag
 hi xmlTag                    guifg=#E8BF6A
 hi xmlTagName                guifg=#E8BF6A
 hi xmlEndTag                 guifg=#E8BF6A
+
+hi def link sassClass Function
+hi def link sassId Function
+hi def link cssTagName Function

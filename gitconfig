@@ -92,7 +92,7 @@
 [core]
   autocrlf = false
   editor = vim
-  excludesfile = ~/.gitignore
+	excludesfile = /Users/stefanroex/.gitignore
 [advice]
   statusHints = false
 [diff]
@@ -117,3 +117,9 @@
 
 [github]
   user = stexy
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

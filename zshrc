@@ -6,7 +6,9 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-plugins=(git rake bundler brew gem osx vi-mode tmux heroku)
+plugins=(git rake bundler brew gem osx tmux heroku)
+
+unsetopt correct_all
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/aliases
@@ -20,7 +22,6 @@ export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
 export RUBY_FREE_MIN=500000
 
-# Customize to your needs...
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.rbenv/shims:$PATH"
