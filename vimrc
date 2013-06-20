@@ -25,8 +25,9 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'wincent/Command-T'
 
 " Syntax
-Bundle 'kchmck/vim-coffee-script'
+Bundle 'groenewege/vim-less'
 Bundle 'heartsentwined/vim-ember-script'
+Bundle 'kchmck/vim-coffee-script'
 Bundle 'nono/vim-handlebars'
 Bundle 'slim-template/vim-slim'
 Bundle 'tpope/vim-cucumber'

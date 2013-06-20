@@ -23,6 +23,6 @@ export RUBY_HEAP_FREE_MIN=500000
 export RUBY_FREE_MIN=500000
 
 export PATH="/usr/local/bin:$PATH"
-export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.rbenv/shims:$PATH"
+export PATH="$HOME/bin:$PATH"
 export PATH="./bin:$PATH"
