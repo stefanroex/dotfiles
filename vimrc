@@ -25,6 +25,7 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'wincent/Command-T'
 
 " Syntax
+Bundle 'elixir-lang/vim-elixir'
 Bundle 'groenewege/vim-less'
 Bundle 'heartsentwined/vim-ember-script'
 Bundle 'kchmck/vim-coffee-script'
@@ -107,7 +108,7 @@ nnoremap <silent> <CR> :nohlsearch<cr>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " ignore Rubinius, Sass cache files
-set wildignore+=*/tmp/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,node_modules
+set wildignore+=*/tmp/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,node_modules,components,build
 
 " disable cursor keys in normal mode
 map <Left> <Nop>
