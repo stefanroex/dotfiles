@@ -108,7 +108,7 @@ nnoremap <silent> <CR> :nohlsearch<cr>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " ignore Rubinius, Sass cache files
-set wildignore+=*/tmp/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,node_modules,components,build
+set wildignore+=*/tmp/**,*/bin/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,node_modules,components,build
 
 " disable cursor keys in normal mode
 map <Left> <Nop>
@@ -208,10 +208,8 @@ if has("autocmd")
   au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
 
   " Treat ERB as ruby erb file
-  au BufRead,BufNewFile *.erb set filetype=eruby.html
-
-  " Treat ERB as ruby erb file
   au BufRead,BufNewFile *.skim set filetype=slim
+  au BufRead,BufNewFile *.erb set filetype=eruby.html
 
   " Reload vimrc on save
   au BufWritePost .vimrc source $MYVIMRC

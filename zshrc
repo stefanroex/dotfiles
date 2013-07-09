@@ -13,6 +13,7 @@ unsetopt correct_all
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/aliases
 source $HOME/.dotfiles/zsh/functions
+source $HOME/.rbenv/completions/rbenv.zsh
 
 # Shaves about 0.5s off Rails boot time (when using perf patch). Taken from https://gist.github.com/1688857
 export RUBY_HEAP_MIN_SLOTS=1000000

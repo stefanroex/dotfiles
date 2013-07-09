@@ -28,7 +28,7 @@ alias restore='pg_restore --verbose --clean --no-acl --no-owner -h localhost -d 
 alias retag='ctags -R --exclude=vendor * --exclude=.git --exclude=log *'
 alias rk="rake"
 alias rsync='rsync --progress'
-alias s="rspec"
+alias s='pow open && e'
 alias so='source ~/.dotfiles/zsh/aliases'
 alias startredis='redis-server /usr/local/etc/redis.conf &'
 alias vi='mvim -v'
