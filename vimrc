@@ -112,7 +112,7 @@ set wildignore+=*/tmp/**,*/bin/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,node_mo
 
 " disable cursor keys in normal mode
 map <Left> <Nop>
-map <Right> <Nop>a
+map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
 
@@ -178,7 +178,6 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-map <C-h> :nohl<cr>
 imap <C-l> :<Space>
 map <C-s> <esc>:w<CR>
 imap <C-s> <esc>:w<CR>
@@ -209,6 +208,7 @@ if has("autocmd")
 
   " Treat ERB as ruby erb file
   au BufRead,BufNewFile *.skim set filetype=slim
+  au BufRead,BufNewFile *.slim set filetype=slim
   au BufRead,BufNewFile *.erb set filetype=eruby.html
 
   " Reload vimrc on save
@@ -246,10 +246,10 @@ function! RunCurrentTest()
     call SetTestFile()
 
     if match(expand('%'), '\.feature$') != -1
-      call SetTestRunner("!cucumber")
+      call SetTestRunner("!bin/cucumber --no-color")
       exec g:bjo_test_runner g:bjo_test_file
     elseif match(expand('%'), '_spec\.rb$') != -1
-      call SetTestRunner("!rspec --no-color")
+      call SetTestRunner("!bin/rspec --no-color")
       exec g:bjo_test_runner g:bjo_test_file
     else
       call SetTestRunner("!ruby -Itest")
