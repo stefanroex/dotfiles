@@ -6,22 +6,26 @@ c() { cd ~/code/$1; }
 _c() { _files -W ~/code -/; }
 compdef _c c
 
-rake() {
-  if [ -S .zeus.sock ]; then
-    zeus rake "$@"
-  else
-    command rake "$@"
-  fi
-}
-
-rspec() {
-  if [ -S .zeus.sock ]; then
-    zeus rspec "$@"
-  else
-    command rspec "$@"
-  fi
-}
-
 function mcd() {
   mkdir -p "$1" && cd "$1";
+}
+
+function ruby_authors() {
+  for filename in `find app lib -iname "*.rb"`
+    do git log $filename | grep Author
+  done
+}
+
+function javascript_authors() {
+  for filename in `find public -iname "*.js"`
+    do git log $filename | grep Author
+  done
+}
+
+function herokus() {
+  heroku "$@" --remote staging
+}
+
+function herokup() {
+  heroku "$@" --remote production
 }

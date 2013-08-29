@@ -44,6 +44,7 @@ else
   color railscasts2
 endif
 
+" set rnu
 set number
 " set cursorline
 set history=200
@@ -56,10 +57,6 @@ set undodir^=~/.vim/_undo/
 set nobackup
 set nowritebackup
 set hidden
-
-set ttyfast
-set ttyscroll=5
-set lazyredraw
 
 " Whitespace
 set nowrap
@@ -91,6 +88,9 @@ set suffixesadd=.rb,.coffee,.js
 set ttimeout
 set ttimeoutlen=20
 set notimeout
+set ttyfast
+set ttyscroll=5
+set lazyredraw
 
 " View full list when tab-complete in command mode
 set wildmode=list:full
@@ -166,6 +166,7 @@ map <leader>f :CommandT<cr>
 map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
+map <leader>r :!rspec<cr>
 map <leader>q :bd<CR>
 map <leader>t :call RunCurrentTest()<CR>
 map <leader>v :tabe $MYVIMRC<CR>
@@ -246,10 +247,18 @@ function! RunCurrentTest()
     call SetTestFile()
 
     if match(expand('%'), '\.feature$') != -1
-      call SetTestRunner("!bin/cucumber --no-color")
+      if has("gui_running")
+        call SetTestRunner("!bin/cucumber --no-color")
+      else
+        call SetTestRunner("!bin/cucumber")
+      endif
       exec g:bjo_test_runner g:bjo_test_file
     elseif match(expand('%'), '_spec\.rb$') != -1
-      call SetTestRunner("!bin/rspec --no-color")
+      if has("gui_running")
+        call SetTestRunner("!rspec --no-color")
+      else
+        call SetTestRunner("!rspec")
+      endif
       exec g:bjo_test_runner g:bjo_test_file
     else
       call SetTestRunner("!ruby -Itest")

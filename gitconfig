@@ -112,7 +112,6 @@
   helper = osxkeychain
 
 [heroku]
-  remote = staging
   account = brightin
 
 [github]

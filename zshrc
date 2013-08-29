@@ -6,7 +6,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-plugins=(git rake bundler brew gem osx tmux heroku)
+plugins=(git brew gem osx tmux heroku)
 
 unsetopt correct_all
 
