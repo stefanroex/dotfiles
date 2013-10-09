@@ -15,6 +15,7 @@ Bundle 'ervandew/supertab'
 Bundle 'rking/ag.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tomtom/tcomment_vim'
+Bundle 'tpope/vim-dispatch'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-repeat'
@@ -39,7 +40,7 @@ Bundle 'tpope/vim-haml'
 " ========================================================================
 
 if has("gui_running")
-  color railscasts
+  color railscasts2
 else
   color railscasts2
 endif
@@ -48,6 +49,7 @@ endif
 set number
 " set cursorline
 set history=200
+set scrolloff=5
 set guioptions-=L
 set guioptions-=r
 set guioptions-=T
@@ -57,6 +59,7 @@ set undodir^=~/.vim/_undo/
 set nobackup
 set nowritebackup
 set hidden
+set clipboard=unnamed
 
 " Whitespace
 set nowrap
@@ -73,13 +76,14 @@ set ignorecase
 set smartcase
 
 " Windows
-set winwidth=84
-set winheight=10
-set winminheight=10
-set winheight=999
+" set winwidth=84
+" set winheight=10
+" set winminheight=10
+" set winheight=999
 
 " Use Ack instead of grep
 set grepprg=ag
+let g:ackprg = 'ag --nogroup --column'
 
 " Able to 'gf' files
 set suffixesadd=.rb,.coffee,.js
@@ -90,7 +94,14 @@ set ttimeoutlen=20
 set notimeout
 set ttyfast
 set ttyscroll=5
-set lazyredraw
+
+let loaded_matchparen=1 " Don't load matchit.vim (paren/bracket matching)
+set noshowmatch         " Don't match parentheses/brackets
+set nocursorline        " Don't paint cursor line
+set nocursorcolumn      " Don't paint cursor column
+" set lazyredraw          " Wait to redraw
+set scrolljump=8
+let html_no_rendering=1 " Don't render italic, bold, links in HTML
 
 " View full list when tab-complete in command mode
 set wildmode=list:full
@@ -129,6 +140,7 @@ augroup myfiletypes
 augroup END
 
 set mouse=a
+set ttymouse=xterm2
 
 " ========================================================================
 "  Mappings
@@ -247,18 +259,10 @@ function! RunCurrentTest()
     call SetTestFile()
 
     if match(expand('%'), '\.feature$') != -1
-      if has("gui_running")
-        call SetTestRunner("!bin/cucumber --no-color")
-      else
-        call SetTestRunner("!bin/cucumber")
-      endif
+      call SetTestRunner("!cucumber")
       exec g:bjo_test_runner g:bjo_test_file
     elseif match(expand('%'), '_spec\.rb$') != -1
-      if has("gui_running")
-        call SetTestRunner("!rspec --no-color")
-      else
-        call SetTestRunner("!rspec")
-      endif
+      call SetTestRunner("!rspec")
       exec g:bjo_test_runner g:bjo_test_file
     else
       call SetTestRunner("!ruby -Itest")
