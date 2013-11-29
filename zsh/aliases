@@ -46,8 +46,8 @@ alias production-console='heroku run console --remote production'
 alias production-tail='heroku logs --tail --remote production'
 
 # Heroku databases
-alias db-pull-staging='heroku pgbackups:url | xargs curl -o staging.sql'
-alias db-pull-production='heroku pgbackups:url --remote production | xargs curl -o production.sql'
+alias db-pull-staging='herokus pgbackups:url | xargs curl -o staging.sql'
+alias db-pull-production='herokup pgbackups:url | xargs curl -o production.sql'
 
 alias db-copy-staging-to-development='db-pull-staging && restore staging.sql'
 alias db-copy-production-to-development='db-pull-production && restore production.sql'
