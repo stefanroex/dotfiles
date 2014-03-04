@@ -1,4 +1,5 @@
 alias ...='../..'
+alias ass='pow restart && rm -rf tmp/cache'
 alias a='ls -lrthG'
 alias aliases='mvim -v ~/.dotfiles/zsh/aliases'
 alias amend="git commit --amend"
@@ -29,6 +30,7 @@ alias retag='ctags -R --exclude=vendor * --exclude=.git --exclude=log *'
 alias rk="rake"
 alias rsync='rsync --progress'
 alias s='pow open && e'
+alias server='python -m SimpleHTTPServer'
 alias so='source ~/.dotfiles/zsh/aliases'
 alias startredis='redis-server /usr/local/etc/redis.conf &'
 alias vi='mvim -v'
@@ -51,7 +53,6 @@ alias db-pull-production='herokup pgbackups:url | xargs curl -o production.sql'
 
 alias db-copy-staging-to-development='db-pull-staging && restore staging.sql'
 alias db-copy-production-to-development='db-pull-production && restore production.sql'
-alias db-copy-production-to-staging='heroku pgbackups:restore DATABASE `heroku pgbackups:url --remote production` --remote staging --confirm `basename $PWD`-staging'
+alias db-copy-production-to-staging='herokus pgbackups:restore DATABASE `herokup pgbackups:url` --confirm `basename $PWD`-staging'
 
-alias db-backups-capture='heroku pgbackups:capture --remote production'
-alias db-backups='heroku pgbackups --remote production'
+alias db-backups-capture='herokup pgbackups:capture --expire'

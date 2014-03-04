@@ -11,24 +11,29 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Plugins
+Bundle 'dockyard/vim-easydir'
 Bundle 'ervandew/supertab'
+Bundle 'kien/ctrlp.vim'
 Bundle 'rking/ag.vim'
 Bundle 'scrooloose/nerdtree'
+Bundle 'tacahiroy/ctrlp-funky'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'tpope/vim-dispatch'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-rake'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-sensible'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'wincent/Command-T'
+Bundle 'vim-scripts/VimClojure'
 
 " Syntax
 Bundle 'elixir-lang/vim-elixir'
 Bundle 'groenewege/vim-less'
 Bundle 'heartsentwined/vim-ember-script'
+Bundle 'heartsentwined/vim-emblem'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'nono/vim-handlebars'
 Bundle 'slim-template/vim-slim'
@@ -45,6 +50,7 @@ else
   color railscasts2
 endif
 
+set noswapfile
 " set rnu
 set number
 " set cursorline
@@ -68,6 +74,7 @@ set shiftwidth=2
 set expandtab
 set list
 set listchars=trail:⋅,nbsp:⋅,tab:▸\
+set showbreak=↪
 
 " Searching
 set hlsearch
@@ -119,7 +126,7 @@ nnoremap <silent> <CR> :nohlsearch<cr>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " ignore Rubinius, Sass cache files
-set wildignore+=*/tmp/**,*/bin/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,node_modules,components,build
+set wildignore+=*/tmp/**,*/bin/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,/node_modules/**,components,build
 
 " disable cursor keys in normal mode
 map <Left> <Nop>
@@ -132,7 +139,10 @@ map ; :
 
 command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
 
-let g:CommandTCancelMap=['<ESC>','<C-c>']
+let g:ctrlp_extensions = ['funky']
+let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
+let g:ctrlp_use_caching = 0
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
 augroup myfiletypes
   autocmd!
@@ -150,23 +160,25 @@ let mapleader=","
 
 nnoremap <leader><leader> <c-^>
 
-map <leader>.c :CommandT app/controllers<cr>
-map <leader>.h :CommandT app/helpers<cr>
-map <leader>.j :CommandT app/assets/javascripts<cr>
-map <leader>.k :CommandT config<cr>
-map <leader>.l :CommandT lib<cr>
-map <leader>.m :CommandT app/models<cr>
+nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+map <leader>.c :CtrlP app/controllers<cr>
+map <leader>.h :CtrlP app/helpers<cr>
+map <leader>.j :CtrlP app/assets/javascripts<cr>
+map <leader>.k :CtrlP config<cr>
+map <leader>.l :CtrlP lib<cr>
+map <leader>.m :CtrlP app/models<cr>
 map <leader>.r :topleft :split config/routes.rb<cr>
-map <leader>.s :CommandT app/assets/stylesheets<cr>
-map <leader>.t :CommandT spec<cr>
-map <leader>.v :CommandT app/views<cr>
-map <leader>/c :CommandT app/assets/javascripts/views<cr>
-map <leader>/m :CommandT app/assets/javascripts/models<cr>
+map <leader>.s :CtrlP app/assets/stylesheets<cr>
+map <leader>.t :CtrlP spec<cr>
+map <leader>.v :CtrlP app/views<cr>
+map <leader>/c :CtrlP app/assets/javascripts/views<cr>
+map <leader>/m :CtrlP app/assets/javascripts/models<cr>
 map <leader>/r :topleft :split app/assets/javascripts/router.js.coffee<cr>
-map <leader>/t :CommandT app/assets/javascripts/templates<cr>
-map <leader>/v :CommandT app/assets/javascripts/views<cr>
+map <leader>/t :CtrlP app/assets/javascripts/templates<cr>
+map <leader>/v :CtrlP app/assets/javascripts/views<cr>
 map <leader>A :NERDTreeFind<cr>
-map <leader>F :CommandT %%<cr>
+map <leader>F :CtrlP %%<cr>
 map <leader>O :! open %%<cr><cr>
 map <leader>T :call RunCurrentLineInTest()<CR>
 map <leader>W :KillWhitespace<CR>
@@ -174,7 +186,9 @@ map <leader>a :NERDTreeToggle<cr>
 map <leader>b :Gblame<cr>
 map <leader>cc :TComment<cr>
 map <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
-map <leader>f :CommandT<cr>
+map <leader>f :CtrlP<cr>
+map <Leader>Fu :CtrlPFunky<Cr>
+map <Leader>FU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
@@ -226,11 +240,7 @@ if has("autocmd")
 
   " Reload vimrc on save
   au BufWritePost .vimrc source $MYVIMRC
-
-  " Flush CommandT automaticaly
-  au FocusGained,BufWritePost * CommandTFlush
 endif
-
 
 " ========================================================================
 "  Functions

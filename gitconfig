@@ -79,7 +79,7 @@
   # tag
   t = tag -n                        # show tags with <n> lines of each tag message
 [format]
-  pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
+  pretty = format:%C(white)%ad%Creset %C(green)%h%C(yellow)%d%Creset %C(white)%s %C(magenta) [%an]%Creset
 [merge]
   summary = true
   verbosity = 1
@@ -92,7 +92,7 @@
 [core]
   autocrlf = false
   editor = vim
-	excludesfile = /Users/stefanroex/.gitignore
+  excludesfile = /Users/stefanroex/.gitignore
 [advice]
   statusHints = false
 [diff]
@@ -117,8 +117,8 @@
 [github]
   user = stexy
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
