@@ -106,7 +106,7 @@ let loaded_matchparen=1 " Don't load matchit.vim (paren/bracket matching)
 set noshowmatch         " Don't match parentheses/brackets
 set nocursorline        " Don't paint cursor line
 set nocursorcolumn      " Don't paint cursor column
-" set lazyredraw          " Wait to redraw
+set lazyredraw          " Wait to redraw
 set scrolljump=8
 let html_no_rendering=1 " Don't render italic, bold, links in HTML
 
@@ -115,6 +115,9 @@ set wildmode=list:full
 
 " Statusline
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+
+" append a newline if it is not already there
+set eol
 
 map Q <Nop>
 map K <Nop>
@@ -221,6 +224,7 @@ imap <c-a> <c-o>^
 "  Autocmd
 " ========================================================================
 
+
 if has("autocmd")
   " Treat JSON files like JavaScript
   au BufNewFile,BufRead *.json set ft=javascript
@@ -238,6 +242,12 @@ if has("autocmd")
   au BufRead,BufNewFile *.slim set filetype=slim
   au BufRead,BufNewFile *.erb set filetype=eruby.html
 
+  " Trim whitespace
+  autocmd FileWritePre * :call TrimWhiteSpace()
+  autocmd FileAppendPre * :call TrimWhiteSpace()
+  autocmd FilterWritePre * :call TrimWhiteSpace()
+  autocmd BufWritePre * :call TrimWhiteSpace()
+
   " Reload vimrc on save
   au BufWritePost .vimrc source $MYVIMRC
 endif
@@ -245,6 +255,11 @@ endif
 " ========================================================================
 "  Functions
 " ========================================================================
+
+function TrimWhiteSpace()
+  %s/\s*$//
+  ''
+:endfunction
 
 function! SynStack()
   if !exists("*synstack")

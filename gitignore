@@ -12,3 +12,5 @@ db/*.sqlite3
 .powder
 *.dump
 *.sql
+notes.txt
+node_modules
