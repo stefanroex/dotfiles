@@ -11,6 +11,7 @@ alias gc='git commit'
 alias gci="git pull --rebase && rake && git push"
 alias gd='git diff'
 alias gdc='git diff --cached'
+alias gdm='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 alias gm='git commit -m'
 alias gph='git push staging master && herokus run rake db:migrate && herokus open'
 alias gphp='git push production master && herokup run rake db:migrate && herokup open'

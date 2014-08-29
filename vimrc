@@ -39,16 +39,13 @@ Bundle 'nono/vim-handlebars'
 Bundle 'slim-template/vim-slim'
 Bundle 'tpope/vim-cucumber'
 Bundle 'tpope/vim-haml'
+Bundle 'mxw/vim-jsx'
 
 " ========================================================================
 "  Settings
 " ========================================================================
 
-if has("gui_running")
-  color railscasts2
-else
-  color railscasts2
-endif
+color sweam
 
 set noswapfile
 " set rnu
@@ -129,7 +126,7 @@ nnoremap <silent> <CR> :nohlsearch<cr>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " ignore Rubinius, Sass cache files
-set wildignore+=*/tmp/**,*/bin/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,/node_modules/**,components,build
+set wildignore+=*/tmp/**,*/bin/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,/node_modules/**,/components/**,build
 
 " disable cursor keys in normal mode
 map <Left> <Nop>
@@ -201,6 +198,7 @@ map <leader>t :call RunCurrentTest()<CR>
 map <leader>v :tabe $MYVIMRC<CR>
 map <leader>w :bp<CR>:bd#<CR>
 map <leader>x :bn<CR>
+map <leader>y :call <SID>SynStack()<CR>
 map <leader>z :bp<CR>
 
 nnoremap <c-j> <c-w>j
@@ -279,7 +277,7 @@ function! RenameFile()
 endfunction
 
 function! RunCurrentTest()
-  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
+  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_spec.js.coffee\)$') != -1
   if in_test_file
     call SetTestFile()
 
@@ -288,6 +286,9 @@ function! RunCurrentTest()
       exec g:bjo_test_runner g:bjo_test_file
     elseif match(expand('%'), '_spec\.rb$') != -1
       call SetTestRunner("!bin/rspec")
+      exec g:bjo_test_runner g:bjo_test_file
+    elseif match(expand('%'), '_spec\.js\.coffee$') != -1
+      call SetTestRunner("!bin/teaspoon")
       exec g:bjo_test_runner g:bjo_test_file
     else
       call SetTestRunner("!ruby -Itest")
@@ -325,6 +326,8 @@ function! CorrectTestRunner()
     return "cucumber"
   elseif match(expand('%'), '_spec\.rb$') != -1
     return "rspec"
+  elseif match(expand('%'), '_spec\.js\.coffee$') != -1
+    return "js"
   else
     return "ruby"
   endif
