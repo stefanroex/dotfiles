@@ -20,6 +20,7 @@
   rs = rebase --skip                # skip rebase
   r = remote -v                     # show remotes (verbose)
   s = status                        # status
+  st = status                       # status
 [format]
   pretty = format:%C(white)%ad%Creset %C(green)%h%C(yellow)%d%Creset %C(white)%s %C(magenta) [%an]%Creset
 [merge]
