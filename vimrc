@@ -11,6 +11,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Plugins
+Bundle 'SirVer/ultisnips'
 Bundle 'dockyard/vim-easydir'
 Bundle 'ervandew/supertab'
 Bundle 'kien/ctrlp.vim'
@@ -35,11 +36,12 @@ Bundle 'groenewege/vim-less'
 Bundle 'heartsentwined/vim-ember-script'
 Bundle 'heartsentwined/vim-emblem'
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'mxw/vim-jsx'
 Bundle 'nono/vim-handlebars'
 Bundle 'slim-template/vim-slim'
 Bundle 'tpope/vim-cucumber'
 Bundle 'tpope/vim-haml'
-Bundle 'mxw/vim-jsx'
+Bundle 'mtscout6/vim-cjsx'
 
 " ========================================================================
 "  Settings
@@ -152,6 +154,10 @@ augroup END
 set mouse=a
 set ttymouse=xterm2
 
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
 " ========================================================================
 "  Mappings
 " ========================================================================
@@ -254,7 +260,7 @@ endif
 "  Functions
 " ========================================================================
 
-function TrimWhiteSpace()
+function! TrimWhiteSpace()
   %s/\s*$//
   ''
 :endfunction
