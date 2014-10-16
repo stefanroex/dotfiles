@@ -2,46 +2,44 @@ set nocompatible
 filetype off
 
 " ========================================================================
-" Vundle stuff
+" Vim Plug
 " ========================================================================
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-Bundle 'gmarik/vundle'
+call plug#begin('~/.vim/plugged')
 
 " Plugins
-Bundle 'SirVer/ultisnips'
-Bundle 'dockyard/vim-easydir'
-Bundle 'ervandew/supertab'
-Bundle 'kien/ctrlp.vim'
-Bundle 'rking/ag.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tacahiroy/ctrlp-funky'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-rake'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-sensible'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'vim-scripts/VimClojure'
+Plug 'SirVer/ultisnips'
+Plug 'dockyard/vim-easydir'
+Plug 'ervandew/supertab'
+Plug 'kien/ctrlp.vim'
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-ruby/vim-ruby'
+Plug 'vim-scripts/VimClojure'
 
 " Syntax
-Bundle 'elixir-lang/vim-elixir'
-Bundle 'groenewege/vim-less'
-Bundle 'heartsentwined/vim-ember-script'
-Bundle 'heartsentwined/vim-emblem'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'mxw/vim-jsx'
-Bundle 'nono/vim-handlebars'
-Bundle 'slim-template/vim-slim'
-Bundle 'tpope/vim-cucumber'
-Bundle 'tpope/vim-haml'
-Bundle 'mtscout6/vim-cjsx'
+Plug 'elixir-lang/vim-elixir'
+Plug 'groenewege/vim-less'
+Plug 'heartsentwined/vim-ember-script'
+Plug 'heartsentwined/vim-emblem'
+Plug 'kchmck/vim-coffee-script'
+Plug 'mxw/vim-jsx'
+Plug 'nono/vim-handlebars'
+Plug 'slim-template/vim-slim'
+Plug 'tpope/vim-cucumber'
+Plug 'tpope/vim-haml'
+Plug 'mtscout6/vim-cjsx'
+
+call plug#end()
 
 " ========================================================================
 "  Settings
@@ -284,25 +282,23 @@ endfunction
 
 function! RunCurrentTest()
   let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_spec.js.coffee\)$') != -1
+
   if in_test_file
     call SetTestFile()
 
     if match(expand('%'), '\.feature$') != -1
       call SetTestRunner("!cucumber")
-      exec g:bjo_test_runner g:bjo_test_file
     elseif match(expand('%'), '_spec\.rb$') != -1
       call SetTestRunner("!bin/rspec")
-      exec g:bjo_test_runner g:bjo_test_file
     elseif match(expand('%'), '_spec\.js\.coffee$') != -1
       call SetTestRunner("!bin/teaspoon")
-      exec g:bjo_test_runner g:bjo_test_file
     else
       call SetTestRunner("!ruby -Itest")
-      exec g:bjo_test_runner g:bjo_test_file
     endif
-  else
-    exec g:bjo_test_runner g:bjo_test_file
   endif
+
+  exec "w " g:bjo_test_file
+  exec g:bjo_test_runner g:bjo_test_file
 endfunction
 
 function! SetTestRunner(runner)
@@ -315,6 +311,7 @@ function! RunCurrentLineInTest()
     call SetTestFileWithLine()
   end
 
+  exec "w " g:bjo_test_file
   exec "!rspec" g:bjo_test_file . ":" . g:bjo_test_file_line
 endfunction
 

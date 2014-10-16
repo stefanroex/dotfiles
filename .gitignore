@@ -5,4 +5,5 @@ vim/_temp
 vim/_backup
 vim/_undo
 vim/doc/tags
+vim/plugged
 *.un~
