@@ -36,7 +36,6 @@ cask install alfred
 cask install apptrap
 cask install arq
 cask install boot2docker
-cask install caffeine
 cask install dropbox
 cask install firefox
 cask install fluid
