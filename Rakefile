@@ -5,7 +5,7 @@ task :install do
   replace_all = true
   Dir['*'].each do |file|
     next if %w[Rakefile README.md].include? file
-    
+
     if File.exist?(File.join(ENV['HOME'], ".#{file}"))
       if replace_all
         replace_file(file)
@@ -45,11 +45,6 @@ task :command_t => :macvim_check do
       sh "make clean"
     end
   end
-end
-
-desc "Install gems"
-task :gems do
-  sh "gem install pry pry-doc"
 end
 
 task :macvim_check do
