@@ -15,9 +15,8 @@ DISABLE_CORRECTION="true"
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/aliases
 source $HOME/.dotfiles/zsh/functions
-source $HOME/.rbenv/completions/rbenv.zsh
 
-export EDITOR='e'
+export EDITOR='mvim -v'
 
 export RUBY_FREE_MIN=200000
 export RUBY_GC_HEAP_FREE_SLOTS=200000
@@ -32,9 +31,3 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="./bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
-export PATH="/usr/local/go/bin:$PATH"
-
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
-source /Users/stefanroex/.iterm2_shell_integration.zsh
