@@ -4,3 +4,5 @@ tmp
 vendor
 *.sql
 *.dump
+node_modules
+bower_components

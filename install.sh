@@ -3,6 +3,7 @@
 xcode-select --install
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 curl -L http://install.ohmyz.sh | sh
+curl https://raw.githubusercontent.com/creationix/nvm/v0.17.2/install.sh | bash
 brew doctor
 brew update
 

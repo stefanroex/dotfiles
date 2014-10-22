@@ -1,16 +1,40 @@
+#Mac Files
 .DS_Store
-._*
 .Trashes
-.bundle
-tags
-vendor/bundle
-zeus.json
-log/
-db/*.sqlite3
-.rbenv-version
+
+# Swap files
+*.swp
+*.swn
+*.swo
+*.orig
+
+# Ruby
 .ruby-version
+.rbenv-version
+.bundle
+vendor/bundle
+db/*.sqlite3
 .powder
+
+# Vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# Ctags
+tags
+
+# Logs
+log/
+
+# Node
+node_modules/
+bower_components/
+npm-debug.log
+
+# Datbase backups
 *.dump
 *.sql
-notes.txt
-node_modules

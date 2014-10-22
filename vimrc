@@ -9,6 +9,7 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 " Plugins
+Plug 'Shutnik/jshint2.vim'
 Plug 'SirVer/ultisnips'
 Plug 'dockyard/vim-easydir'
 Plug 'ervandew/supertab'
@@ -33,12 +34,13 @@ Plug 'groenewege/vim-less'
 Plug 'heartsentwined/vim-ember-script'
 Plug 'heartsentwined/vim-emblem'
 Plug 'kchmck/vim-coffee-script'
+Plug 'mtscout6/vim-cjsx'
 Plug 'mxw/vim-jsx'
 Plug 'nono/vim-handlebars'
+Plug 'pangloss/vim-javascript'
 Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
-Plug 'mtscout6/vim-cjsx'
 
 call plug#end()
 
@@ -126,9 +128,6 @@ nnoremap <silent> <CR> :nohlsearch<cr>
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
-" ignore Rubinius, Sass cache files
-set wildignore+=*/tmp/**,*/bin/**,*.rbc,.rbx,*.scssc,*.sassc,*/vendor/**,/node_modules/**,/components/**,build
-
 " disable cursor keys in normal mode
 map <Left> <Nop>
 map <Right> <Nop>
@@ -140,10 +139,13 @@ map ; :
 
 command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
 
-let g:ctrlp_extensions = ['funky']
-let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
+let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:20,results:20'
 let g:ctrlp_use_caching = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](doc|tmp|node_modules|bower_components)',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
 
 augroup myfiletypes
   autocmd!
@@ -192,8 +194,6 @@ map <leader>b :Gblame<cr>
 map <leader>cc :TComment<cr>
 map <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 map <leader>f :CtrlP<cr>
-map <Leader>Fu :CtrlPFunky<Cr>
-map <Leader>FU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>

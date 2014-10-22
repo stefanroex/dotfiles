@@ -31,3 +31,6 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="./bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
+
+export NVM_DIR="/Users/stefanroex/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
