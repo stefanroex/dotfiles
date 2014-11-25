@@ -32,9 +32,10 @@ log/
 
 # Node
 node_modules/
-bower_components/
 npm-debug.log
 
 # Datbase backups
 *.dump
 *.sql
+
+notes.txt

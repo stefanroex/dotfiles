@@ -9,31 +9,36 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 " Plugins
-Plug 'Shutnik/jshint2.vim'
 Plug 'SirVer/ultisnips'
 Plug 'dockyard/vim-easydir'
 Plug 'ervandew/supertab'
+Plug 'guns/vim-sexp'
 Plug 'kien/ctrlp.vim'
+Plug 'kien/rainbow_parentheses.vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
-Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-ruby/vim-ruby'
-Plug 'vim-scripts/VimClojure'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-dispatch'
+Plug 'jgdavey/tslime.vim'
 
 " Syntax
 Plug 'elixir-lang/vim-elixir'
 Plug 'groenewege/vim-less'
+Plug 'guns/vim-clojure-static'
 Plug 'heartsentwined/vim-ember-script'
 Plug 'heartsentwined/vim-emblem'
 Plug 'kchmck/vim-coffee-script'
+Plug 'leafgarland/typescript-vim'
 Plug 'mtscout6/vim-cjsx'
 Plug 'mxw/vim-jsx'
 Plug 'nono/vim-handlebars'
@@ -299,6 +304,9 @@ function! RunCurrentTest()
   endif
 
   exec "w " g:bjo_test_file
+  " let a:command = g:bjo_test_runner . " " . g:bjo_test_file . "\n"
+  " exec "!" a:command
+  " call Send_to_Tmux(a:command)
   exec g:bjo_test_runner g:bjo_test_file
 endfunction
 

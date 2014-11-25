@@ -1,22 +1,25 @@
-ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="fwalch"
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+if [[ -n ${EMACS} ]]; then
+  zstyle ':prezto:module:terminal' auto-title 'no'
+fi
 
 # Save a ton of history
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-plugins=(git brew gem osx tmux heroku)
-
 unsetopt correct_all
 unsetopt correct
-DISABLE_CORRECTION="true"
 
-source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/zsh/aliases
 source $HOME/.dotfiles/zsh/functions
 
 export EDITOR='mvim -v'
+
+export TERM=xterm-256color
 
 export RUBY_FREE_MIN=200000
 export RUBY_GC_HEAP_FREE_SLOTS=200000
@@ -31,6 +34,3 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="./bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
-
-export NVM_DIR="/Users/stefanroex/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

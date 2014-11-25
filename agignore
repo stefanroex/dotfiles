@@ -1,6 +1,7 @@
 log
 tags
 tmp
+dist
 vendor
 *.sql
 *.dump
