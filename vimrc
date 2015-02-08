@@ -47,6 +47,10 @@ Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
 
+" Syntaxhighlight tweaking
+" Plug 'lilydjwg/colorizer'
+" Plug 'vim-scripts/SyntaxAttr.vim'
+
 call plug#end()
 
 " ========================================================================
@@ -148,7 +152,7 @@ let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:20,results:20'
 let g:ctrlp_use_caching = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](doc|tmp|node_modules|bower_components)',
+  \ 'dir':  '\v[\/](doc|tmp|node_modules|bower_components|vendor/assets)',
   \ 'file': '\v\.(exe|so|dll)$',
   \ }
 
@@ -202,8 +206,9 @@ map <leader>f :CtrlP<cr>
 map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
-map <leader>r :!rspec<cr>
+" map <leader>p :call SyntaxAttr()<CR>
 map <leader>q :bd<CR>
+map <leader>r :!rspec<cr>
 map <leader>t :call RunCurrentTest()<CR>
 map <leader>v :tabe $MYVIMRC<CR>
 map <leader>w :bp<CR>:bd#<CR>

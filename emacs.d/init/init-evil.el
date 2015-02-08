@@ -50,6 +50,7 @@
   "z" 'previous-code-buffer
   "b" 'switch-to-buffer
   "w" 'quit-window
+  "q" 'kill-buffer-and-window
   "m" 'smex
   "F" 'find-file
   "k" 'kill-buffer

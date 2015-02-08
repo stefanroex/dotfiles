@@ -1,5 +1,4 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
-
 (mapc 'require '(init-bootstrap
                  init-custom
                  init-appearance
@@ -16,3 +15,6 @@
                  init-lisp
                  init-js
                  ))
+
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/evil-rebellion"))
+(require 'evil-rebellion)

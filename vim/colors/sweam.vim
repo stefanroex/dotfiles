@@ -40,6 +40,7 @@ highlight Special                   guifg=#DA4939 ctermfg=167
 
 highlight pythonBuiltin             guifg=#6D9CBE ctermfg=73 gui=NONE cterm=NONE
 
+" Ruby
 highlight rubyBlockParameter        guifg=#FFFFFF ctermfg=15
 highlight rubyClass                 guifg=#FFFFFF ctermfg=15
 highlight rubyConstant              guifg=#DA4939 ctermfg=167
@@ -50,6 +51,7 @@ highlight rubyPredefinedConstant    guifg=#DA4939 ctermfg=167
 highlight rubyPseudoVariable        guifg=#FFC66D ctermfg=221
 highlight rubyStringDelimiter       guifg=#A5C261 ctermfg=143
 
+" Coffeescript
 highlight coffeeParen               guifg=#E6E1DC guibg=#111111
 highlight coffeeExtendedOp          guifg=#E6E1DC guibg=#111111
 highlight coffeeSpecialOp           guifg=#E6E1DC guibg=#111111
@@ -58,9 +60,20 @@ highlight coffeeGlobal              guifg=#FFC66D ctermfg=221
 highlight coffeeHashRocket          guifg=#CC7833 ctermfg=173 gui=NONE cterm=NONE
 highlight coffeeObjAssignFirst      guifg=#FFC66D ctermfg=221
 
+" Javascript
+highlight jsUndefined               guifg=#FFC66D ctermfg=221
+highlight jsThis                    guifg=#E6E1DC guibg=#111111
+highlight jsFunction                guifg=#CC7833 ctermfg=173 gui=NONE cterm=NONE
+highlight jsStorageClass            guifg=#CC7833 ctermfg=173 gui=NONE cterm=NONE
+highlight jsHtmlEvents              guifg=#E6E1DC guibg=#111111
+highlight jsGlobalObjects           guifg=#CC7833 ctermfg=173 gui=NONE cterm=NONE
+highlight jsConstant                guifg=#DA4939 ctermfg=167
+
+" XML / JSX
 highlight xmlTag                    guifg=#E8BF6A ctermfg=179
 highlight xmlTagName                guifg=#E8BF6A ctermfg=179
 highlight xmlEndTag                 guifg=#E8BF6A ctermfg=179
+highlight xmlAttrib                 guifg=#E6E1DC guibg=#111111
 
 highlight mailSubject               guifg=#A5C261 ctermfg=107
 highlight mailHeaderKey             guifg=#FFC66D ctermfg=221
