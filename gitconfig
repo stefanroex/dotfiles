@@ -52,4 +52,8 @@
 [github]
   user = stexy
 [heroku]
-  account = brightin
+	account = brightin
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true

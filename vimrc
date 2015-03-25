@@ -12,7 +12,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'SirVer/ultisnips'
 Plug 'dockyard/vim-easydir'
 Plug 'ervandew/supertab'
-Plug 'guns/vim-sexp'
+" Plug 'guns/vim-sexp'
 Plug 'kien/ctrlp.vim'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'rking/ag.vim'
@@ -23,7 +23,7 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-sexp-mappings-for-regular-people'
+" Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-ruby/vim-ruby'
@@ -32,11 +32,10 @@ Plug 'tpope/vim-dispatch'
 Plug 'jgdavey/tslime.vim'
 
 " Syntax
+Plug 'claco/jasmine.vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'groenewege/vim-less'
 Plug 'guns/vim-clojure-static'
-Plug 'heartsentwined/vim-ember-script'
-Plug 'heartsentwined/vim-emblem'
 Plug 'kchmck/vim-coffee-script'
 Plug 'leafgarland/typescript-vim'
 Plug 'mtscout6/vim-cjsx'
@@ -46,6 +45,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
+Plug 'amdt/vim-niji'
 
 " Syntaxhighlight tweaking
 " Plug 'lilydjwg/colorizer'
@@ -206,7 +206,7 @@ map <leader>f :CtrlP<cr>
 map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
-" map <leader>p :call SyntaxAttr()<CR>
+map <leader>p :call SyntaxAttr()<CR>
 map <leader>q :bd<CR>
 map <leader>r :!rspec<cr>
 map <leader>t :call RunCurrentTest()<CR>
@@ -250,6 +250,13 @@ if has("autocmd")
   " mark Jekyll YAML frontmatter as comment
   au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
 
+  " Make sure js.coffee and js.cjsx is jasmine
+  autocmd BufNewFile,BufRead,BufWritePost *[Ss]pec.js.coffee, set filetype=jasmine.coffee syntax=jasmine.coffee
+  autocmd BufNewFile,BufRead,BufWritePost *test.js.coffee, set filetype=jasmine.coffee syntax=jasmine.coffee
+  autocmd BufNewFile,BufRead,BufWritePost *test.js.cjsx, set filetype=jasmine.coffee syntax=jasmine.coffee
+  autocmd BufNewFile,BufRead,BufWritePost *test.cjsx, set filetype=jasmine.coffee syntax=jasmine.coffee
+  autocmd BufNewFile,BufRead,BufWritePost *test.coffee, set filetype=jasmine.coffee syntax=jasmine.coffee
+
   " Treat ERB as ruby erb file
   au BufRead,BufNewFile *.skim set filetype=slim
   au BufRead,BufNewFile *.slim set filetype=slim
@@ -292,13 +299,21 @@ function! RenameFile()
 endfunction
 
 function! RunCurrentTest()
-  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_spec.js.coffee\)$') != -1
+  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_spec.js.coffee\|test.js.cjsx\|test.js.coffee\|test.coffee\|test.cjsx\|test.js\)$') != -1
 
   if in_test_file
     call SetTestFile()
 
     if match(expand('%'), '\.feature$') != -1
       call SetTestRunner("!cucumber")
+    elseif match(expand('%'), 'test\.js\.coffee$') != -1
+      call SetTestRunner("!npm test")
+    elseif match(expand('%'), 'test\.js\.cjsx$') != -1
+      call SetTestRunner("!npm test")
+    elseif match(expand('%'), 'test\.coffee$') != -1
+      call SetTestRunner("!npm test")
+    elseif match(expand('%'), 'test\.cjsx$') != -1
+      call SetTestRunner("!npm test")
     elseif match(expand('%'), '_spec\.rb$') != -1
       call SetTestRunner("!bin/rspec")
     elseif match(expand('%'), '_spec\.js\.coffee$') != -1
@@ -309,10 +324,8 @@ function! RunCurrentTest()
   endif
 
   exec "w " g:bjo_test_file
-  " let a:command = g:bjo_test_runner . " " . g:bjo_test_file . "\n"
-  " exec "!" a:command
-  " call Send_to_Tmux(a:command)
   exec g:bjo_test_runner g:bjo_test_file
+  " exec g:bjo_test_runner
 endfunction
 
 function! SetTestRunner(runner)
@@ -336,16 +349,4 @@ endfunction
 function! SetTestFileWithLine()
   let g:bjo_test_file=@%
   let g:bjo_test_file_line=line(".")
-endfunction
-
-function! CorrectTestRunner()
-  if match(expand('%'), '\.feature$') != -1
-    return "cucumber"
-  elseif match(expand('%'), '_spec\.rb$') != -1
-    return "rspec"
-  elseif match(expand('%'), '_spec\.js\.coffee$') != -1
-    return "js"
-  else
-    return "ruby"
-  endif
 endfunction
