@@ -23,6 +23,7 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-fireplace'
 " Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -129,7 +130,6 @@ set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 set eol
 
 map Q <Nop>
-map K <Nop>
 
 " clear the search buffer when hitting return
 nnoremap <silent> <CR> :nohlsearch<cr>
@@ -168,6 +168,13 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+function! Weasel_Piggieback()
+  :Eval (require 'weasel.repl.websocket)
+  :Piggieback (weasel.repl.websocket/repl-env :ip "0.0.0.0" :port 9001)
+endfunction
+
+command! Wiggie :call Weasel_Piggieback()
+
 " ========================================================================
 "  Mappings
 " ========================================================================
@@ -176,7 +183,7 @@ let mapleader=","
 
 nnoremap <leader><leader> <c-^>
 
-nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+" nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 map <leader>.c :CtrlP app/controllers<cr>
 map <leader>.h :CtrlP app/helpers<cr>

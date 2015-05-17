@@ -54,6 +54,7 @@
   "m" 'smex
   "F" 'find-file
   "k" 'kill-buffer
+  "t" 'cider-eval-buffer
   "v" 'open-emacs-config)
 
 ;; esc quits
@@ -84,13 +85,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map (kbd "C-n") 'next-error)
 (define-key evil-normal-state-map (kbd "C-p") 'previous-error)
 
-;; emacs org mode
-(require 'evil-org)
-(defun disable-linenumbers ()
-    (linum-mode -1))
-(add-hook 'org-mode-hook 'disable-linenumbers)
-(add-hook 'org-mode-hook 'visual-line-mode)
-
+;; Set offset used by < and > to 2
 (setq evil-shift-width 2)
 
 ;; Easy window management

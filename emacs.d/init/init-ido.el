@@ -7,6 +7,3 @@
 (setq ido-use-faces nil)
 (setq ido-ignore-buffers
       '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
-
-;; Ido vertical
-(ido-vertical-mode 1)

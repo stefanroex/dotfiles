@@ -72,8 +72,8 @@ highlight jsStorageClass            guifg=#DA4939 ctermfg=167
 highlight jsThis                    guifg=#D0D0FF ctermfg=189
 
 " Jasmine
-highlight specMatcher               guifg=#E6E1DC guibg=#111111
-highlight specFunctions             guifg=#E6E1DC guibg=#111111
+highlight specMatcher               guifg=#FFC66D ctermfg=221
+highlight specFunctions             guifg=#FFC66D ctermfg=221
 
 " XML / JSX
 highlight xmlTag                    guifg=#E8BF6A ctermfg=179

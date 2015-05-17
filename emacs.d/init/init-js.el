@@ -22,8 +22,8 @@
 (add-hook 'coffee-mode-hook 'subword-mode)
 (add-hook 'coffee-mode-hook 'highlight-indentation-current-column-mode)
 (add-hook 'coffee-mode-hook
-  (function (lambda ()
-          (setq evil-shift-width js-indent-level))))
+          (function (lambda ()
+                      (setq evil-shift-width js-indent-level))))
 
 ;; JSX
 (add-to-list 'auto-mode-alist '("\\.module.js.jsx$" . jsx-mode))
@@ -31,8 +31,8 @@
 
 (add-hook 'jsx-mode-hook 'subword-mode)
 (add-hook 'jsx-mode-hook
-  (function (lambda ()
-          (setq evil-shift-width js-indent-level))))
+          (function (lambda ()
+                      (setq evil-shift-width js-indent-level))))
 
 (custom-set-variables
  '(jsx-indent-level 2))

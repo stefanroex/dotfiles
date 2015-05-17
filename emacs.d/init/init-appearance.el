@@ -1,7 +1,7 @@
 (provide 'init-appearance)
 
 ;; Font
-(set-default-font "Inconsolata 16")
+(set-default-font "Inconsolata 18")
 (setq-default line-spacing 4)
 
 ;; Theme
