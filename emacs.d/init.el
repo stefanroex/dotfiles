@@ -1,17 +1,5 @@
-;;; init.el  --- My own init file
-
-;;; Commentary:
-
-;; Custom emacs config. Uses use-package and evil.
-
-;;; Code:
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-
-(setenv "PATH" (concat (getenv "HOME") "/.rbenv/shims:" (getenv "HOME") "/.rbenv/bin:" (getenv "PATH")))
-(setq exec-path (cons (concat (getenv "HOME") "/.rbenv/shims") (cons (concat (getenv "HOME") "/.rbenv/bin") exec-path)))
-
 (package-initialize)
 
 ;; use-package
@@ -44,13 +32,27 @@
 (global-set-key (kbd "s-}") 'elscreen-next)
 (global-set-key (kbd "s-{") 'elscreen-previous)
 
+;; Encoding
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
+
+;; reduce the frequency of garbage collection by making it happen on
+;; each 50MB of allocated data (the default is on every 0.76MB)
+(setq gc-cons-threshold 50000000)
+
+;; warn when opening files bigger than 100MB
+(setq large-file-warning-threshold 100000000)
+
 ;; Environment fixup
 (use-package exec-path-from-shell
   :ensure t
-  :if (and (eq system-type 'darwin) (display-graphic-p))
-  :config
+  :init
   (progn
-    (exec-path-from-shell-initialize)))
+    ;; (setq shell-file-name "bash")
+    (exec-path-from-shell-initialize)
+    (setq shell-command-switch "-ic")))
 
 ;; UI
 (use-package init-custom
@@ -69,7 +71,7 @@
   :config
   (setq ido-use-faces nil
         ido-enable-flex-matching t
-        ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*")))
+        ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*")))
 
 (use-package ido-vertical-mode
   :ensure t
@@ -85,13 +87,6 @@
   :config
   (setq flx-ido-threshhold 1000
         flx-ido-mode 1))
-
-;; Smex support
-(use-package smex
-  :ensure t
-  :defer t
-  :init (smex-initialize)
-  :bind ("M-x" . smex))
 
 (use-package evil
   :ensure t
@@ -178,24 +173,28 @@
 
     (evil-leader/set-leader ",")
 
+    (evil-leader/set-key-for-mode 'emacs-lisp-mode "e" 'eval-last-sexp)
+
     (evil-leader/set-key
       "," 'my-switch-to-other-buffer
+      "F" 'find-file
+      "b" 'switch-to-buffer
+      "k" 'kill-buffer
+      "m" 'smex
+      "n" 'multi-term
+      "q" 'kill-buffer-and-window
+      "w" 'quit-window
       "x" 'next-code-buffer
       "z" 'previous-code-buffer
-      "b" 'switch-to-buffer
-      "w" 'quit-window
-      "q" 'kill-buffer-and-window
-      "m" 'smex
-      "F" 'find-file
-      "k" 'kill-buffer
       "v" 'open-emacs-config)))
 
 (use-package projectile
   :ensure t
   :diminish projectile-mode
-  :init (projectile-global-mode)
   :config
   (progn
+    (setq projectile-enable-caching t)
+    (projectile-global-mode)
     (defun find-file-projectile-or-dir ()
       (interactive)
       (if (projectile-project-p)
@@ -222,14 +221,23 @@
   :diminish auto-complete-mode
   :config
   (progn
-    (global-auto-complete-mode 1)
-    (ac-config-default)
-    (setq ac-sources '(ac-source-words-in-buffer
-                       ac-source-semantic
-                       ac-source-yasnippet
-                       ac-source-abbrev))
-    (setq ac-delay 0.1)
-    (setq ac-disable-faces nil)))
+    (require 'auto-complete-config)
+    (setq ac-use-fuzzy t
+          ac-auto-start t
+          ac-use-quick-help nil
+          ac-delay 0.1
+          ac-ignore-case t)
+    (set-default 'ac-sources
+                 '(ac-source-imenu
+                   ac-source-dictionary
+                   ac-source-words-in-buffer
+                   ac-source-words-in-same-mode-buffers
+                   ac-source-words-in-all-buffer))
+    ;; (setq ac-sources '(ac-source-words-in-buffer
+    ;;                    ac-source-semantic
+    ;;                    ac-source-yasnippet
+    ;;                    ac-source-abbrev))
+    (global-auto-complete-mode 1)))
 
 (use-package magit
   :ensure t
@@ -237,6 +245,9 @@
   :diminish magit-auto-revert-mode
   :init
   (setq magit-last-seen-setup-instructions "1.4.0"))
+
+(use-package git-blame
+  :ensure t)
 
 (use-package move-text
   :ensure t
@@ -252,11 +263,13 @@
   :init
   (evil-leader/set-key "a" 'project-explorer-toggle)
   :config
-  (evil-declare-key 'normal project-explorer-mode-map
-    (kbd "o") 'pe/return
-    (kbd "r") 'pe/rename-file
-    (kbd "d") 'pe/delete-file
-    (kbd "RET") 'pe/return))
+  (progn
+    (setq pe/omit-gitignore t)
+    (evil-declare-key 'normal project-explorer-mode-map
+      (kbd "o") 'pe/return
+      (kbd "r") 'pe/rename-file
+      (kbd "d") 'pe/delete-file
+      (kbd "RET") 'pe/return)))
 
 (use-package paredit
   :ensure t
@@ -297,7 +310,10 @@
 
 (use-package clojure-mode
   :ensure t
-  :defer t)
+  :defer t
+  :config
+  (evil-leader/set-key-for-mode 'clojure-mode
+    "c" 'cider-jack-in))
 
 (use-package clojure-mode-extra-font-locking
   :ensure t
@@ -332,33 +348,38 @@
 (use-package flycheck
   :ensure t
   :config
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+  (progn
+    (add-hook 'after-init-hook #'global-flycheck-mode)
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))))
 
 (use-package coffee-mode
   :ensure t)
 
-(use-package enh-ruby-mode
-  :ensure t
-  :mode (("\\(Rake\\|Thor\\|Guard\\|Gem\\|Cap\\|Vagrant\\|Berks\\|Pod\\|Puppet\\)file\\'" . enh-ruby-mode)
-         ("\\.\\(rb\\|rabl\\|ru\\|builder\\|rake\\|thor\\|gemspec\\|jbuilder\\)\\'" . enh-ruby-mode)))
+;; (use-package rspec-mode
+;;   :ensure t
+;;   :config
+;;   (progn
+;;     (add-hook 'ruby-mode-hook 'rspec-mode)
 
-(use-package rspec-mode
-  :ensure t
+;;     (setq rspec-use-bundler-when-possible nil
+;;           rspec-use-rake-when-possible nil
+;;           rspec-spec-command "./bin/rspec")
+
+;;     (rspec-install-snippets)
+
+;;     (evil-leader/set-key
+;;       "t" 'rspec-verify
+;;       "T" 'rspec-verify-single)))
+
+(use-package ruby-test-mode
+  :defer t
+  :init
+  (add-hook 'ruby-mode-hook 'ruby-test-mode)
   :config
   (progn
-
-    (add-hook 'ruby-mode-hook 'rspec-mode)
-
-    (setq rspec-use-rake-when-possible nil
-          rspec-spec-command "bin/rspec"
-          rspec-use-bundler-when-possible nil
-          rspec-use-spring-when-possible t)
-
-    (rspec-install-snippets)
-
-    (evil-leader/set-key
-      "t" 'rspec-verify
-      "T" 'rspec-verify-single)))
+    (evil-leader/set-key 'ruby-mode
+      "t" 'ruby-test-run
+      "T" 'ruby-test-run-at-point)))
 
 (use-package elscreen
   :ensure t
@@ -371,10 +392,67 @@
     (global-set-key (kbd "s-{") 'elscreen-previous)))
 
 (use-package multi-term
+  :ensure t
+  :config
+  (progn
+    (setq system-uses-terminfo nil)))
+
+
+(use-package smex
   :ensure t)
 
-(setq system-uses-terminfo nil)
+(use-package ace-jump-mode
+  :ensure t
+  :config
+  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode))
+
+(use-package cider
+  :ensure t
+  :config
+  (progn
+    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+    (add-hook 'cider-repl-mode-hook 'paredit-mode)
+
+    (defun cider-save-and-eval ()
+      (interactive)
+      (save-buffer)
+      (cider-eval-buffer))
+
+    ;; should be cider-mode, doesn't work
+    (evil-leader/set-key-for-mode 'clojure-mode
+      "E" 'cider-eval-last-sexp
+      "T" 'cider-test-run-test
+      "d" 'cider-doc
+      "e" 'cider-save-and-eval
+      "t" 'cider-test-run-tests)
+
+    (setq cider-repl-pop-to-buffer-on-connect t
+          cider-show-error-buffer t
+          cider-auto-select-error-buffer t
+          cider-repl-history-file "~/.emacs.d/cider-history"
+          cider-repl-wrap-history t)))
+
+(defun which-active-modes ()
+  "Give a message of which minor modes are enabled in the current buffer."
+  (interactive)
+  (let ((active-modes))
+    (mapc (lambda (mode) (condition-case nil
+                             (if (and (symbolp mode) (symbol-value mode))
+                                 (add-to-list 'active-modes mode))
+                           (error nil) ))
+          minor-mode-list)
+    (message "Active modes are %s" active-modes)))
+
+(use-package ac-cider
+  :ensure t
+  :config
+  (progn
+    (add-hook 'cider-mode-hook 'ac-flyspell-workaround)
+    (add-hook 'cider-mode-hook 'ac-cider-setup)
+    (add-hook 'cider-repl-mode-hook 'ac-cider-setup)
+    (eval-after-load "auto-complete"
+      '(progn
+         (add-to-list 'ac-modes 'cider-mode)
+         (add-to-list 'ac-modes 'cider-repl-mode)))))
 
 (provide 'init)
-
-;;; init.el ends here

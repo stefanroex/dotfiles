@@ -1,9 +1,12 @@
-;; Scroll in less larger steps
-;; (setq scroll-margin 5
-;;     scroll-step 5)
-
 ;; Show Linenumbers
-;; (global-linum-mode 1)
+;; (global-linum-mode t)
+
+;; Dont show linenumbers in terminal
+;; (add-hook 'term-mode-hook (lambda () (linum-mode -1)))
+
+;; Show column and linum in mode-line
+(line-number-mode 1)
+(column-number-mode 1)
 
 ;; Nowrap
 ;; (setq-default truncate-lines t)
@@ -74,5 +77,14 @@
 (defadvice previous-buffer (after avoid-messages-buffer-in-next-buffer)
 (when (string= "*Messages*" (buffer-name))
     (previous-buffer)))
+
+;; Depending on the files opened and the syntax highlighting enabled, font-lock-mode can be slow, we try to limit that, to keep Emacs reactive.
+(setq font-lock-maximum-decoration 2)
+
+(setq-default indicate-buffer-boundaries 'left)
+(setq-default indicate-empty-lines +1)
+
+;; Automaticaly add newline at and of document
+(setq require-final-newline t)
 
 (provide 'init-custom)
