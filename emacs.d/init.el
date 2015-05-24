@@ -12,9 +12,13 @@
 (require 'bind-key)
 (require 'diminish)
 
-(use-package base16-theme
-  :ensure t
-  :init (load-theme 'base16-tomorrow-dark t))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'load-path "~/.emacs.d/themes")
+(load-theme 'tomorrow-night-bright t)
+(load-theme 'solarized-light t)
+
+(use-package solarized-theme
+  :ensure t)
 
 ;; Font
 (set-frame-font "Inconsolata 18")
@@ -94,26 +98,29 @@
   :config
   (progn
     ;; Map ; to : for easier ex access
-    (define-key evil-normal-state-map (kbd ";") 'evil-ex)
-    (define-key evil-visual-state-map (kbd ";") 'evil-ex)
-    (define-key evil-motion-state-map (kbd ";") 'evil-ex)
+    (define-key evil-normal-state-map (kbd ";") 'smex)
 
     ;; esc quits
     (setq evil-intercept-esc 'always)
     (defun minibuffer-keyboard-quit ()
       (interactive)
       (if (and delete-selection-mode transient-mark-mode mark-active)
-          (setq deactivate-mark  t)
+          (setq deactivate-mark t)
         (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
         (abort-recursive-edit)))
-    (define-key evil-normal-state-map [escape] 'keyboard-quit)
-    (define-key evil-visual-state-map [escape] 'keyboard-quit)
+
+    ;; Dont' ring bell when we quit minibuffer
+    (setq ring-bell-function 
+          (lambda ()
+            (unless (memq this-command
+                          '(keyboard-quit minibuffer-keyboard-quit))
+              (ding))))
+
     (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
     (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
     (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
     (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
     (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
-    (global-set-key [escape] 'evil-exit-emacs-state)
 
     ;; Next and previous search results
     (define-key evil-normal-state-map (kbd "C-n") 'next-error)
@@ -180,7 +187,6 @@
       "F" 'find-file
       "b" 'switch-to-buffer
       "k" 'kill-buffer
-      "m" 'smex
       "n" 'multi-term
       "q" 'kill-buffer-and-window
       "w" 'quit-window
@@ -244,7 +250,10 @@
   :defer t
   :diminish magit-auto-revert-mode
   :init
-  (setq magit-last-seen-setup-instructions "1.4.0"))
+  (progn
+    (setq magit-last-seen-setup-instructions "1.4.0")
+    (evil-leader/set-key
+      "g" 'magit-status)))
 
 (use-package git-blame
   :ensure t)
