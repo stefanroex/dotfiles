@@ -16,6 +16,7 @@ Plug 'ervandew/supertab'
 Plug 'kien/ctrlp.vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'skalnik/vim-vroom'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
@@ -151,6 +152,10 @@ set ttymouse=xterm2
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 
+" Vroom
+let g:vroom_use_binstubs = 1
+let g:vroom_map_keys = 0
+
 " ========================================================================
 "  Mappings
 " ========================================================================
@@ -159,13 +164,10 @@ let mapleader=","
 
 nnoremap <leader><leader> <c-^>
 
-" nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
-
 map <leader>A :NERDTreeFind<cr>
 map <leader>F :CtrlP %%<cr>
 map <leader>O :! open %%<cr><cr>
-map <leader>T :call RunCurrentLineInTest()<CR>
-map <leader>W :KillWhitespace<CR>
+map <leader>T :VroomRunNearestTest<cr>
 map <leader>a :NERDTreeToggle<cr>
 map <leader>b :Gblame<cr>
 map <leader>cc :TComment<cr>
@@ -175,8 +177,7 @@ map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
 map <leader>q :bd<CR>
-map <leader>r :!rspec<cr>
-map <leader>t :call RunCurrentTest()<CR>
+map <leader>t :VroomRunTestFile<cr>
 map <leader>v :tabe $MYVIMRC<CR>
 map <leader>w :bp<CR>:bd#<CR>
 map <leader>x :bn<CR>
@@ -204,9 +205,6 @@ if has("autocmd")
   " see :help last-position-jump
   au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g`\"" | endif
-
-  " mark Jekyll YAML frontmatter as comment
-  au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
 
   " Make sure js.coffee and js.cjsx is jasmine
   au BufNewFile,BufRead,BufWritePost *[Ss]pec.js.coffee, set filetype=jasmine.coffee
@@ -243,57 +241,4 @@ function! RenameFile()
         exec ':silent !rm ' . old_name
         redraw!
     endif
-endfunction
-
-function! RunCurrentTest()
-  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_spec.js.coffee\|test.js.cjsx\|test.js.coffee\|test.coffee\|test.cjsx\|test.js\)$') != -1
-
-  if in_test_file
-    call SetTestFile()
-
-    if match(expand('%'), '\.feature$') != -1
-      call SetTestRunner("!cucumber")
-    elseif match(expand('%'), 'test\.js\.coffee$') != -1
-      call SetTestRunner("!npm test")
-    elseif match(expand('%'), 'test\.js\.cjsx$') != -1
-      call SetTestRunner("!npm test")
-    elseif match(expand('%'), 'test\.coffee$') != -1
-      call SetTestRunner("!npm test")
-    elseif match(expand('%'), 'test\.cjsx$') != -1
-      call SetTestRunner("!npm test")
-    elseif match(expand('%'), '_spec\.rb$') != -1
-      call SetTestRunner("!bin/rspec")
-    elseif match(expand('%'), '_spec\.js\.coffee$') != -1
-      call SetTestRunner("!bin/teaspoon")
-    else
-      call SetTestRunner("!ruby -Itest")
-    endif
-  endif
-
-  exec "w " g:bjo_test_file
-  exec g:bjo_test_runner g:bjo_test_file
-  " exec g:bjo_test_runner
-endfunction
-
-function! SetTestRunner(runner)
-  let g:bjo_test_runner=a:runner
-endfunction
-
-function! RunCurrentLineInTest()
-  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
-  if in_test_file
-    call SetTestFileWithLine()
-  end
-
-  exec "w " g:bjo_test_file
-  exec "!rspec" g:bjo_test_file . ":" . g:bjo_test_file_line
-endfunction
-
-function! SetTestFile()
-  let g:bjo_test_file=@%
-endfunction
-
-function! SetTestFileWithLine()
-  let g:bjo_test_file=@%
-  let g:bjo_test_file_line=line(".")
 endfunction
