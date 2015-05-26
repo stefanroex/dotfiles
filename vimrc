@@ -13,10 +13,10 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dockyard/vim-easydir'
 Plug 'ervandew/supertab'
+Plug 'janko-m/vim-test'
 Plug 'kien/ctrlp.vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'skalnik/vim-vroom'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
@@ -152,10 +152,6 @@ set ttymouse=xterm2
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 
-" Vroom
-let g:vroom_use_binstubs = 1
-let g:vroom_map_keys = 0
-
 " ========================================================================
 "  Mappings
 " ========================================================================
@@ -167,7 +163,7 @@ nnoremap <leader><leader> <c-^>
 map <leader>A :NERDTreeFind<cr>
 map <leader>F :CtrlP %%<cr>
 map <leader>O :! open %%<cr><cr>
-map <leader>T :VroomRunNearestTest<cr>
+map <leader>T :TestNearest<cr>
 map <leader>a :NERDTreeToggle<cr>
 map <leader>b :Gblame<cr>
 map <leader>cc :TComment<cr>
@@ -177,7 +173,7 @@ map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
 map <leader>q :bd<CR>
-map <leader>t :VroomRunTestFile<cr>
+map <leader>t :TestFile<cr>
 map <leader>v :tabe $MYVIMRC<CR>
 map <leader>w :bp<CR>:bd#<CR>
 map <leader>x :bn<CR>
@@ -198,17 +194,18 @@ nmap <Space><Space> <Plug>(easymotion-s)
 " ========================================================================
 
 if has("autocmd")
-  " Treat JSON files like JavaScript
-  au BufNewFile,BufRead *.json set ft=javascript
 
   " Remember last location in file, but not for commit messages.
   " see :help last-position-jump
   au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g`\"" | endif
+        \| exe "normal! g`\"" | endif
 
   " Make sure js.coffee and js.cjsx is jasmine
-  au BufNewFile,BufRead,BufWritePost *[Ss]pec.js.coffee, set filetype=jasmine.coffee
-  au BufNewFile,BufRead,BufWritePost *test.{js.coffee,js.cjsx,cjsx,coffee}, set filetype=jasmine.coffee
+  au BufRead,BufNewFile *[Ss]pec.js.coffee, set filetype=jasmine.coffee
+  au BufRead,BufNewFile *test.{js.coffee,js.cjsx,cjsx,coffee}, set filetype=jasmine.coffee
+
+  " Treat JSON files like JavaScript
+  au BufRead,BufNewFile *.json set ft=javascript
 
   " Treat ERB as ruby erb file
   au BufRead,BufNewFile *.{skim,slim} set filetype=slim
@@ -231,14 +228,14 @@ endif
 function! TrimWhiteSpace()
   %s/\s*$//
   ''
-:endfunction
+endfunction
 
 function! RenameFile()
-    let old_name = expand('%')
-    let new_name = input('New file name: ', expand('%'), 'file')
-    if new_name != '' && new_name != old_name
-        exec ':saveas ' . new_name
-        exec ':silent !rm ' . old_name
-        redraw!
-    endif
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'), 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
 endfunction

@@ -30,12 +30,9 @@ zstyle ':prezto:load' pmodule \
   'history' \
   'directory' \
   'spectrum' \
-  'utility' \
   'completion' \
   'osx' \
   'rsync' \
-  'rails' \
-  'ruby' \
   'git' \
   'node' \
   'history-substring-search' \

@@ -33,10 +33,10 @@
 (global-set-key (kbd "s-{") 'elscreen-previous)
 
 ;; Encoding
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-language-environment "UTF-8")
-(prefer-coding-system 'utf-8)
+;; (set-terminal-coding-system 'utf-8)
+;; (set-keyboard-coding-system 'utf-8)
+;; (set-language-environment "UTF-8")
+;; (prefer-coding-system 'utf-8)
 
 ;; reduce the frequency of garbage collection by making it happen on
 ;; each 50MB of allocated data (the default is on every 0.76MB)
@@ -50,10 +50,9 @@
   :ensure t
   :init
   (progn
-    ;; (setq shell-file-name "bash")
-    (exec-path-from-shell-initialize)
-    ;; (setq shell-command-switch "-ic")
-    ))
+    (exec-path-from-shell-initialize)))
+
+;; (setq shell-command-switch "-ic")
 
 ;; UI
 (use-package init-custom
@@ -217,26 +216,26 @@
   :init
   (show-paren-mode -1))
 
-(use-package auto-complete
-  :ensure t
-  :diminish auto-complete-mode
-  :config
-  (progn
-    (require 'auto-complete-config)
-    (setq ac-use-fuzzy t
-          ac-auto-start t
-          ac-use-quick-help nil
-          ac-ignore-case t)
-    (set-default 'ac-sources
-                 '(ac-source-words-in-buffer
-                   ac-source-words-in-same-mode-buffers
-                   ac-source-dictionary))
+;; (use-package auto-complete
+;;   :ensure t
+;;   :diminish auto-complete-mode
+;;   :config
+;;   (progn
+;;     (require 'auto-complete-config)
+;;     (setq ac-use-fuzzy t
+;;           ac-auto-start t
+;;           ac-use-quick-help nil
+;;           ac-ignore-case t)
+;;     (set-default 'ac-sources
+;;                  '(ac-source-words-in-buffer
+;;                    ac-source-words-in-same-mode-buffers
+;;                    ac-source-dictionary))
 
-    ;; (setq ac-sources '(ac-source-words-in-buffer
-    ;;                    ac-source-semantic
-    ;;                    ac-source-yasnippet
-    ;;                    ac-source-abbrev))
-    (global-auto-complete-mode 1)))
+;;     ;; (setq ac-sources '(ac-source-words-in-buffer
+;;     ;;                    ac-source-semantic
+;;     ;;                    ac-source-yasnippet
+;;     ;;                    ac-source-abbrev))
+;;     (global-auto-complete-mode 1)))
 
 (use-package magit
   :ensure t
@@ -510,6 +509,16 @@
   :ensure t)
 
 (use-package slim-mode
+  :ensure t)
+
+(use-package guide-key
+  :ensure t
+  :config
+  (progn
+    (guide-key-mode t)
+    (setq guide-key/guide-key-sequence '("," ",-c"))))
+
+(use-package evil-iedit-state
   :ensure t)
 
 (provide 'init)
