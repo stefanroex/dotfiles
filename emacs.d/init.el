@@ -13,12 +13,8 @@
 (require 'diminish)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes")
-(load-theme 'tomorrow-night-bright t)
-(load-theme 'solarized-light t)
-
-(use-package solarized-theme
-  :ensure t)
+;; (add-to-list 'load-path "~/.emacs.d/themes")
+(load-theme 'zenburn t)
 
 ;; Font
 (set-frame-font "Inconsolata 18")
@@ -56,7 +52,8 @@
   (progn
     ;; (setq shell-file-name "bash")
     (exec-path-from-shell-initialize)
-    (setq shell-command-switch "-ic")))
+    ;; (setq shell-command-switch "-ic")
+    ))
 
 ;; UI
 (use-package init-custom
@@ -97,9 +94,6 @@
   :init (evil-mode t)
   :config
   (progn
-    ;; Map ; to : for easier ex access
-    (define-key evil-normal-state-map (kbd ";") 'smex)
-
     ;; esc quits
     (setq evil-intercept-esc 'always)
     (defun minibuffer-keyboard-quit ()
@@ -110,7 +104,7 @@
         (abort-recursive-edit)))
 
     ;; Dont' ring bell when we quit minibuffer
-    (setq ring-bell-function 
+    (setq ring-bell-function
           (lambda ()
             (unless (memq this-command
                           '(keyboard-quit minibuffer-keyboard-quit))
@@ -199,7 +193,6 @@
   :diminish projectile-mode
   :config
   (progn
-    (setq projectile-enable-caching t)
     (projectile-global-mode)
     (defun find-file-projectile-or-dir ()
       (interactive)
@@ -220,7 +213,9 @@
   (evil-ex-define-cmd "Ag" 'ag))
 
 (use-package better-defaults
-  :ensure t)
+  :ensure t
+  :init
+  (show-paren-mode -1))
 
 (use-package auto-complete
   :ensure t
@@ -231,14 +226,12 @@
     (setq ac-use-fuzzy t
           ac-auto-start t
           ac-use-quick-help nil
-          ac-delay 0.1
           ac-ignore-case t)
     (set-default 'ac-sources
-                 '(ac-source-imenu
-                   ac-source-dictionary
-                   ac-source-words-in-buffer
+                 '(ac-source-words-in-buffer
                    ac-source-words-in-same-mode-buffers
-                   ac-source-words-in-all-buffer))
+                   ac-source-dictionary))
+
     ;; (setq ac-sources '(ac-source-words-in-buffer
     ;;                    ac-source-semantic
     ;;                    ac-source-yasnippet
@@ -252,6 +245,26 @@
   :init
   (progn
     (setq magit-last-seen-setup-instructions "1.4.0")
+    (evil-add-hjkl-bindings magit-commit-mode-map 'emacs)
+    (evil-add-hjkl-bindings magit-log-mode-map 'emacs)
+    (evil-add-hjkl-bindings magit-process-mode-map 'emacs)
+    (evil-add-hjkl-bindings magit-status-mode-map 'emacs)
+
+    ;; fullscreen magit
+    (defadvice magit-status (around magit-fullscreen activate)
+      (window-configuration-to-register :magit-fullscreen)
+      ad-do-it
+      (delete-other-windows))
+
+    ;; Better quit. See: https://github.com/syl20bnr/spacemacs/blob/b17e259cfe6c381a8ec57a754118e2a092721a7e/spacemacs/packages.el
+    (defun magit-quit-session ()
+      "Restores the previous window configuration and kills the magit buffer"
+      (interactive)
+      (kill-buffer)
+      (jump-to-register :magit-fullscreen))
+
+    ;; (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+
     (evil-leader/set-key
       "g" 'magit-status)))
 
@@ -296,8 +309,8 @@
 (use-package evil-paredit
   :defer t
   :ensure t
-  :config
-  (after 'evil
+  :init
+  (progn
     (add-hook 'macs-lisp-mode-hook #'evil-paredit-mode)
     (add-hook 'cider-repl-mode-hook #'evil-paredit-mode)
     (add-hook 'clojure-mode-hook #'evil-paredit-mode)
@@ -354,41 +367,35 @@
 ;;   :defer t
 ;;   :diminish yas-minor-mode)
 
-(use-package flycheck
-  :ensure t
-  :config
-  (progn
-    (add-hook 'after-init-hook #'global-flycheck-mode)
-    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))))
-
-(use-package coffee-mode
-  :ensure t)
-
-;; (use-package rspec-mode
+;; (use-package flycheck
 ;;   :ensure t
 ;;   :config
 ;;   (progn
-;;     (add-hook 'ruby-mode-hook 'rspec-mode)
+;;     (add-hook 'after-init-hook #'global-flycheck-mode)
+;;     (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))))
 
-;;     (setq rspec-use-bundler-when-possible nil
-;;           rspec-use-rake-when-possible nil
-;;           rspec-spec-command "./bin/rspec")
-
-;;     (rspec-install-snippets)
-
-;;     (evil-leader/set-key
-;;       "t" 'rspec-verify
-;;       "T" 'rspec-verify-single)))
-
-(use-package ruby-test-mode
-  :defer t
-  :init
-  (add-hook 'ruby-mode-hook 'ruby-test-mode)
+(use-package coffee-mode
+  :ensure t
+  :mode (("\\.coffee\\'" . coffee-mode)
+         ("\\.cjsx" . coffee-mode))
   :config
   (progn
-    (evil-leader/set-key 'ruby-mode
-      "t" 'ruby-test-run
-      "T" 'ruby-test-run-at-point)))
+    (setq whitespace-action '(auto-cleanup))
+    (setq whitespace-style '(trailing
+                             space-before-tab
+                             indentation
+                             empty
+                             space-after-tab))
+    (custom-set-variables '(coffee-tab-width 2))))
+
+;; (use-package ruby-test-mode
+;;   :ensure t
+;;   :init
+;;   (add-hook 'ruby-mode-hook 'ruby-test-mode)
+;;   :config
+;;   (evil-leader/set-key 'ruby-mode
+;;     "t" 'ruby-test-run
+;;     "T" 'ruby-test-run-at-point))
 
 (use-package elscreen
   :ensure t
@@ -406,9 +413,12 @@
   (progn
     (setq system-uses-terminfo nil)))
 
-
 (use-package smex
-  :ensure t)
+  :ensure t
+  :config
+  (progn
+    (global-set-key ";" 'smex)
+    (define-key evil-normal-state-map ";" 'smex)))
 
 (use-package ace-jump-mode
   :ensure t
@@ -463,5 +473,43 @@
       '(progn
          (add-to-list 'ac-modes 'cider-mode)
          (add-to-list 'ac-modes 'cider-repl-mode)))))
+
+(use-package sass-mode
+  :ensure t)
+
+(use-package web-mode
+  :ensure t
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.css\\'" . web-mode)
+         ("\\.mustache\\'" . web-mode)
+         ("\\.erb\\'" . web-mode))
+  :init
+  (progn
+    (setq web-mode-content-types-alist
+          '(("jsx"  . "\\.js\\'")))
+    (add-hook 'web-mode-hook (lambda ()
+                               (set-fill-column 120)))))
+
+(use-package projectile-rails
+  :ensure t
+  :config
+  (progn
+    (add-hook 'projectile-mode-hook 'projectile-rails-on)))
+
+(use-package robe
+  :ensure t
+  :config
+  (progn
+    (add-hook 'ruby-mode-hook 'robe-mode)
+    (add-hook 'ruby-mode-hook 'ac-robe-setup)))
+
+(use-package rainbow-mode
+  :ensure t)
+
+(use-package enh-ruby-mode
+  :ensure t)
+
+(use-package slim-mode
+  :ensure t)
 
 (provide 'init)

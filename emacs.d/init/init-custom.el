@@ -9,11 +9,7 @@
 (column-number-mode 1)
 
 ;; Nowrap
-;; (setq-default truncate-lines t)
-
-;; start maximized
-(custom-set-variables
- '(initial-frame-alist (quote ((fullscreen . maximized)))))
+(setq-default truncate-lines t)
 
 ;; Prevent the cursor from blinking
 (blink-cursor-mode 0)
@@ -46,12 +42,6 @@
 ;; Turn down the time to echo keystrokes so I don't have to wait around for things to happen. Dialog boxes are also a bit annoying, so just have Emacs use the echo area for everything. Beeping is for robots, and I am not a robot.
 (setq echo-keystrokes 0.1
     use-dialog-box nil)
-
-;; Disable show params mode from better-defaults
-(show-paren-mode -1)
-
-;; display time
-(display-time-mode t)
 
 ;; use system clipboard
 (setq x-select-enable-clipboard t)

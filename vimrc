@@ -9,12 +9,11 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 " Plugins
-Plug 'SirVer/ultisnips'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'dockyard/vim-easydir'
 Plug 'ervandew/supertab'
-" Plug 'guns/vim-sexp'
 Plug 'kien/ctrlp.vim'
-Plug 'kien/rainbow_parentheses.vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
@@ -23,16 +22,12 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-fireplace'
-" Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'vim-ruby/vim-ruby'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-dispatch'
-Plug 'jgdavey/tslime.vim'
+Plug 'vim-scripts/gitignore'
 
 " Syntax
+Plug 'amdt/vim-niji'
 Plug 'claco/jasmine.vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'groenewege/vim-less'
@@ -46,7 +41,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
-Plug 'amdt/vim-niji'
+Plug 'vim-ruby/vim-ruby'
 
 " Syntaxhighlight tweaking
 " Plug 'lilydjwg/colorizer'
@@ -61,9 +56,7 @@ call plug#end()
 color sweam
 
 set noswapfile
-" set rnu
 set number
-" set cursorline
 set history=200
 set scrolloff=5
 set guioptions-=L
@@ -92,18 +85,12 @@ set incsearch
 set ignorecase
 set smartcase
 
-" Windows
-" set winwidth=84
-" set winheight=10
-" set winminheight=10
-" set winheight=999
-
 " Use Ack instead of grep
 set grepprg=ag
 let g:ackprg = 'ag --nogroup --column'
 
 " Able to 'gf' files
-set suffixesadd=.rb,.coffee,.js
+" set suffixesadd=.rb,.coffee,.js
 
 " (Hopefully) removes the delay when hitting esc in insert mode
 set ttimeout
@@ -148,13 +135,9 @@ map ; :
 
 command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
 
-let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:20,results:20'
 let g:ctrlp_use_caching = 0
+let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:20,results:20'
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](doc|tmp|node_modules|bower_components|vendor/assets)',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ }
 
 augroup myfiletypes
   autocmd!
@@ -164,16 +147,9 @@ augroup END
 set mouse=a
 set ttymouse=xterm2
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-function! Weasel_Piggieback()
-  :Eval (require 'weasel.repl.websocket)
-  :Piggieback (weasel.repl.websocket/repl-env :ip "0.0.0.0" :port 9001)
-endfunction
-
-command! Wiggie :call Weasel_Piggieback()
+" Easymotion
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_smartcase = 1
 
 " ========================================================================
 "  Mappings
@@ -185,21 +161,6 @@ nnoremap <leader><leader> <c-^>
 
 " nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
 
-map <leader>.c :CtrlP app/controllers<cr>
-map <leader>.h :CtrlP app/helpers<cr>
-map <leader>.j :CtrlP app/assets/javascripts<cr>
-map <leader>.k :CtrlP config<cr>
-map <leader>.l :CtrlP lib<cr>
-map <leader>.m :CtrlP app/models<cr>
-map <leader>.r :topleft :split config/routes.rb<cr>
-map <leader>.s :CtrlP app/assets/stylesheets<cr>
-map <leader>.t :CtrlP spec<cr>
-map <leader>.v :CtrlP app/views<cr>
-map <leader>/c :CtrlP app/assets/javascripts/views<cr>
-map <leader>/m :CtrlP app/assets/javascripts/models<cr>
-map <leader>/r :topleft :split app/assets/javascripts/router.js.coffee<cr>
-map <leader>/t :CtrlP app/assets/javascripts/templates<cr>
-map <leader>/v :CtrlP app/assets/javascripts/views<cr>
 map <leader>A :NERDTreeFind<cr>
 map <leader>F :CtrlP %%<cr>
 map <leader>O :! open %%<cr><cr>
@@ -213,14 +174,12 @@ map <leader>f :CtrlP<cr>
 map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
-map <leader>p :call SyntaxAttr()<CR>
 map <leader>q :bd<CR>
 map <leader>r :!rspec<cr>
 map <leader>t :call RunCurrentTest()<CR>
 map <leader>v :tabe $MYVIMRC<CR>
 map <leader>w :bp<CR>:bd#<CR>
 map <leader>x :bn<CR>
-map <leader>y :call <SID>SynStack()<CR>
 map <leader>z :bp<CR>
 
 nnoremap <c-j> <c-w>j
@@ -228,22 +187,14 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-imap <C-l> :<Space>
-map <C-s> <esc>:w<CR>
-imap <C-s> <esc>:w<CR>
-map <C-t> <esc>:tabnew<CR>
-map <C-x> <C-w>c
 map <C-n> :cn<CR>
 map <C-p> :cp<CR>
 
-" Emacs-like beginning and end of line.
-imap <c-e> <c-o>$
-imap <c-a> <c-o>^
+nmap <Space><Space> <Plug>(easymotion-s)
 
 " ========================================================================
 "  Autocmd
 " ========================================================================
-
 
 if has("autocmd")
   " Treat JSON files like JavaScript
@@ -258,25 +209,21 @@ if has("autocmd")
   au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
 
   " Make sure js.coffee and js.cjsx is jasmine
-  autocmd BufNewFile,BufRead,BufWritePost *[Ss]pec.js.coffee, set filetype=jasmine.coffee syntax=jasmine.coffee
-  autocmd BufNewFile,BufRead,BufWritePost *test.js.coffee, set filetype=jasmine.coffee syntax=jasmine.coffee
-  autocmd BufNewFile,BufRead,BufWritePost *test.js.cjsx, set filetype=jasmine.coffee syntax=jasmine.coffee
-  autocmd BufNewFile,BufRead,BufWritePost *test.cjsx, set filetype=jasmine.coffee syntax=jasmine.coffee
-  autocmd BufNewFile,BufRead,BufWritePost *test.coffee, set filetype=jasmine.coffee syntax=jasmine.coffee
+  au BufNewFile,BufRead,BufWritePost *[Ss]pec.js.coffee, set filetype=jasmine.coffee
+  au BufNewFile,BufRead,BufWritePost *test.{js.coffee,js.cjsx,cjsx,coffee}, set filetype=jasmine.coffee
 
   " Treat ERB as ruby erb file
-  au BufRead,BufNewFile *.skim set filetype=slim
-  au BufRead,BufNewFile *.slim set filetype=slim
+  au BufRead,BufNewFile *.{skim,slim} set filetype=slim
   au BufRead,BufNewFile *.erb set filetype=eruby.html
 
   " Trim whitespace
-  autocmd FileWritePre * :call TrimWhiteSpace()
-  autocmd FileAppendPre * :call TrimWhiteSpace()
-  autocmd FilterWritePre * :call TrimWhiteSpace()
-  autocmd BufWritePre * :call TrimWhiteSpace()
+  au FileWritePre,FileAppendPre,FilterWritePre,BufWritePre * :call TrimWhiteSpace()
 
   " Reload vimrc on save
-  au BufWritePost .vimrc source $MYVIMRC
+  augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+  augroup END " }
 endif
 
 " ========================================================================
@@ -287,13 +234,6 @@ function! TrimWhiteSpace()
   %s/\s*$//
   ''
 :endfunction
-
-function! SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
 
 function! RenameFile()
     let old_name = expand('%')
