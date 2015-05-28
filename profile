@@ -11,8 +11,8 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_HEAP_SLOTS_INCREMENT=1000000
 export POLTERGEIST_TIMEOUT=10
 
+export PATH="./bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
-export PATH="./bin:$PATH"

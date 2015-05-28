@@ -12,13 +12,12 @@
 (require 'bind-key)
 (require 'diminish)
 
+(set-face-attribute 'default nil :height 150)
+(setq-default line-spacing 4)
+
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 ;; (add-to-list 'load-path "~/.emacs.d/themes")
 (load-theme 'zenburn t)
-
-;; Font
-(set-frame-font "Inconsolata 18")
-(setq-default line-spacing 4)
 
 ;; Window switching similar in emacs mode
 (global-set-key (kbd "C-h") 'windmove-left)
@@ -33,10 +32,10 @@
 (global-set-key (kbd "s-{") 'elscreen-previous)
 
 ;; Encoding
-;; (set-terminal-coding-system 'utf-8)
-;; (set-keyboard-coding-system 'utf-8)
-;; (set-language-environment "UTF-8")
-;; (prefer-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
 
 ;; reduce the frequency of garbage collection by making it happen on
 ;; each 50MB of allocated data (the default is on every 0.76MB)
@@ -51,8 +50,6 @@
   :init
   (progn
     (exec-path-from-shell-initialize)))
-
-;; (setq shell-command-switch "-ic")
 
 ;; UI
 (use-package init-custom
@@ -87,54 +84,6 @@
   :config
   (setq flx-ido-threshhold 1000
         flx-ido-mode 1))
-
-(use-package evil
-  :ensure t
-  :init (evil-mode t)
-  :config
-  (progn
-    ;; esc quits
-    (setq evil-intercept-esc 'always)
-    (defun minibuffer-keyboard-quit ()
-      (interactive)
-      (if (and delete-selection-mode transient-mark-mode mark-active)
-          (setq deactivate-mark t)
-        (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
-        (abort-recursive-edit)))
-
-    ;; Dont' ring bell when we quit minibuffer
-    (setq ring-bell-function
-          (lambda ()
-            (unless (memq this-command
-                          '(keyboard-quit minibuffer-keyboard-quit))
-              (ding))))
-
-    (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
-    (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
-    (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
-    (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
-    (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
-
-    ;; Next and previous search results
-    (define-key evil-normal-state-map (kbd "C-n") 'next-error)
-    (define-key evil-normal-state-map (kbd "C-p") 'previous-error)
-
-    ;; Set offset used by < and > to 2
-    (setq evil-shift-width 2)
-
-    ;; Easy window management
-    (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-    (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-    (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-    (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
-
-    (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)
-    (evil-ex-define-cmd "Ag" 'ag)))
-
-(use-package evil-surround
-  :ensure t
-  :defer t
-  :init (global-evil-surround-mode t))
 
 (use-package evil-leader
   :ensure t
@@ -187,6 +136,54 @@
       "z" 'previous-code-buffer
       "v" 'open-emacs-config)))
 
+(use-package evil
+  :ensure t
+  :init (evil-mode t)
+  :config
+  (progn
+    ;; esc quits
+    (setq evil-intercept-esc 'always)
+    (defun minibuffer-keyboard-quit ()
+      (interactive)
+      (if (and delete-selection-mode transient-mark-mode mark-active)
+          (setq deactivate-mark t)
+        (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+        (abort-recursive-edit)))
+
+    ;; Dont' ring bell when we quit minibuffer
+    (setq ring-bell-function
+          (lambda ()
+            (unless (memq this-command
+                          '(keyboard-quit minibuffer-keyboard-quit))
+              (ding))))
+
+    (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+    (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+    (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+    (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+    (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+
+    ;; Next and previous search results
+    (define-key evil-normal-state-map (kbd "C-n") 'next-error)
+    (define-key evil-normal-state-map (kbd "C-p") 'previous-error)
+
+    ;; Set offset used by < and > to 2
+    (setq-default evil-shift-width 2)
+
+    ;; Easy window management
+    (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+    (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+    (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+    (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+
+    (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)
+    (evil-ex-define-cmd "Ag" 'ag)))
+
+(use-package evil-surround
+  :ensure t
+  :defer t
+  :init (global-evil-surround-mode t))
+
 (use-package projectile
   :ensure t
   :diminish projectile-mode
@@ -205,6 +202,27 @@
 
     (defvar projectile-rails-rspec '("Gemfile" "app" "config" "spec"))))
 
+(use-package rspec-mode
+  :ensure t
+  :config
+  (progn
+    (defadvice rspec-compile (around rspec-compile-around)
+      "Use BASH shell for running the specs because of ZSH issues."
+      (let ((shell-file-name "/bin/bash"))
+        ad-do-it))
+    (ad-activate 'rspec-compile)
+
+    (setq rspec-use-rake-when-possible nil
+          rspec-spec-command "./bin/rspec"
+          rspec-use-bundler-when-possible nil
+          rspec-use-spring-when-possible t)
+
+    (setq compilation-scroll-output t)
+
+    (evil-leader/set-key
+      "t" 'rspec-verify
+      "T" 'rspec-verify-single)))
+
 (use-package ag
   :ensure t
   :defer t
@@ -212,30 +230,22 @@
   (evil-ex-define-cmd "Ag" 'ag))
 
 (use-package better-defaults
+  :ensure t)
+
+(use-package company
   :ensure t
+  :defer t
   :init
-  (show-paren-mode -1))
+  (global-company-mode t)
+  :config
+  (progn
+    (setq company-idle-delay nil
+          company-minimum-prefix-length 2)
 
-;; (use-package auto-complete
-;;   :ensure t
-;;   :diminish auto-complete-mode
-;;   :config
-;;   (progn
-;;     (require 'auto-complete-config)
-;;     (setq ac-use-fuzzy t
-;;           ac-auto-start t
-;;           ac-use-quick-help nil
-;;           ac-ignore-case t)
-;;     (set-default 'ac-sources
-;;                  '(ac-source-words-in-buffer
-;;                    ac-source-words-in-same-mode-buffers
-;;                    ac-source-dictionary))
-
-;;     ;; (setq ac-sources '(ac-source-words-in-buffer
-;;     ;;                    ac-source-semantic
-;;     ;;                    ac-source-yasnippet
-;;     ;;                    ac-source-abbrev))
-;;     (global-auto-complete-mode 1)))
+    (define-key evil-insert-state-map (kbd "<tab>") 'company-complete)
+    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+    (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+    (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)))
 
 (use-package magit
   :ensure t
@@ -254,15 +264,6 @@
       (window-configuration-to-register :magit-fullscreen)
       ad-do-it
       (delete-other-windows))
-
-    ;; Better quit. See: https://github.com/syl20bnr/spacemacs/blob/b17e259cfe6c381a8ec57a754118e2a092721a7e/spacemacs/packages.el
-    (defun magit-quit-session ()
-      "Restores the previous window configuration and kills the magit buffer"
-      (interactive)
-      (kill-buffer)
-      (jump-to-register :magit-fullscreen))
-
-    ;; (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
 
     (evil-leader/set-key
       "g" 'magit-status)))
@@ -364,7 +365,8 @@
 ;; (use-package yasnippet
 ;;   :ensure t
 ;;   :defer t
-;;   :diminish yas-minor-mode)
+;;   :diminish yas-minor-mode
+;;   :init (yas-global-mode 1))
 
 ;; (use-package flycheck
 ;;   :ensure t
@@ -379,6 +381,14 @@
          ("\\.cjsx" . coffee-mode))
   :config
   (progn
+    (defun javascript/coffee-indent ()
+      (if (coffee-line-wants-indent)
+          (coffee-insert-spaces (+ (coffee-previous-indent) coffee-tab-width))
+        (coffee-insert-spaces (coffee-previous-indent))))
+
+    (add-hook 'coffee-mode-hook '(lambda ()
+                                   (setq indent-line-function 'javascript/coffee-indent)))
+
     (setq whitespace-action '(auto-cleanup))
     (setq whitespace-style '(trailing
                              space-before-tab
@@ -386,15 +396,6 @@
                              empty
                              space-after-tab))
     (custom-set-variables '(coffee-tab-width 2))))
-
-;; (use-package ruby-test-mode
-;;   :ensure t
-;;   :init
-;;   (add-hook 'ruby-mode-hook 'ruby-test-mode)
-;;   :config
-;;   (evil-leader/set-key 'ruby-mode
-;;     "t" 'ruby-test-run
-;;     "T" 'ruby-test-run-at-point))
 
 (use-package elscreen
   :ensure t
@@ -417,7 +418,8 @@
   :config
   (progn
     (global-set-key ";" 'smex)
-    (define-key evil-normal-state-map ";" 'smex)))
+    (define-key evil-normal-state-map ";" 'smex)
+    (define-key evil-visual-state-map ";" 'smex)))
 
 (use-package ace-jump-mode
   :ensure t
@@ -480,7 +482,6 @@
   :ensure t
   :mode (("\\.html?\\'" . web-mode)
          ("\\.css\\'" . web-mode)
-         ("\\.mustache\\'" . web-mode)
          ("\\.erb\\'" . web-mode))
   :init
   (progn
@@ -499,13 +500,9 @@
   :ensure t
   :config
   (progn
-    (add-hook 'ruby-mode-hook 'robe-mode)
-    (add-hook 'ruby-mode-hook 'ac-robe-setup)))
+    (add-hook 'ruby-mode-hook 'robe-mode)))
 
 (use-package rainbow-mode
-  :ensure t)
-
-(use-package enh-ruby-mode
   :ensure t)
 
 (use-package slim-mode
@@ -513,12 +510,37 @@
 
 (use-package guide-key
   :ensure t
+  :diminish guide-key-mode
   :config
   (progn
     (guide-key-mode t)
-    (setq guide-key/guide-key-sequence '("," ",-c"))))
+    (setq guide-key/guide-key-sequence '(","))))
 
 (use-package evil-iedit-state
+  :ensure t)
+
+(use-package mmm-mode
+  :ensure t
+  :config
+  (progn
+    (mmm-add-classes
+     '((cjsx
+        :submode web-mode
+        :face mmm-code-submode-face
+        :front "\\(\\)[:space:]*<\\Sc"
+        :front-match 1
+        :back "\\Sc>[:space:]*\\(\\)"
+        :back-match 1)))
+
+    (setq mmm-global-mode 'maybe
+          mmm-parse-when-idle t)
+
+    (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'cjsx)))
+
+;; Syntax tweaks
+(modify-syntax-entry ?_ "w" ruby-mode-syntax-table)
+
+(use-package ruby-refactor
   :ensure t)
 
 (provide 'init)

@@ -191,21 +191,21 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(trailing-whitespace ((t (:background ,zenburn-red))))
    `(vertical-border ((t (:foreground ,zenburn-fg))))
 ;;;;; font lock
-   `(font-lock-builtin-face ((t (:foreground ,zenburn-fg :weight bold))))
+   `(font-lock-builtin-face ((t (:foreground ,zenburn-fg))))
    `(font-lock-comment-face ((t (:foreground ,zenburn-fg-1))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,zenburn-fg-1))))
    `(font-lock-constant-face ((t (:foreground ,zenburn-blue))))
    `(font-lock-doc-face ((t (:foreground ,zenburn-fg-1))))
    `(font-lock-function-name-face ((t (:foreground ,zenburn-yellow))))
-   `(font-lock-keyword-face ((t (:foreground ,zenburn-orange :weight bold))))
-   `(font-lock-negation-char-face ((t (:foreground ,zenburn-yellow :weight bold))))
+   `(font-lock-keyword-face ((t (:foreground ,zenburn-orange))))
+   `(font-lock-negation-char-face ((t (:foreground ,zenburn-yellow))))
    `(font-lock-preprocessor-face ((t (:foreground ,zenburn-blue+1))))
-   `(font-lock-regexp-grouping-construct ((t (:foreground ,zenburn-yellow :weight bold))))
-   `(font-lock-regexp-grouping-backslash ((t (:foreground ,zenburn-green :weight bold))))
+   `(font-lock-regexp-grouping-construct ((t (:foreground ,zenburn-yellow))))
+   `(font-lock-regexp-grouping-backslash ((t (:foreground ,zenburn-green))))
    `(font-lock-string-face ((t (:foreground ,zenburn-green))))
    `(font-lock-type-face ((t (:foreground ,zenburn-red))))
-   `(font-lock-variable-name-face ((t (:foreground ,zenburn-fg))))
-   `(font-lock-warning-face ((t (:foreground ,zenburn-yellow-2 :weight bold))))
+   `(font-lock-variable-name-face ((t (:foreground ,zenburn-yellow))))
+   `(font-lock-warning-face ((t (:foreground ,zenburn-yellow-2))))
 
    `(c-annotation-face ((t (:inherit font-lock-constant-face))))
 ;;;;; newsticker
@@ -895,10 +895,10 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(sh-quoted-exec ((t (:foreground ,zenburn-red))))
 ;;;;; show-paren
    `(show-paren-mismatch ((t (:foreground ,zenburn-red+1 :background ,zenburn-bg+3 :weight bold))))
-   `(show-paren-match ((t (:background ,zenburn-bg+3 :weight bold))))
+   `(show-paren-match ((t (:foreground ,zenburn-fg+1 :weight bold))))
 ;;;;; smartparens
    `(sp-show-pair-mismatch-face ((t (:foreground ,zenburn-red+1 :background ,zenburn-bg+3 :weight bold))))
-   `(sp-show-pair-match-face ((t (:background ,zenburn-bg+3 :weight bold))))
+   `(sp-show-pair-match-face ((t (:background ,zenburn-bg :weight bold))))
 ;;;;; sml-mode-line
    '(sml-modeline-end-face ((t :inherit default :width condensed)))
 ;;;;; SLIME
