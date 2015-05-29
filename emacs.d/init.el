@@ -119,16 +119,24 @@
              (string-match-p "^\*" (buffer-name))
              (not ( equal bread-crumb (buffer-name) )) )
           (previous-buffer))))
+    (defun kill-other-buffers ()
+      "Kill all other buffers."
+      (interactive)
+      (mapc 'kill-buffer 
+            (delq (current-buffer) 
+                  (remove-if-not 'buffer-file-name (buffer-list)))))
 
     (evil-leader/set-leader ",")
 
-    (evil-leader/set-key-for-mode 'emacs-lisp-mode "e" 'eval-last-sexp)
+    (evil-leader/set-key-for-mode 'emacs-lisp-mode
+      "e" 'eval-last-sexp
+      "d" 'describe-function)
 
     (evil-leader/set-key
       "," 'my-switch-to-other-buffer
       "F" 'find-file
       "b" 'switch-to-buffer
-      "k" 'kill-buffer
+      "k" 'kill-other-buffers
       "n" 'multi-term
       "q" 'kill-buffer-and-window
       "w" 'quit-window
@@ -176,6 +184,11 @@
     (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
     (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 
+    (defadvice evil-delete-backward-char-and-join (before remove-indent-level activate)
+      "Remove extra char (for 2 level-indent) when you're at that indent level"
+      (if (looking-back "  ")
+          (delete-char -1)))
+
     (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)
     (evil-ex-define-cmd "Ag" 'ag)))
 
@@ -202,27 +215,6 @@
 
     (defvar projectile-rails-rspec '("Gemfile" "app" "config" "spec"))))
 
-(use-package rspec-mode
-  :ensure t
-  :config
-  (progn
-    (defadvice rspec-compile (around rspec-compile-around)
-      "Use BASH shell for running the specs because of ZSH issues."
-      (let ((shell-file-name "/bin/bash"))
-        ad-do-it))
-    (ad-activate 'rspec-compile)
-
-    (setq rspec-use-rake-when-possible nil
-          rspec-spec-command "./bin/rspec"
-          rspec-use-bundler-when-possible nil
-          rspec-use-spring-when-possible t)
-
-    (setq compilation-scroll-output t)
-
-    (evil-leader/set-key
-      "t" 'rspec-verify
-      "T" 'rspec-verify-single)))
-
 (use-package ag
   :ensure t
   :defer t
@@ -235,14 +227,12 @@
 (use-package company
   :ensure t
   :defer t
+  :diminish company-mode
   :init
   (global-company-mode t)
   :config
   (progn
-    (setq company-idle-delay nil
-          company-minimum-prefix-length 2)
-
-    (define-key evil-insert-state-map (kbd "<tab>") 'company-complete)
+    (define-key prog-mode-map (kbd "<tab>") 'company-complete)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
     (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)))
@@ -362,18 +352,6 @@
   (progn
     (define-key evil-normal-state-map (kbd "RET") 'evil-search-highlight-persist-remove-all)))
 
-;; (use-package yasnippet
-;;   :ensure t
-;;   :defer t
-;;   :diminish yas-minor-mode
-;;   :init (yas-global-mode 1))
-
-;; (use-package flycheck
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (add-hook 'after-init-hook #'global-flycheck-mode)
-;;     (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))))
 
 (use-package coffee-mode
   :ensure t
@@ -418,8 +396,7 @@
   :config
   (progn
     (global-set-key ";" 'smex)
-    (define-key evil-normal-state-map ";" 'smex)
-    (define-key evil-visual-state-map ";" 'smex)))
+    (define-key evil-normal-state-map ";" 'smex)))
 
 (use-package ace-jump-mode
   :ensure t
@@ -476,7 +453,15 @@
          (add-to-list 'ac-modes 'cider-repl-mode)))))
 
 (use-package sass-mode
-  :ensure t)
+  :ensure t
+  :config
+  (progn
+    (defadvice haml-electric-backspace (before remove-indent-level activate)
+      "Remove extra char (for 2 level-indent) when you're at that indent level"
+      (if (and (looking-back "  ") (not (looking-at "\w")))
+          (delete-char -1)))))
+
+(setq backward-delete-char-untabify-method 'all)
 
 (use-package web-mode
   :ensure t
@@ -489,18 +474,6 @@
           '(("jsx"  . "\\.js\\'")))
     (add-hook 'web-mode-hook (lambda ()
                                (set-fill-column 120)))))
-
-(use-package projectile-rails
-  :ensure t
-  :config
-  (progn
-    (add-hook 'projectile-mode-hook 'projectile-rails-on)))
-
-(use-package robe
-  :ensure t
-  :config
-  (progn
-    (add-hook 'ruby-mode-hook 'robe-mode)))
 
 (use-package rainbow-mode
   :ensure t)
@@ -537,10 +510,46 @@
 
     (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'cjsx)))
 
-;; Syntax tweaks
-(modify-syntax-entry ?_ "w" ruby-mode-syntax-table)
+(use-package ruby-mode
+  :mode (("\\.rb\\'" . ruby-mode))
+  :config
+  (progn
+    (use-package ruby-refactor
+      :ensure t)
 
-(use-package ruby-refactor
-  :ensure t)
+    (use-package projectile-rails
+      :ensure t
+      :config
+      (progn
+        (add-hook 'projectile-mode-hook 'projectile-rails-on)))
+
+    (use-package robe
+      :ensure t
+      :config
+      (progn
+        (add-hook 'ruby-mode-hook 'robe-mode)))
+
+    (use-package rspec-mode
+      :ensure t
+      :config
+      (progn
+        (defadvice rspec-compile (around rspec-compile-around)
+          "Use BASH shell for running the specs because of ZSH issues."
+          (let ((shell-file-name "/bin/bash"))
+            ad-do-it))
+        (ad-activate 'rspec-compile)
+
+        (setq rspec-use-rake-when-possible nil
+              rspec-spec-command "rspec"
+              rspec-use-bundler-when-possible nil
+              rspec-use-spring-when-possible t)
+
+        (setq compilation-scroll-output t)
+
+        (evil-leader/set-key
+          "t" 'rspec-verify
+          "T" 'rspec-verify-single)))
+
+    (modify-syntax-entry ?_ "w" ruby-mode-syntax-table)))
 
 (provide 'init)
