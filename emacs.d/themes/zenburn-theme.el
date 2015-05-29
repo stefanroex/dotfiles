@@ -47,7 +47,7 @@
     ("zenburn-bg+1"     . "#4F4F4F")
     ("zenburn-bg+2"     . "#5F5F5F")
     ("zenburn-bg+3"     . "#6F6F6F")
-    ("zenburn-red+1"    . "#DA4939")
+    ("zenburn-red+1"    . "red")
     ("zenburn-red"      . "#DA4939")
     ("zenburn-red-1"    . "#DA4949")
     ("zenburn-red-2"    . "#DA4949")
@@ -136,7 +136,7 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(link ((t (:foreground ,zenburn-yellow :underline t :weight bold))))
    `(link-visited ((t (:foreground ,zenburn-yellow-2 :underline t :weight normal))))
    `(default ((t (:foreground ,zenburn-fg :background ,zenburn-bg))))
-   `(cursor ((t (:foreground ,zenburn-fg :background ,zenburn-fg+1))))
+   `(cursor ((t (:foreground ,zenburn-red+1 :background ,zenburn-red+1))))
    `(escape-glyph ((t (:foreground ,zenburn-yellow :bold t))))
    `(fringe ((t (:foreground ,zenburn-fg :background ,zenburn-bg+1))))
    `(header-line ((t (:foreground ,zenburn-yellow
