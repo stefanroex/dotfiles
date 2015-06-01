@@ -1,0 +1,6 @@
+# -*- Mode: Snippet -*-
+#name : use-package
+#group : definitions
+# --
+(use-package ${1:name}
+  :ensure t)

@@ -55,35 +55,15 @@
 (use-package init-custom
   :load-path "init/")
 
+(use-package subr-x
+  :load-path "init/")
+
 ;; Fancy battery info for mode line
 (use-package fancy-battery
   :ensure t
   :defer t
   :config (setq fancy-battery-show-percentage t)
   :init (fancy-battery-mode))
-
-(use-package ido
-  :ensure t
-  :init (ido-mode t)
-  :config
-  (setq ido-use-faces nil
-        ido-enable-flex-matching t
-        ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*")))
-
-(use-package ido-vertical-mode
-  :ensure t
-  :init (ido-vertical-mode t))
-
-(use-package ido-ubiquitous
-  :ensure t
-  :config
-  (setq ido-everywhere 1))
-
-(use-package flx-ido
-  :ensure t
-  :config
-  (setq flx-ido-threshhold 1000
-        flx-ido-mode 1))
 
 (use-package evil-leader
   :ensure t
@@ -119,6 +99,7 @@
              (string-match-p "^\*" (buffer-name))
              (not ( equal bread-crumb (buffer-name) )) )
           (previous-buffer))))
+
     (defun kill-other-buffers ()
       "Kill all other buffers."
       (interactive)
@@ -130,12 +111,15 @@
 
     (evil-leader/set-key-for-mode 'emacs-lisp-mode
       "e" 'eval-last-sexp
-      "d" 'describe-function)
+      "d" 'helm-apropos
+      "hf" 'describe-function
+      "hv" 'describe-variable)
 
     (evil-leader/set-key
       "," 'my-switch-to-other-buffer
-      "F" 'find-file
-      "b" 'switch-to-buffer
+      "F" 'helm-find-files
+      "hk" 'describe-key
+      "hm" 'describe-mode
       "k" 'kill-other-buffers
       "n" 'multi-term
       "q" 'kill-buffer-and-window
@@ -202,18 +186,19 @@
   :diminish projectile-mode
   :config
   (progn
+    (setq projectile-switch-project-action 'helm-projectile-find-file)
+
     (projectile-global-mode)
+
     (defun find-file-projectile-or-dir ()
       (interactive)
       (if (projectile-project-p)
-          (projectile-find-file)
-        (ido-find-file)))
+          (helm-projectile-find-file)
+        (helm-find-files)))
 
     (evil-leader/set-key
       "f" 'find-file-projectile-or-dir
-      "p" 'projectile-switch-project)
-
-    (defvar projectile-rails-rspec '("Gemfile" "app" "config" "spec"))))
+      "p" 'helm-projectile-switch-project)))
 
 (use-package ag
   :ensure t
@@ -256,10 +241,9 @@
       (delete-other-windows))
 
     (evil-leader/set-key
-      "g" 'magit-status)))
-
-(use-package git-blame
-  :ensure t)
+      "gs" 'magit-status
+      "gl" 'magit-log
+      "gb" 'magit-blame-mode)))
 
 (use-package move-text
   :ensure t
@@ -296,15 +280,24 @@
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
 
-(use-package evil-paredit
-  :defer t
+;; (use-package evil-paredit
+;;   :defer t
+;;   :ensure t
+;;   :init
+;;   (progn
+;;     (add-hook 'emacs-lisp-mode-hook #'evil-paredit-mode)
+;;     (add-hook 'cider-repl-mode-hook #'evil-paredit-mode)
+;;     (add-hook 'clojure-mode-hook #'evil-paredit-mode)
+;;     (add-hook 'scheme-mode-hook #'evil-paredit-mode)))
+
+(use-package evil-cleverparens
   :ensure t
+  :diminish evil-cleverparens-mode
   :init
   (progn
-    (add-hook 'macs-lisp-mode-hook #'evil-paredit-mode)
-    (add-hook 'cider-repl-mode-hook #'evil-paredit-mode)
-    (add-hook 'clojure-mode-hook #'evil-paredit-mode)
-    (add-hook 'scheme-mode-hook #'evil-paredit-mode)))
+    (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode) 
+    (add-hook 'cider-repl-mode-hook #'evil-cleverparens-mode) 
+    (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)))
 
 (use-package rainbow-delimiters
   :ensure t
@@ -325,7 +318,7 @@
   :defer t
   :config
   (evil-leader/set-key-for-mode 'clojure-mode
-    "c" 'cider-jack-in))
+    "cs" 'cider-jack-in))
 
 (use-package clojure-mode-extra-font-locking
   :ensure t
@@ -352,7 +345,6 @@
   (progn
     (define-key evil-normal-state-map (kbd "RET") 'evil-search-highlight-persist-remove-all)))
 
-
 (use-package coffee-mode
   :ensure t
   :mode (("\\.coffee\\'" . coffee-mode)
@@ -365,14 +357,10 @@
         (coffee-insert-spaces (coffee-previous-indent))))
 
     (add-hook 'coffee-mode-hook '(lambda ()
+                                   (advice-remove 'evil-delete-backward-char-and-join #'remove-indent-level)
                                    (setq indent-line-function 'javascript/coffee-indent)))
 
     (setq whitespace-action '(auto-cleanup))
-    (setq whitespace-style '(trailing
-                             space-before-tab
-                             indentation
-                             empty
-                             space-after-tab))
     (custom-set-variables '(coffee-tab-width 2))))
 
 (use-package elscreen
@@ -391,13 +379,6 @@
   (progn
     (setq system-uses-terminfo nil)))
 
-(use-package smex
-  :ensure t
-  :config
-  (progn
-    (global-set-key ";" 'smex)
-    (define-key evil-normal-state-map ";" 'smex)))
-
 (use-package ace-jump-mode
   :ensure t
   :config
@@ -408,7 +389,9 @@
   :config
   (progn
     (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+    (add-hook 'cider-mode-hook #'company-mode)
     (add-hook 'cider-repl-mode-hook 'paredit-mode)
+    (add-hook 'cider-repl-mode-hook #'company-mode)
 
     (defun cider-save-and-eval ()
       (interactive)
@@ -419,38 +402,19 @@
     (evil-leader/set-key-for-mode 'clojure-mode
       "E" 'cider-eval-last-sexp
       "T" 'cider-test-run-test
+      "t" 'cider-test-run-tests
       "d" 'cider-doc
-      "e" 'cider-save-and-eval
-      "t" 'cider-test-run-tests)
+      "e" 'cider-save-and-eval)
+
+    ;; Add support for evil
+    (push 'cider-stacktrace-mode evil-motion-state-modes)
+    (push 'cider-popup-buffer-mode evil-motion-state-modes)
 
     (setq cider-repl-pop-to-buffer-on-connect t
           cider-show-error-buffer t
           cider-auto-select-error-buffer t
           cider-repl-history-file "~/.emacs.d/cider-history"
           cider-repl-wrap-history t)))
-
-(defun which-active-modes ()
-  "Give a message of which minor modes are enabled in the current buffer."
-  (interactive)
-  (let ((active-modes))
-    (mapc (lambda (mode) (condition-case nil
-                             (if (and (symbolp mode) (symbol-value mode))
-                                 (add-to-list 'active-modes mode))
-                           (error nil) ))
-          minor-mode-list)
-    (message "Active modes are %s" active-modes)))
-
-(use-package ac-cider
-  :ensure t
-  :config
-  (progn
-    (add-hook 'cider-mode-hook 'ac-flyspell-workaround)
-    (add-hook 'cider-mode-hook 'ac-cider-setup)
-    (add-hook 'cider-repl-mode-hook 'ac-cider-setup)
-    (eval-after-load "auto-complete"
-      '(progn
-         (add-to-list 'ac-modes 'cider-mode)
-         (add-to-list 'ac-modes 'cider-repl-mode)))))
 
 (use-package sass-mode
   :ensure t
@@ -470,8 +434,7 @@
          ("\\.erb\\'" . web-mode))
   :init
   (progn
-    (setq web-mode-content-types-alist
-          '(("jsx"  . "\\.js\\'")))
+    (setq web-mode-content-types-alist '(("jsx"  . "\\.js\\'")))
     (add-hook 'web-mode-hook (lambda ()
                                (set-fill-column 120)))))
 
@@ -479,18 +442,90 @@
   :ensure t)
 
 (use-package slim-mode
-  :ensure t)
+  :ensure t
+  :mode ("\\.slim\\'" . slim-mode))
 
 (use-package guide-key
   :ensure t
   :diminish guide-key-mode
   :config
   (progn
-    (guide-key-mode t)
-    (setq guide-key/guide-key-sequence '(","))))
+    (guide-key-mode t)        
+    (setq guide-key/guide-key-sequence '("," ",c" ",h" ",b")
+          guide-key/recursive-key-sequence-flag t)))
+
+(use-package ruby-hash-syntax
+  :ensure t)
+
+(use-package ruby-refactor
+  :ensure t)
+
+(use-package projectile-rails
+  :ensure t
+  :config
+  (progn
+    (add-hook 'projectile-mode-hook 'projectile-rails-on)))
+
+(use-package robe
+  :ensure t
+  :config
+  (progn
+    (add-hook 'ruby-mode-hook 'robe-mode)
+    (eval-after-load 'company
+      '(push 'company-robe company-backends))))
+
+(use-package rspec-mode
+  :ensure t
+  :config
+  (progn
+    (defadvice rspec-compile (around rspec-compile-around)
+      "Use BASH shell for running the specs because of ZSH issues."
+      (let ((shell-file-name "/bin/bash"))
+        ad-do-it))
+
+    (ad-activate 'rspec-compile)
+
+    (setq rspec-use-rake-when-possible nil
+          rspec-spec-command "rspec"
+          rspec-use-bundler-when-possible nil
+          rspec-use-spring-when-possible t)
+
+    (setq compilation-scroll-output t)
+
+    (evil-leader/set-key-for-mode 'ruby-mode
+      "cs" 'robe-start
+      "d" 'robe-doc
+      "ch" 'ruby-toggle-hash-syntax)
+
+    (evil-leader/set-key-for-mode 'ruby-mode
+      "t" 'rspec-verify
+      "T" 'rspec-verify-single)))
+
+(use-package ruby-mode
+  :ensure t
+  :mode (("\\.rb\\'"       . ruby-mode)
+         ("\\.ru\\'"       . ruby-mode)
+         ("\\.gemspec\\'"  . ruby-mode)
+         ("\\.rake\\'"     . ruby-mode)
+         ("Rakefile\\'"    . ruby-mode)
+         ("Gemfile\\'"     . ruby-mode))
+  :config
+  (progn
+    (setq ruby-deep-indent-paren nil
+          ruby-deep-arglist nil)
+    (modify-syntax-entry ?_ "w" ruby-mode-syntax-table)))
+
+(use-package yaml-mode
+  :ensure t
+  :mode (("\\.yml\\'"  . yaml-mode)
+         ("\\.yaml\\'" . yaml-mode)))
 
 (use-package evil-iedit-state
-  :ensure t)
+  :ensure t
+  :config
+  (progn
+    (evil-leader/set-key
+      "i" 'evil-iedit-state/iedit-mode)))
 
 (use-package mmm-mode
   :ensure t
@@ -510,46 +545,82 @@
 
     (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'cjsx)))
 
-(use-package ruby-mode
-  :mode (("\\.rb\\'" . ruby-mode))
-  :config
+(defun w ()
+  "Mimicks evil ex-mode :w command"
+  (interactive)
+  (save-buffer))
+
+(use-package restclient
+  :ensure t)
+
+(use-package helm
+  :ensure t
+  :defer t
+  :init
   (progn
-    (use-package ruby-refactor
+    (use-package helm-projectile
       :ensure t)
 
-    (use-package projectile-rails
-      :ensure t
-      :config
-      (progn
-        (add-hook 'projectile-mode-hook 'projectile-rails-on)))
+    (setq helm-M-x-fuzzy-match t
+          helm-buffers-fuzzy-matching t
+          helm-projectile-fuzzy-match t
+          helm-autoresize-mode t
+          helm-apropos-fuzzy-match t
+          helm-recentf-fuzzy-match t)
 
-    (use-package robe
-      :ensure t
-      :config
-      (progn
-        (add-hook 'ruby-mode-hook 'robe-mode)))
+    (evil-leader/set-key
+      "b" 'helm-projectile-switch-to-buffer
+      "B" 'helm-mini
+      "y" 'helm-show-kill-ring)
 
-    (use-package rspec-mode
-      :ensure t
-      :config
-      (progn
-        (defadvice rspec-compile (around rspec-compile-around)
-          "Use BASH shell for running the specs because of ZSH issues."
-          (let ((shell-file-name "/bin/bash"))
-            ad-do-it))
-        (ad-activate 'rspec-compile)
+    (global-set-key ";" 'helm-M-x)
+    (define-key evil-normal-state-map ";" 'helm-M-x)
+    (global-set-key (kbd "M-x") 'helm-M-x)))
 
-        (setq rspec-use-rake-when-possible nil
-              rspec-spec-command "rspec"
-              rspec-use-bundler-when-possible nil
-              rspec-use-spring-when-possible t)
+(use-package helm-spotify
+  :ensure t
+  :defer t)
 
-        (setq compilation-scroll-output t)
+(use-package expand-region
+  :ensure t
+  :init
+  (evil-leader/set-key "r" 'er/expand-region))
 
-        (evil-leader/set-key
-          "t" 'rspec-verify
-          "T" 'rspec-verify-single)))
+(use-package flycheck
+  :ensure t
+  :init
+  (progn 
+    (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change)
+          flycheck-idle-change-delay 1.5)
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+    (add-hook 'prog-mode-hook 'flycheck-mode)
+    (add-hook 'mmm-mode-hook 'flycheck-mode)))
 
-    (modify-syntax-entry ?_ "w" ruby-mode-syntax-table)))
+(use-package flycheck-clojure
+  :ensure t
+  :init
+  :config
+  (flycheck-clojure-setup))
+
+(use-package flycheck-pos-tip
+  :ensure t
+  :config
+  (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
+
+(use-package yasnippet
+  :ensure t
+  :init
+  (progn 
+    (add-hook 'prog-mode-hook 'yas-minor-mode))
+  :config
+  (yas-reload-all))
+
+(use-package compile
+  :commands compile
+  :config
+  (progn
+    (setq compilation-ask-about-save nil
+          compilation-always-kill t
+          compilation-scroll-output 'first-error)))
 
 (provide 'init)
