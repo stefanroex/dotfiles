@@ -138,7 +138,8 @@ command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
 
 let g:ctrlp_use_caching = 0
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:20,results:20'
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+" let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
 augroup myfiletypes
   autocmd!
@@ -183,6 +184,11 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+
+" Move cursor to end of passed text
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
 
 map <C-n> :cn<CR>
 map <C-p> :cp<CR>

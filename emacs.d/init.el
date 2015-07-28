@@ -357,10 +357,8 @@
         (coffee-insert-spaces (coffee-previous-indent))))
 
     (add-hook 'coffee-mode-hook '(lambda ()
-                                   (advice-remove 'evil-delete-backward-char-and-join #'remove-indent-level)
                                    (setq indent-line-function 'javascript/coffee-indent)))
 
-    (setq whitespace-action '(auto-cleanup))
     (custom-set-variables '(coffee-tab-width 2))))
 
 (use-package elscreen
@@ -424,8 +422,6 @@
       "Remove extra char (for 2 level-indent) when you're at that indent level"
       (if (and (looking-back "  ") (not (looking-at "\w")))
           (delete-char -1)))))
-
-(setq backward-delete-char-untabify-method 'all)
 
 (use-package web-mode
   :ensure t
@@ -527,23 +523,23 @@
     (evil-leader/set-key
       "i" 'evil-iedit-state/iedit-mode)))
 
-(use-package mmm-mode
-  :ensure t
-  :config
-  (progn
-    (mmm-add-classes
-     '((cjsx
-        :submode web-mode
-        :face mmm-code-submode-face
-        :front "\\(\\)[:space:]*<\\Sc"
-        :front-match 1
-        :back "\\Sc>[:space:]*\\(\\)"
-        :back-match 1)))
+;; (use-package mmm-mode
+;;   :ensure t
+;;   :config
+;;   (progn
+;;     (mmm-add-classes
+;;      '((cjsx
+;;         :submode web-mode
+;;         :face mmm-code-submode-face
+;;         :front "\\(\\)[:space:]*<\\Sc"
+;;         :front-match 1
+;;         :back "\\Sc>[:space:]*\\(\\)"
+;;         :back-match 1)))
 
-    (setq mmm-global-mode 'maybe
-          mmm-parse-when-idle t)
+;;     (setq mmm-global-mode 'maybe
+;;           mmm-parse-when-idle t)
 
-    (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'cjsx)))
+;;     (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'cjsx)))
 
 (defun w ()
   "Mimicks evil ex-mode :w command"
@@ -586,15 +582,15 @@
   :init
   (evil-leader/set-key "r" 'er/expand-region))
 
-(use-package flycheck
-  :ensure t
-  :init
-  (progn 
-    (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change)
-          flycheck-idle-change-delay 1.5)
-    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-    (add-hook 'prog-mode-hook 'flycheck-mode)
-    (add-hook 'mmm-mode-hook 'flycheck-mode)))
+;; (use-package flycheck
+;;   :ensure t
+;;   :init
+;;   (progn 
+;;     (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change)
+;;           flycheck-idle-change-delay 1.0)
+;;     (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+;;     (add-hook 'prog-mode-hook 'flycheck-mode)
+;;     (add-hook 'mmm-mode-hook 'flycheck-mode)))
 
 (use-package flycheck-clojure
   :ensure t
@@ -622,5 +618,15 @@
     (setq compilation-ask-about-save nil
           compilation-always-kill t
           compilation-scroll-output 'first-error)))
+
+(use-package 4clojure
+  :ensure t
+  :config
+  (defadvice 4clojure-open-question (around 4clojure-open-question-around)
+    "Start a cider/nREPL connection if one hasn't already been started when
+opening 4clojure questions"
+    ad-do-it
+    (unless cider-current-clojure-buffer
+      (cider-jack-in))))
 
 (provide 'init)

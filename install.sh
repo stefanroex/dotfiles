@@ -12,6 +12,7 @@ brew install git
 brew install heroku-toolbelt
 brew install macvim --override-system-vim
 brew install openssl
+brew install pgcli
 brew install rbenv
 brew install ruby-build
 brew install ssh-copy-id
