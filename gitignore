@@ -15,6 +15,7 @@
 vendor/bundle
 db/*.sqlite3
 .powder
+.powenv
 
 # Vim
 [._]*.s[a-w][a-z]
@@ -39,3 +40,4 @@ npm-debug.log
 *.sql
 
 notes.txt
+rails_best_practices_output.html

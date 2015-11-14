@@ -17,6 +17,7 @@ Plug 'janko-m/vim-test'
 Plug 'kien/ctrlp.vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
@@ -30,9 +31,11 @@ Plug 'vim-scripts/gitignore'
 " Syntax
 Plug 'amdt/vim-niji'
 Plug 'claco/jasmine.vim'
+Plug 'derekwyatt/vim-scala'
 Plug 'elixir-lang/vim-elixir'
 Plug 'groenewege/vim-less'
 Plug 'guns/vim-clojure-static'
+" Plug 'isRuslan/vim-es6'
 Plug 'kchmck/vim-coffee-script'
 Plug 'leafgarland/typescript-vim'
 Plug 'mtscout6/vim-cjsx'
@@ -44,6 +47,8 @@ Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
 
+Plug 'mhartington/oceanic-next'
+
 " Syntaxhighlight tweaking
 " Plug 'lilydjwg/colorizer'
 " Plug 'vim-scripts/SyntaxAttr.vim'
@@ -54,7 +59,12 @@ call plug#end()
 "  Settings
 " ========================================================================
 
+
+" Theme
+syntax enable
+set t_Co=256
 color sweam
+set background=dark
 
 set noswapfile
 set number
@@ -111,6 +121,10 @@ let html_no_rendering=1 " Don't render italic, bold, links in HTML
 " View full list when tab-complete in command mode
 set wildmode=list:full
 
+" Javascript settings
+let g:javascript_enable_domhtmlcss = 1
+let g:jsx_ext_required = 0
+
 " Statusline
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
@@ -153,6 +167,30 @@ set ttymouse=xterm2
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 
+" Vim-test
+let test#javascript#mocha#executable = 'node_modules/.bin/mocha --compilers js:babel-core/register --require ./test/testHelper.js'
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_mode_map = { "mode": "passive" }
+
+" Override eslint with local version where necessary.
+let local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
+if matchstr(local_eslint, "^\/\\w") == ''
+  let local_eslint = getcwd() . "/" . local_eslint
+endif
+if executable(local_eslint)
+  let g:syntastic_javascript_eslint_exec = local_eslint
+endif
+
 " ========================================================================
 "  Mappings
 " ========================================================================
@@ -174,6 +212,7 @@ map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
 map <leader>q :bd<CR>
+map <leader>s :SyntasticCheck<cr><cr>
 map <leader>t :TestFile<cr>
 map <leader>v :tabe $MYVIMRC<CR>
 map <leader>w :bp<CR>:bd#<CR>

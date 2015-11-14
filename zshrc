@@ -6,6 +6,10 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export TERM=xterm-256color
 
+autoload -U compinit && compinit
+
+fpath=(~/.dotfiles/zsh/completions $fpath)
+
 # Save a ton of history
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
@@ -35,3 +39,4 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="./bin:$PATH"
+export PATH="/Library/Haskell/bin:$PATH"

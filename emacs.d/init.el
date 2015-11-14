@@ -55,8 +55,8 @@
 (use-package init-custom
   :load-path "init/")
 
-(use-package subr-x
-  :load-path "init/")
+;; (use-package subr-x
+;;   :load-path "init/")
 
 ;; Fancy battery info for mode line
 (use-package fancy-battery
@@ -80,25 +80,22 @@
       (interactive)
       (find-file "~/.emacs.d/init.el"))
 
-    (defun next-code-buffer ()
-      (interactive)
-      (let (( bread-crumb (buffer-name) ))
-        (next-buffer)
+    (defun circle-code-buffers (circle-fn)
+      (let ((bread-crumb (buffer-name)))
+        (circle-fn)
         (while
             (and
              (string-match-p "^\*" (buffer-name))
-             (not ( equal bread-crumb (buffer-name) )) )
-          (next-buffer))))
+             (not (equal bread-crumb (buffer-name))) )
+          (circle-fn))))
+
+    (defun next-code-buffer ()
+      (interactive)
+      (circle-code-buffers next-buffer))
 
     (defun previous-code-buffer ()
       (interactive)
-      (let (( bread-crumb (buffer-name) ))
-        (previous-buffer)
-        (while
-            (and
-             (string-match-p "^\*" (buffer-name))
-             (not ( equal bread-crumb (buffer-name) )) )
-          (previous-buffer))))
+      (circle-code-buffers previous-buffer))
 
     (defun kill-other-buffers ()
       "Kill all other buffers."
@@ -225,7 +222,7 @@
 (use-package magit
   :ensure t
   :defer t
-  :diminish magit-auto-revert-mode
+  ;; :diminish magit-auto-revert-mode
   :init
   (progn
     (setq magit-last-seen-setup-instructions "1.4.0")
@@ -280,16 +277,6 @@
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
 
-;; (use-package evil-paredit
-;;   :defer t
-;;   :ensure t
-;;   :init
-;;   (progn
-;;     (add-hook 'emacs-lisp-mode-hook #'evil-paredit-mode)
-;;     (add-hook 'cider-repl-mode-hook #'evil-paredit-mode)
-;;     (add-hook 'clojure-mode-hook #'evil-paredit-mode)
-;;     (add-hook 'scheme-mode-hook #'evil-paredit-mode)))
-
 (use-package evil-cleverparens
   :ensure t
   :diminish evil-cleverparens-mode
@@ -317,6 +304,8 @@
   :ensure t
   :defer t
   :config
+  (evil-leader/set-key-for-mode 'clojurescript-mode
+    "cs" 'cider-jack-in)
   (evil-leader/set-key-for-mode 'clojure-mode
     "cs" 'cider-jack-in))
 
@@ -345,38 +334,6 @@
   (progn
     (define-key evil-normal-state-map (kbd "RET") 'evil-search-highlight-persist-remove-all)))
 
-(use-package coffee-mode
-  :ensure t
-  :mode (("\\.coffee\\'" . coffee-mode)
-         ("\\.cjsx" . coffee-mode))
-  :config
-  (progn
-    (defun javascript/coffee-indent ()
-      (if (coffee-line-wants-indent)
-          (coffee-insert-spaces (+ (coffee-previous-indent) coffee-tab-width))
-        (coffee-insert-spaces (coffee-previous-indent))))
-
-    (add-hook 'coffee-mode-hook '(lambda ()
-                                   (setq indent-line-function 'javascript/coffee-indent)))
-
-    (custom-set-variables '(coffee-tab-width 2))))
-
-(use-package elscreen
-  :ensure t
-  :init (elscreen-start)
-  :config
-  (progn
-    (global-set-key (kbd "s-w") 'elscreen-kill)
-    (global-set-key (kbd "s-t") 'elscreen-create)
-    (global-set-key (kbd "s-}") 'elscreen-next)
-    (global-set-key (kbd "s-{") 'elscreen-previous)))
-
-(use-package multi-term
-  :ensure t
-  :config
-  (progn
-    (setq system-uses-terminfo nil)))
-
 (use-package ace-jump-mode
   :ensure t
   :config
@@ -391,10 +348,29 @@
     (add-hook 'cider-repl-mode-hook 'paredit-mode)
     (add-hook 'cider-repl-mode-hook #'company-mode)
 
+    (defun cider-repl-command (cmd)
+      "Execute commands on the cider repl"
+      (cider-switch-to-repl-buffer)
+      (goto-char (point-max))
+      (insert cmd)
+      (cider-repl-return)
+      (cider-switch-to-last-clojure-buffer))
+
+    (defun cider-repl-reset ()
+      "Assumes reloaded + tools.namespace is used to reload everything"
+      (interactive)
+      (save-some-buffers)
+      (cider-repl-command "(reset)"))
+
+    (defun cider-reset-test-run-tests ()
+      (interactive)
+      (cider-repl-reset)
+      (cider-test-run-tests))
+
     (defun cider-save-and-eval ()
       (interactive)
       (save-buffer)
-      (cider-eval-buffer))
+      (cider-repl-reset))
 
     ;; should be cider-mode, doesn't work
     (evil-leader/set-key-for-mode 'clojure-mode
@@ -405,11 +381,11 @@
       "e" 'cider-save-and-eval)
 
     ;; Add support for evil
+    (push 'cider-repl-mode evil-motion-state-modes)
     (push 'cider-stacktrace-mode evil-motion-state-modes)
     (push 'cider-popup-buffer-mode evil-motion-state-modes)
 
-    (setq cider-repl-pop-to-buffer-on-connect t
-          cider-show-error-buffer t
+    (setq cider-show-error-buffer t
           cider-auto-select-error-buffer t
           cider-repl-history-file "~/.emacs.d/cider-history"
           cider-repl-wrap-history t)))
@@ -450,25 +426,11 @@
     (setq guide-key/guide-key-sequence '("," ",c" ",h" ",b")
           guide-key/recursive-key-sequence-flag t)))
 
-(use-package ruby-hash-syntax
-  :ensure t)
-
-(use-package ruby-refactor
-  :ensure t)
-
 (use-package projectile-rails
   :ensure t
   :config
   (progn
     (add-hook 'projectile-mode-hook 'projectile-rails-on)))
-
-(use-package robe
-  :ensure t
-  :config
-  (progn
-    (add-hook 'ruby-mode-hook 'robe-mode)
-    (eval-after-load 'company
-      '(push 'company-robe company-backends))))
 
 (use-package rspec-mode
   :ensure t
@@ -523,24 +485,6 @@
     (evil-leader/set-key
       "i" 'evil-iedit-state/iedit-mode)))
 
-;; (use-package mmm-mode
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (mmm-add-classes
-;;      '((cjsx
-;;         :submode web-mode
-;;         :face mmm-code-submode-face
-;;         :front "\\(\\)[:space:]*<\\Sc"
-;;         :front-match 1
-;;         :back "\\Sc>[:space:]*\\(\\)"
-;;         :back-match 1)))
-
-;;     (setq mmm-global-mode 'maybe
-;;           mmm-parse-when-idle t)
-
-;;     (mmm-add-mode-ext-class 'coffee-mode "\\.cjsx\\'" 'cjsx)))
-
 (defun w ()
   "Mimicks evil ex-mode :w command"
   (interactive)
@@ -569,18 +513,7 @@
       "B" 'helm-mini
       "y" 'helm-show-kill-ring)
 
-    (global-set-key ";" 'helm-M-x)
-    (define-key evil-normal-state-map ";" 'helm-M-x)
     (global-set-key (kbd "M-x") 'helm-M-x)))
-
-(use-package helm-spotify
-  :ensure t
-  :defer t)
-
-(use-package expand-region
-  :ensure t
-  :init
-  (evil-leader/set-key "r" 'er/expand-region))
 
 ;; (use-package flycheck
 ;;   :ensure t
@@ -592,24 +525,24 @@
 ;;     (add-hook 'prog-mode-hook 'flycheck-mode)
 ;;     (add-hook 'mmm-mode-hook 'flycheck-mode)))
 
-(use-package flycheck-clojure
-  :ensure t
-  :init
-  :config
-  (flycheck-clojure-setup))
+;; (use-package flycheck-clojure
+;;   :ensure t
+;;   :init
+;;   :config
+;;   (flycheck-clojure-setup))
 
-(use-package flycheck-pos-tip
-  :ensure t
-  :config
-  (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
+;; (use-package flycheck-pos-tip
+;;   :ensure t
+;;   :config
+;;   (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
 
-(use-package yasnippet
-  :ensure t
-  :init
-  (progn 
-    (add-hook 'prog-mode-hook 'yas-minor-mode))
-  :config
-  (yas-reload-all))
+;; (use-package yasnippet
+;;   :ensure t
+;;   :init
+;;   (progn 
+;;     (add-hook 'prog-mode-hook 'yas-minor-mode))
+;;   :config
+;;   (yas-reload-all))
 
 (use-package compile
   :commands compile
@@ -618,15 +551,5 @@
     (setq compilation-ask-about-save nil
           compilation-always-kill t
           compilation-scroll-output 'first-error)))
-
-(use-package 4clojure
-  :ensure t
-  :config
-  (defadvice 4clojure-open-question (around 4clojure-open-question-around)
-    "Start a cider/nREPL connection if one hasn't already been started when
-opening 4clojure questions"
-    ad-do-it
-    (unless cider-current-clojure-buffer
-      (cider-jack-in))))
 
 (provide 'init)
