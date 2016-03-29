@@ -210,12 +210,7 @@
   (add-hook 'ielm-mode-hook 'eldoc-mode))
 
 (use-package clojure-mode
-  :defer t
-  :config
-  (evil-leader/set-key-for-mode 'clojurescript-mode
-    "cs" 'cider-jack-in)
-  (evil-leader/set-key-for-mode 'clojure-mode
-    "cs" 'cider-jack-in))
+  :defer t)
 
 (use-package clojure-mode-extra-font-locking
   :defer t)
@@ -251,11 +246,15 @@
         cider-repl-wrap-history t)
   :config
   (evil-leader/set-key-for-mode 'clojure-mode
+    "cs" 'cider-jack-in
+    "cS" 'cider-restart
     "e" 'cider-eval-last-sexp
     "T" 'cider-test-run-test
     "t" 'cider-test-run-tests
     "d" 'cider-doc)
   (evil-leader/set-key-for-mode 'clojurescript-mode
+    "cs" 'cider-jack-in
+    "cS" 'cider-restart
     "e" 'cider-eval-last-sexp
     "E" 'cider-pprint-eval-last-sexp
     "T" 'cider-test-run-test
