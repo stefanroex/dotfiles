@@ -16,8 +16,8 @@
   (yas-global-mode 1))
 
 (use-package evil-leader
-  :pin melpa-stable
-  :init (global-evil-leader-mode t)
+  :init
+  (global-evil-leader-mode t)
   :config
   (progn
     ;; Evil leader
@@ -32,20 +32,20 @@
 
     (defun circle-code-buffers (circle-fn)
       (let ((bread-crumb (buffer-name)))
-        (circle-fn)
+        (funcall circle-fn)
         (while
             (and
              (string-match-p "^\*" (buffer-name))
              (not (equal bread-crumb (buffer-name))) )
-          (circle-fn))))
+          (funcall circle-fn))))
 
     (defun next-code-buffer ()
       (interactive)
-      (circle-code-buffers next-buffer))
+      (circle-code-buffers 'next-buffer))
 
     (defun previous-code-buffer ()
       (interactive)
-      (circle-code-buffers previous-buffer))
+      (circle-code-buffers 'previous-buffer))
 
     (defun kill-other-buffers ()
       "Kill all other buffers."
@@ -178,13 +178,15 @@
       "rp" 'cljr-promote-function
       "rf" 'cljr-create-fn-from-example
       "rl" 'cljr-move-to-let
-      "rd" 'cljr-add-project-dependency)
+      "rd" 'cljr-add-project-dependency
+      "rr" 'cljr-rename-file)
 
     (evil-leader/set-key-for-mode 'clojurescript-mode
       "rp" 'cljr-promote-function
       "rf" 'cljr-create-fn-from-example
       "rl" 'cljr-move-to-let
-      "rd" 'cljr-add-project-dependency)
+      "rd" 'cljr-add-project-dependency
+      "rr" 'cljr-rename-file)
 
     (setq cljr-favor-private-functions nil)
 
