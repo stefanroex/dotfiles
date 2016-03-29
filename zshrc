@@ -21,9 +21,10 @@ unsetopt correct
 source $HOME/.dotfiles/zsh/aliases
 source $HOME/.dotfiles/zsh/functions
 
-export EDITOR='mvim -v'
+export EDITOR='nvim'
 
-export TERM=xterm-256color
+# export TERM=xterm-256color
+export TERMINFO="$HOME/.terminfo"
 
 export RUBY_FREE_MIN=200000
 export RUBY_GC_HEAP_FREE_SLOTS=200000
@@ -36,7 +37,7 @@ export POLTERGEIST_TIMEOUT=10
 
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.rbenv/shims:$PATH"
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="./bin:$PATH"
 export PATH="/Library/Haskell/bin:$PATH"

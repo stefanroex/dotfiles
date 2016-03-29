@@ -13,8 +13,8 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 alias gdm='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 alias gm='git commit -m'
-alias gph='git push staging master && herokus run rake db:migrate && herokus open'
-alias gphp='git push production master && herokup run rake db:migrate && herokup open'
+alias gph='git push staging master && hs run rake db:migrate && hs open'
+alias gphp='git push production master && hp run rake db:migrate && hp open'
 alias gs='git status'
 alias ip="curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+'"
 alias killruby='killall -9 ruby'
@@ -51,10 +51,10 @@ alias production-console='heroku run console --remote production'
 alias production-tail='heroku logs --tail --remote production'
 
 # Heroku databases
-alias db-pull-staging='herokus pg:backups url | xargs curl -o staging.sql'
-alias db-pull-production='herokup pg:backups url | xargs curl -o production.sql'
+alias db-pull-staging='hs pg:backups url | xargs curl -o staging.sql'
+alias db-pull-production='hp pg:backups url | xargs curl -o production.sql'
 
 alias db-copy-staging-to-development='db-pull-staging && restore staging.sql'
 alias db-copy-production-to-development='db-pull-production && restore production.sql'
 
-alias db-backups-capture='herokup pgbackups capture'
+alias db-backups-capture='hp pgbackups capture'

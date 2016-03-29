@@ -34,7 +34,7 @@
   autosetupmerge = true
 [core]
   autocrlf = input
-  editor = mvim -v
+  editor = nvim
   excludesfile = ~/.gitignore
 [diff]
   mnemonicprefix = true

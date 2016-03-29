@@ -1,4 +1,6 @@
-set nocompatible
+if !has('nvim')
+  set nocompatible
+endif
 set shell=bash
 filetype off
 
@@ -10,6 +12,7 @@ call plug#begin('~/.vim/plugged')
 
 " Plugins
 Plug 'Lokaltog/vim-easymotion'
+Plug 'benekastah/neomake'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dockyard/vim-easydir'
 Plug 'ervandew/supertab'
@@ -17,7 +20,6 @@ Plug 'janko-m/vim-test'
 Plug 'kien/ctrlp.vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
@@ -28,6 +30,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/gitignore'
 
+Plug 'w0ng/vim-hybrid'
+
 " Syntax
 Plug 'amdt/vim-niji'
 Plug 'claco/jasmine.vim'
@@ -35,9 +39,7 @@ Plug 'derekwyatt/vim-scala'
 Plug 'elixir-lang/vim-elixir'
 Plug 'groenewege/vim-less'
 Plug 'guns/vim-clojure-static'
-" Plug 'isRuslan/vim-es6'
 Plug 'kchmck/vim-coffee-script'
-Plug 'leafgarland/typescript-vim'
 Plug 'mtscout6/vim-cjsx'
 Plug 'mxw/vim-jsx'
 Plug 'nono/vim-handlebars'
@@ -46,8 +48,6 @@ Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
-
-Plug 'mhartington/oceanic-next'
 
 " Syntaxhighlight tweaking
 " Plug 'lilydjwg/colorizer'
@@ -61,10 +61,8 @@ call plug#end()
 
 
 " Theme
-syntax enable
-set t_Co=256
-color sweam
 set background=dark
+colorscheme sweam
 
 set noswapfile
 set number
@@ -107,8 +105,11 @@ let g:ackprg = 'ag --nogroup --column'
 set ttimeout
 set ttimeoutlen=20
 set notimeout
-set ttyfast
-set ttyscroll=5
+
+if !has('nvim')
+  set ttyfast
+  set ttyscroll=5
+endif
 
 let loaded_matchparen=1 " Don't load matchit.vim (paren/bracket matching)
 set noshowmatch         " Don't match parentheses/brackets
@@ -131,7 +132,7 @@ set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 " append a newline if it is not already there
 set eol
 
-map Q <Nop>
+map Q @q
 
 " clear the search buffer when hitting return
 nnoremap <silent> <CR> :nohlsearch<cr>
@@ -161,7 +162,10 @@ augroup myfiletypes
 augroup END
 
 set mouse=a
-set ttymouse=xterm2
+
+if !has('nvim')
+  set ttymouse=xterm2
+endif
 
 " Easymotion
 let g:EasyMotion_do_mapping = 0
@@ -170,26 +174,27 @@ let g:EasyMotion_smartcase = 1
 " Vim-test
 let test#javascript#mocha#executable = 'node_modules/.bin/mocha --compilers js:babel-core/register --require ./test/testHelper.js'
 
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" Neomake
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_ruby_enabled_makers = ['rubocop']
+let g:neomake_javascript_eslint_exe = './node_modules/.bin/eslint'
 
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_mode_map = { "mode": "passive" }
-
-" Override eslint with local version where necessary.
-let local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
-if matchstr(local_eslint, "^\/\\w") == ''
-  let local_eslint = getcwd() . "/" . local_eslint
-endif
-if executable(local_eslint)
-  let g:syntastic_javascript_eslint_exec = local_eslint
-endif
+let g:terminal_color_0  = '#2e3436'
+let g:terminal_color_1  = '#cc0000'
+let g:terminal_color_2  = '#4e9a06'
+let g:terminal_color_3  = '#c4a000'
+let g:terminal_color_4  = '#3465a4'
+let g:terminal_color_5  = '#75507b'
+let g:terminal_color_6  = '#0b939b'
+let g:terminal_color_7  = '#d3d7cf'
+let g:terminal_color_8  = '#555753'
+let g:terminal_color_9  = '#ef2929'
+let g:terminal_color_10 = '#8ae234'
+let g:terminal_color_11 = '#fce94f'
+let g:terminal_color_12 = '#729fcf'
+let g:terminal_color_13 = '#ad7fa8'
+let g:terminal_color_14 = '#00f5e9'
+let g:terminal_color_15 = '#eeeeec'
 
 " ========================================================================
 "  Mappings
@@ -206,13 +211,14 @@ map <leader>T :TestNearest<cr>
 map <leader>a :NERDTreeToggle<cr>
 map <leader>b :Gblame<cr>
 map <leader>cc :TComment<cr>
+nnoremap <silent> ,d :call neoterm#close()<cr>
 map <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 map <leader>f :CtrlP<cr>
 map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
 map <leader>q :bd<CR>
-map <leader>s :SyntasticCheck<cr><cr>
+map <leader>s :Neomake<cr><cr>
 map <leader>t :TestFile<cr>
 map <leader>v :tabe $MYVIMRC<CR>
 map <leader>w :bp<CR>:bd#<CR>
@@ -258,6 +264,8 @@ if has("autocmd")
 
   " Trim whitespace
   au FileWritePre,FileAppendPre,FilterWritePre,BufWritePre * :call TrimWhiteSpace()
+
+  " au BufWritePost * Neomake
 
   " Reload vimrc on save
   augroup reload_vimrc " {

@@ -1,9 +1,3 @@
-;; Show Linenumbers
-;; (global-linum-mode t)
-
-;; Dont show linenumbers in terminal
-;; (add-hook 'term-mode-hook (lambda () (linum-mode -1)))
-
 ;; Show column and linum in mode-line
 (line-number-mode 1)
 (column-number-mode 1)
@@ -55,5 +49,41 @@
 
 ;; Automaticaly add newline at and of document
 (setq require-final-newline t)
+
+;; Disable highlighting of matching par
+(setq show-paren-mode nil)
+
+;; avoid hiding with M-h
+(setq mac-pass-command-to-system nil)
+
+;; disable visible-bell
+(setq visible-bell nil)
+(setq ring-bell-function 'ignore)
+
+;; cmd key for meta
+(setq mac-option-key-is-meta nil
+      mac-command-key-is-meta t
+      mac-command-modifier 'meta
+      mac-option-modifier 'none)
+
+;; Encoding
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
+
+;; reduce the frequency of garbage collection by making it happen on
+;; each 50MB of allocated data (the default is on every 0.76MB)
+(setq gc-cons-threshold 50000000)
+
+;; warn when opening files bigger than 100MB
+(setq large-file-warning-threshold 100000000)
+
+;; font settings
+(set-face-attribute 'default nil :height 150)
+(setq-default line-spacing 4)
+
+;; Automatically remove trailing whitespace
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (provide 'init-custom)
