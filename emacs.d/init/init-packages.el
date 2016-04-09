@@ -80,7 +80,7 @@
       "hm" 'describe-mode
       "k" 'kill-other-buffers
       "q" 'kill-buffer-and-window
-      "w" 'quit-window
+      "w" 'delete-window
       "x" 'next-code-buffer
       "z" 'previous-code-buffer
       "v" 'open-emacs-config)))
@@ -137,6 +137,25 @@
   (evil-add-hjkl-bindings magit-log-mode-map 'emacs)
   (evil-add-hjkl-bindings magit-process-mode-map 'emacs)
   (evil-add-hjkl-bindings magit-status-mode-map 'emacs)
+
+  (defun display-buffer-full-screen (buffer alist)
+    (delete-other-windows)
+    ;; make sure the window isn't dedicated, otherwise
+    ;; `set-window-buffer' throws an error
+    (set-window-dedicated-p nil nil)
+    (set-window-buffer nil buffer)
+    ;; return buffer's window
+    (get-buffer-window buffer))
+
+  (setq magit-display-buffer-function
+        (lambda (buffer)
+          (if magit-display-buffer-noselect
+              ;; the code that called `magit-display-buffer-function'
+              ;; expects the original window to stay alive, we can't go
+              ;; fullscreen
+              (magit-display-buffer-traditional buffer)
+            (display-buffer buffer '(display-buffer-full-screen)))))
+
   (evil-leader/set-key
     "gs" 'magit-status
     "gl" 'magit-log
@@ -174,27 +193,28 @@
   :defer t
   :init
   (progn
-    (evil-leader/set-key-for-mode 'clojure-mode
-      "rp" 'cljr-promote-function
-      "rf" 'cljr-create-fn-from-example
-      "rl" 'cljr-move-to-let
-      "rd" 'cljr-add-project-dependency
-      "rr" 'cljr-rename-file)
+    (setq cljr-auto-sort-ns t
+          cljr-favor-prefix-notation nil
+          cljr-favor-private-functions nil
+          cljr-clojure-test-declaration
+          "[cljs.test :refer-macros [deftest is]]")
 
     (evil-leader/set-key-for-mode 'clojurescript-mode
-      "rp" 'cljr-promote-function
+      "rd" 'cljr-destructure-keys
       "rf" 'cljr-create-fn-from-example
+      "ri" 'cljr-inline-symbol
       "rl" 'cljr-move-to-let
-      "rd" 'cljr-add-project-dependency
+      "rL" 'cljr-expand-let
+      "rn" 'cljr-clean-ns
+      "rm" 'cljr-move-form
+      "ra" 'cljr-add-missing-libspec
+      "rp" 'cljr-promote-function
       "rr" 'cljr-rename-file)
 
-    (setq cljr-favor-private-functions nil)
-
-    (defun my-clojure-mode-hook ()
-      (clj-refactor-mode 1)
-      (yas-minor-mode 1))
-
-    (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)))
+    (add-hook 'clojure-mode-hook #'clj-refactor-mode))
+  :config
+  (add-to-list 'cljr-magic-require-namespaces
+               '("reagent"  . "reagent.core")))
 
 (use-package evil-cleverparens
   :defer t
@@ -243,20 +263,27 @@
   :defer t
   :init
   (setq cider-show-error-buffer t
+        cider-repl-display-help-banner nil
         cider-auto-select-error-buffer t
         cider-repl-history-file "~/.emacs.d/cider-history"
         cider-repl-wrap-history t)
   :config
-  (evil-leader/set-key-for-mode 'clojure-mode
+  (evil-leader/set-key
     "cs" 'cider-jack-in
     "cS" 'cider-restart
+    "cm" 'cider-macroexpand-1
+    "cr" 'cider-switch-to-repl-buffer)
+
+  (evil-leader/set-key-for-mode 'cider-repl-mode
+    "cr" 'cider-switch-to-last-clojure-buffer)
+
+  (evil-leader/set-key-for-mode 'clojure-mode
     "e" 'cider-eval-last-sexp
     "T" 'cider-test-run-test
     "t" 'cider-test-run-tests
     "d" 'cider-doc)
+
   (evil-leader/set-key-for-mode 'clojurescript-mode
-    "cs" 'cider-jack-in
-    "cS" 'cider-restart
     "e" 'cider-eval-last-sexp
     "E" 'cider-pprint-eval-last-sexp
     "T" 'cider-test-run-test
@@ -308,12 +335,7 @@
     (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
     (add-hook 'clojure-mode-hook #'aggressive-indent-mode)))
 
-(use-package highlight-parentheses
-  :defer t
-  :diminish highlight-parentheses-mode
-  :init
-  (progn
-    (setq hl-paren-colors '("OrangeRed" "DodgerBlue2" "DarkOliveGreen2"))
-    (global-highlight-parentheses-mode t)))
+(use-package multiple-cursors
+  :ensure t)
 
 (provide 'init-packages)

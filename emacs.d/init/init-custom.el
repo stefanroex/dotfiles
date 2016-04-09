@@ -51,7 +51,7 @@
 (setq require-final-newline t)
 
 ;; Disable highlighting of matching par
-(setq show-paren-mode nil)
+(setq show-paren-mode t)
 
 ;; avoid hiding with M-h
 (setq mac-pass-command-to-system nil)
@@ -85,5 +85,12 @@
 
 ;; Automatically remove trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Less intriguing colors for isearch
+(custom-set-faces
+ '(isearch ((t (:background "#fff" :foreground "#555"))))
+ '(isearch-lazy-highlight-face ((t (:background "#fff" :foreground "#333"))))
+ `(evil-search-highlight-persist-highlight-face ((t (:background "#fff" :foreground "#333"))))
+ '(isearch-fail ((t (:background "#fff" :foreground "red")))))
 
 (provide 'init-custom)

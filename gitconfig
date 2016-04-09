@@ -9,17 +9,12 @@
   new = green bold
 [alias]
   b = branch -v                     # branch (verbose)
-  ci = commit                       # commit
-  amend = commit --amend            # ammend your last commit
-  co = checkout                     # checkout
-  nb = checkout -b                  # create and switch to a new branch (mnemonic: "git new branch branchname...")
   d = diff                          # diff unstaged changes
   dc = diff --cached                # diff staged changes
   l = log --graph --date=short
   rc = rebase --continue            # continue rebase
   rs = rebase --skip                # skip rebase
   r = remote -v                     # show remotes (verbose)
-  s = status                        # status
   st = status                       # status
 [format]
   pretty = format:%C(white)%ad%Creset %C(green)%h%C(yellow)%d%Creset %C(white)%s %C(magenta) [%an]%Creset
@@ -34,7 +29,7 @@
   autosetupmerge = true
 [core]
   autocrlf = input
-  editor = nvim
+  editor = vim
   excludesfile = ~/.gitignore
 [diff]
   mnemonicprefix = true
@@ -49,15 +44,3 @@
 [user]
   email = info@stefanroex.nl
   name = Stefan Roex
-[github]
-  user = stexy
-[heroku]
-	account = brightin
-[filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
-[filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
-	required = true
