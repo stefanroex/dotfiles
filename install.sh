@@ -2,7 +2,6 @@
 
 xcode-select --install
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-curl https://raw.githubusercontent.com/creationix/nvm/v0.23.3/install.sh | bash
 brew doctor
 brew update
 
@@ -10,6 +9,7 @@ brew install direnv
 brew install git
 brew install heroku-toolbelt
 brew install macvim --override-system-vim
+brew install nvm
 brew install openssl
 brew install pgcli
 brew install rbenv
