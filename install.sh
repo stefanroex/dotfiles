@@ -32,8 +32,13 @@ brew cask install flux
 brew cask install google-chrome
 brew cask install iterm2
 brew cask install seil
+brew cask install slack
+brew cask install spectacle
+brew cask install spotify
 brew cask install tunnelblick
 
 brew cask alfred link
 brew cask cleanup
 rake install
+
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
