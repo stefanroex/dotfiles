@@ -31,8 +31,8 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; adjustable text-size
-(global-set-key (kbd "s-=") 'text-scale-increase)
-(global-set-key (kbd "s--") 'text-scale-decrease)
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
 
 ;; use system clipboard
 (setq x-select-enable-clipboard t)
@@ -92,5 +92,17 @@
  '(isearch-lazy-highlight-face ((t (:background "#fff" :foreground "#333"))))
  `(evil-search-highlight-persist-highlight-face ((t (:background "#fff" :foreground "#333"))))
  '(isearch-fail ((t (:background "#fff" :foreground "red")))))
+
+;; enabled line numbers
+(linum-mode)
+
+;; revert buffers automatically when underlying files are changed externally
+(global-auto-revert-mode t)
+
+;; whitespace-mode config
+(require 'whitespace)
+(setq whitespace-line-column 80) ;; limit line length
+(setq whitespace-style '(face tabs empty trailing lines-tail))
+(global-whitespace-mode t)
 
 (provide 'init-custom)

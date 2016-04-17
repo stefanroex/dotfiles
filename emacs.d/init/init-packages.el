@@ -1,90 +1,6 @@
 (use-package better-defaults
   :pin melpa-stable)
 
-(use-package exec-path-from-shell
-  :pin melpa-stable
-  :init
-  (exec-path-from-shell-initialize))
-
-(use-package base16-theme
-  :init
-  (load-theme 'base16-ashes-dark t))
-
-(use-package yasnippet
-  :pin melpa-stable
-  :init
-  (yas-global-mode 1))
-
-(use-package evil-leader
-  :init
-  (global-evil-leader-mode t)
-  :config
-  (progn
-    ;; Evil leader
-    (defun my-switch-to-other-buffer ()
-      "Switch to other buffer"
-      (interactive)
-      (switch-to-buffer (other-buffer)))
-
-    (defun open-emacs-config ()
-      (interactive)
-      (find-file "~/.emacs.d/init.el"))
-
-    (defun circle-code-buffers (circle-fn)
-      (let ((bread-crumb (buffer-name)))
-        (funcall circle-fn)
-        (while
-            (and
-             (string-match-p "^\*" (buffer-name))
-             (not (equal bread-crumb (buffer-name))) )
-          (funcall circle-fn))))
-
-    (defun next-code-buffer ()
-      (interactive)
-      (circle-code-buffers 'next-buffer))
-
-    (defun previous-code-buffer ()
-      (interactive)
-      (circle-code-buffers 'previous-buffer))
-
-    (defun kill-other-buffers ()
-      "Kill all other buffers."
-      (interactive)
-      (mapc 'kill-buffer
-            (delq (current-buffer)
-                  (remove-if-not 'buffer-file-name (buffer-list)))))
-
-    (evil-leader/set-leader ",")
-
-    ;; Easier window switching
-    (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-    (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-    (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-    (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
-
-    ;; Evil Window switching similar in emacs mode
-    (global-set-key (kbd "C-h") 'evil-window-left)
-    (global-set-key (kbd "C-j") 'evil-window-down)
-    (global-set-key (kbd "C-k") 'evil-window-up)
-    (global-set-key (kbd "C-l") 'evil-window-right)
-
-    (evil-leader/set-key-for-mode 'emacs-lisp-mode
-      "e" 'eval-last-sexp
-      "d" 'helm-apropos
-      "hf" 'describe-function
-      "hv" 'describe-variable)
-
-    (evil-leader/set-key
-      "," 'my-switch-to-other-buffer
-      "hk" 'describe-key
-      "hm" 'describe-mode
-      "k" 'kill-other-buffers
-      "q" 'kill-buffer-and-window
-      "w" 'delete-window
-      "x" 'next-code-buffer
-      "z" 'previous-code-buffer
-      "v" 'open-emacs-config)))
-
 (use-package evil
   :init
   (evil-mode t)
@@ -92,6 +8,7 @@
   (progn
     ;; esc quits
     (setq evil-intercept-esc 'always)
+
     (defun minibuffer-keyboard-quit ()
       (interactive)
       (if (and delete-selection-mode transient-mark-mode mark-active)
@@ -109,8 +26,103 @@
     (define-key evil-normal-state-map (kbd "C-n") 'next-error)
     (define-key evil-normal-state-map (kbd "C-p") 'previous-error)
 
+    ;; Easier window switching
+    (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+    (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+    (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+    (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+
+    ;; Evil Window switching similar in emacs mode
+    (global-set-key (kbd "C-h") 'evil-window-left)
+    (global-set-key (kbd "C-j") 'evil-window-down)
+    (global-set-key (kbd "C-k") 'evil-window-up)
+    (global-set-key (kbd "C-l") 'evil-window-right)
+
+    ;; Better undo behavior, more like vim.
+    (setq evil-want-fine-undo 'fine)
+
     ;; Set offset used by < and > to 2
     (setq-default evil-shift-width 2)))
+
+(use-package general
+  :ensure t
+  :config
+  (progn
+    (setq general-default-states '(normal))
+
+    (defun my-switch-to-other-buffer ()
+      "Switch to previous buffer."
+      (interactive)
+      (switch-to-buffer (other-buffer)))
+
+    (defun open-emacs-config ()
+      "Open the emacs packages file for quick changes."
+      (interactive)
+      (find-file "~/.emacs.d/init/init-packages.el"))
+
+    (defun circle-code-buffers (circle-fn)
+      (let ((bread-crumb (buffer-name)))
+        (funcall circle-fn)
+        (while
+            (and
+             (string-match-p "^\*" (buffer-name))
+             (not (equal bread-crumb (buffer-name))) )
+          (funcall circle-fn))))
+
+    (defun next-code-buffer ()
+      "Open next active buffer, ignoring non-code related buffers."
+      (interactive)
+      (circle-code-buffers 'next-buffer))
+
+    (defun previous-code-buffer ()
+      "Open next active buffer, ignoring non-code related buffers."
+      (interactive)
+      (circle-code-buffers 'previous-buffer))
+
+    (defun kill-other-buffers ()
+      "Kill all other buffers."
+      (interactive)
+      (mapc 'kill-buffer
+            (delq (current-buffer)
+                  (remove-if-not 'buffer-file-name (buffer-list)))))
+
+    (general-define-key
+     :keymaps 'emacs-lisp-mode-map
+     :prefix ","
+     "e" 'eval-last-sexp
+     "d" 'helm-apropos)
+
+    (general-define-key
+     :prefix ","
+     "hk" 'describe-key
+     "hm" 'describe-mode
+     "hf" 'describe-function
+     "hv" 'describe-variable)
+
+    (general-define-key
+     :prefix ","
+     "," 'my-switch-to-other-buffer
+     "k" 'kill-other-buffers
+     "q" 'kill-buffer-and-window
+     "w" 'delete-window
+     "x" 'next-code-buffer
+     "z" 'previous-code-buffer
+     "v" 'open-emacs-config)))
+
+(use-package exec-path-from-shell
+  :pin melpa-stable
+  :init
+  (exec-path-from-shell-initialize))
+
+(use-package base16-theme
+  :init
+  (load-theme 'base16-ashes-dark t))
+
+(use-package yasnippet
+  :pin melpa-stable
+  :diminish yas-minor-mode
+  :init
+  (yas-global-mode 1))
 
 (use-package evil-surround
   :init (global-evil-surround-mode t))
@@ -156,16 +168,18 @@
               (magit-display-buffer-traditional buffer)
             (display-buffer buffer '(display-buffer-full-screen)))))
 
-  (evil-leader/set-key
-    "gs" 'magit-status
-    "gl" 'magit-log
-    "gb" 'magit-blame))
+  (general-define-key
+   :prefix ","
+   "gs" 'magit-status
+   "gl" 'magit-log
+   "gb" 'magit-blame))
 
 (use-package project-explorer
   :defer t
-  :init
-  (evil-leader/set-key "a" 'project-explorer-toggle)
   :config
+  (general-define-key
+   :prefix ","
+   "a" 'project-explorer-toggle)
   (setq pe/omit-gitignore t)
   (evil-declare-key 'normal project-explorer-mode-map
     (kbd "o") 'pe/return
@@ -199,18 +213,6 @@
           cljr-clojure-test-declaration
           "[cljs.test :refer-macros [deftest is]]")
 
-    (evil-leader/set-key-for-mode 'clojurescript-mode
-      "rd" 'cljr-destructure-keys
-      "rf" 'cljr-create-fn-from-example
-      "ri" 'cljr-inline-symbol
-      "rl" 'cljr-move-to-let
-      "rL" 'cljr-expand-let
-      "rn" 'cljr-clean-ns
-      "rm" 'cljr-move-form
-      "ra" 'cljr-add-missing-libspec
-      "rp" 'cljr-promote-function
-      "rr" 'cljr-rename-file)
-
     (add-hook 'clojure-mode-hook #'clj-refactor-mode))
   :config
   (add-to-list 'cljr-magic-require-namespaces
@@ -218,6 +220,8 @@
 
 (use-package evil-cleverparens
   :defer t
+  :config
+  (setq evil-cleverparens-use-regular-insert t)
   :init
   (progn
     (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
@@ -255,40 +259,38 @@
   (define-key evil-normal-state-map (kbd "RET") 'evil-search-highlight-persist-remove-all))
 
 (use-package ace-jump-mode
-  :defer t
   :config
-  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode))
+  (general-define-key "SPC" 'ace-jump-mode))
 
 (use-package cider
   :defer t
   :init
   (setq cider-show-error-buffer t
         cider-repl-display-help-banner nil
+        cider-eval-result-duration nil
         cider-auto-select-error-buffer t
         cider-repl-history-file "~/.emacs.d/cider-history"
         cider-repl-wrap-history t)
   :config
-  (evil-leader/set-key
-    "cs" 'cider-jack-in
-    "cS" 'cider-restart
-    "cm" 'cider-macroexpand-1
-    "cr" 'cider-switch-to-repl-buffer)
+  (general-define-key
+   :prefix ","
+   "cs" 'cider-jack-in
+   "cS" 'cider-restart)
 
-  (evil-leader/set-key-for-mode 'cider-repl-mode
-    "cr" 'cider-switch-to-last-clojure-buffer)
+  (define-key evil-normal-state-map (kbd "\\") 'cider-eval-defun-at-point)
 
-  (evil-leader/set-key-for-mode 'clojure-mode
-    "e" 'cider-eval-last-sexp
-    "T" 'cider-test-run-test
-    "t" 'cider-test-run-tests
-    "d" 'cider-doc)
+  (general-define-key
+   :keymaps ('clojure-mode-map 'clojurescript-mode-map)
+   :prefix ","
+   "cE" 'cider-pprint-eval-last-sexp
+   "cT" 'cider-test-run-test
+   "cd" 'cider-doc
+   "ce" 'cider-eval-defun-at-point
+   "cm" 'cider-macroexpand-1
+   "cr" 'cider-switch-to-repl-buffer
+   "ct" 'cider-test-run-tests)
 
-  (evil-leader/set-key-for-mode 'clojurescript-mode
-    "e" 'cider-eval-last-sexp
-    "E" 'cider-pprint-eval-last-sexp
-    "T" 'cider-test-run-test
-    "t" 'cider-test-run-tests
-    "d" 'cider-doc))
+  (advice-add 'evil-search-highlight-persist-remove-all :after #'cider--remove-result-overlay))
 
 (use-package which-key
   :diminish which-key-mode
@@ -306,10 +308,11 @@
           helm-apropos-fuzzy-match t
           helm-recentf-fuzzy-match t)
 
-    (evil-leader/set-key
-      "b" 'helm-projectile-switch-to-buffer
-      "B" 'helm-mini
-      "y" 'helm-show-kill-ring)
+    (general-define-key
+     :prefix ","
+     "b" 'helm-projectile-switch-to-buffer
+     "B" 'helm-mini
+     "y" 'helm-show-kill-ring)
 
     (global-set-key (kbd "M-x") 'helm-M-x)))
 
@@ -317,15 +320,17 @@
   :diminish projectile-mode
   :config
   (projectile-global-mode t)
-  (setq projectile-switch-project-action 'helm-projectile-find-file))
+  (setq projectile-keymap-prefix (kbd "C-c p")
+        projectile-create-missing-test-files t
+        projectile-switch-project-action 'helm-projectile-find-file))
 
 (use-package helm-projectile
   :config
   (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)
-  (evil-leader/set-key
-    "f" 'helm-projectile-find-file
-    "F" 'helm-find-files
-    "p" 'helm-projectile-switch-project))
+  (general-define-key
+   :prefix ","
+   "f" 'helm-projectile
+   "F" 'helm-find-files))
 
 (use-package aggressive-indent
   :defer t
@@ -335,7 +340,17 @@
     (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
     (add-hook 'clojure-mode-hook #'aggressive-indent-mode)))
 
-(use-package multiple-cursors
-  :ensure t)
+(use-package evil-anzu
+  :ensure t
+  :diminish anzu-mode
+  :config
+  (global-anzu-mode t))
+
+(use-package whitespace
+  :diminish global-whitespace-mode
+  :config
+  (setq whitespace-line-column 80
+        whitespace-style '(face tabs empty trailing lines-tail))
+  (global-whitespace-mode t))
 
 (provide 'init-packages)
