@@ -7,6 +7,8 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 
+(require 'init-vars)
 (require 'init-use-package)
+(require 'init-functions)
 (require 'init-packages)
 (require 'init-custom)

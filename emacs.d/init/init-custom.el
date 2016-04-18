@@ -99,10 +99,4 @@
 ;; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
 
-;; whitespace-mode config
-(require 'whitespace)
-(setq whitespace-line-column 80) ;; limit line length
-(setq whitespace-style '(face tabs empty trailing lines-tail))
-(global-whitespace-mode t)
-
 (provide 'init-custom)
