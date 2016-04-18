@@ -248,9 +248,8 @@
 
 (use-package helm-projectile
   :config
-  (keys :prefix ","
-        "f" 'helm-projectile
-        "F" 'helm-find-files))
+  (keys-l "f" 'helm-projectile
+          "F" 'helm-find-files))
 
 (use-package aggressive-indent
   :defer t
