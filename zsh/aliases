@@ -1,11 +1,11 @@
 alias ...='../..'
 alias a='ls -lrthG'
-alias aliases='vim -v ~/.dotfiles/zsh/aliases'
+alias aliases='mvim -v ~/.dotfiles/zsh/aliases'
 alias amend="git commit --amend"
 alias ass='rm -rf tmp/cache && pow restart'
 alias cbundle='rm -rf vendor/bundle && bundle install --system --binstubs'
 alias d='cd ~/.dotfiles'
-alias e='vim'
+alias e='mvim -v'
 alias ga='git add . && git add -u && gs'
 alias gc='git commit'
 alias gci="git pull --rebase && rake && git push"
@@ -36,7 +36,7 @@ alias s='pow open && e'
 alias server='python -m SimpleHTTPServer'
 alias so='source ~/.dotfiles/zsh/aliases'
 alias startredis='redis-server /usr/local/etc/redis.conf &'
-alias vi='vim'
+alias vi='mvim -v'
 alias z="zeus"
 
 alias -g M='| more'
