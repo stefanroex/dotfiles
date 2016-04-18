@@ -91,8 +91,10 @@
   (evil-add-hjkl-bindings magit-log-mode-map 'emacs)
   (evil-add-hjkl-bindings magit-process-mode-map 'emacs)
   (evil-add-hjkl-bindings magit-status-mode-map 'emacs)
-  (keys :keymaps 'magit-status-mode-map
+  (keys :states nil
+        :keymaps 'magit-file-section-map
         "K" 'magit-discard)
+
   (keys-l "gs" 'magit-status
           "gl" 'magit-log
           "gb" 'magit-blame))
@@ -127,8 +129,6 @@
         cljr-favor-private-functions nil
         cljr-clojure-test-declaration
         "[cljs.test :refer-macros [deftest is]]")
-  (add-hook 'clojure-mode-hook #'clj-refactor-mode)
-  :config
   (keys-l :keymaps '(clojure-mode-map clojurescript-mode-map)
           "rd" 'cljr-destructure-keys
           "rf" 'cljr-create-fn-from-example
@@ -140,7 +140,8 @@
           "ra" 'cljr-add-missing-libspec
           "rp" 'cljr-promote-function
           "rr" 'cljr-rename-file)
-
+  (add-hook 'clojure-mode-hook #'clj-refactor-mode)
+  :config
   (add-to-list 'cljr-magic-require-namespaces
                '("reagent"  . "reagent.core")))
 
@@ -263,12 +264,5 @@
   :diminish anzu-mode
   :config
   (global-anzu-mode t))
-
-(use-package whitespace
-  :diminish global-whitespace-mode
-  :config
-  (setq whitespace-line-column 80
-        whitespace-style '(face tabs empty trailing lines-tail))
-  (global-whitespace-mode t))
 
 (provide 'init-packages)
