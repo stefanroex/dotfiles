@@ -29,7 +29,7 @@
 (use-package evil
   :init
   (setq evil-intercept-esc 'always
-        evil-want-fine-undo 'fine
+        evil-want-fine-undo t
         evil-shift-width 2)
   :config
   (evil-mode t)
