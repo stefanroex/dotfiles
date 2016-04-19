@@ -243,6 +243,8 @@
 (use-package which-key
   :diminish which-key-mode
   :config
+  (setq which-key-side-window-max-width 0.7
+        which-key-add-column-padding 1)
   (which-key-mode +1)
   (which-key-setup-side-window-right))
 
@@ -255,9 +257,8 @@
         helm-apropos-fuzzy-match t
         helm-recentf-fuzzy-match t)
   :config
-  (keys-l "B" 'helm-mini
+  (keys-l "B" 'helm-buffers-list
           "y" 'helm-show-kill-ring)
-
   (keys :states nil
         "M-x" 'helm-M-x))
 
