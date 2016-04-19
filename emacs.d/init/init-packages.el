@@ -151,6 +151,7 @@
   :defer t
   :diminish eldoc-mode
   :init
+  (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
   (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
   (add-hook 'ielm-mode-hook 'eldoc-mode))
@@ -195,19 +196,46 @@
         cider-repl-wrap-history t)
 
   :config
-  (keys :keymaps '(clojure-mode-map clojurescript-mode-map)
+  (defvar cider-mode-maps
+    '(cider-repl-mode-map
+      clojure-mode-map
+      clojurescript-mode-map))
+
+  (keys :keymaps cider-mode-maps
         "\\" 'cider-eval-defun-at-point)
 
-  (keys-l :keymaps '(clojure-mode-map clojurescript-mode-map)
+  (keys-l :keymaps cider-mode-maps
           "E" 'cider-pprint-eval-last-sexp
           "T" 'cider-test-run-test
-          "cS" 'cider-restart
-          "cm" 'cider-macroexpand-1
-          "cr" 'cider-switch-to-repl-buffer
-          "cs" 'cider-jack-in
-          "ct" 'cider-test-run-tests
           "d" 'cider-doc
           "e" 'cider-eval-defun-at-point)
+
+  (keys :keymaps cider-mode-maps
+        :prefix ",c"
+        "I" 'cider-display-connection-info
+        "J" 'cider-jack-in-clojurescript
+        "R" 'cider-restart
+        "c" 'cider-connection-browser
+        "d" 'cider-doc-map
+        "eb" 'cider-load-buffer
+        "ef" 'cider-eval-defun-at-point
+        "ef" 'cider-load-file
+        "el" 'cider-eval-last-sexp
+        "er" 'cider-eval-last-sexp-and-replace
+        "i" 'cider-inspect
+        "j" 'cider-jack-in
+        "m" 'cider-macroexpand-1
+        "pf" 'cider-pprint-eval-defun-at-point
+        "pl" 'cider-pprint-eval-last-sexp
+        "q" 'cider-quit
+        "r" 'cider-refresh
+        "sc" 'cider-rotate-default-connection
+        "sn" 'cider-repl-set-ns
+        "sr" 'cider-switch-to-repl-buffer
+        "t" 'cider-test-run-tests)
+
+  (add-to-list 'evil-emacs-state-modes 'cider-connections-buffer-mode)
+  (evil-add-hjkl-bindings cider-connections-buffer-mode-map 'emacs)
 
   (advice-add 'evil-search-highlight-persist-remove-all :after #'cider--remove-result-overlay))
 
