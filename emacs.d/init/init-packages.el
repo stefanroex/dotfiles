@@ -129,19 +129,14 @@
         cljr-favor-private-functions nil
         cljr-clojure-test-declaration
         "[cljs.test :refer-macros [deftest is]]")
-  (keys-l :keymaps '(clojure-mode-map clojurescript-mode-map)
-          "rd" 'cljr-destructure-keys
-          "rf" 'cljr-create-fn-from-example
-          "ri" 'cljr-inline-symbol
-          "rl" 'cljr-move-to-let
-          "rL" 'cljr-expand-let
-          "rn" 'cljr-clean-ns
-          "rm" 'cljr-move-form
-          "ra" 'cljr-add-missing-libspec
-          "rp" 'cljr-promote-function
-          "rr" 'cljr-rename-file)
   (add-hook 'clojure-mode-hook #'clj-refactor-mode)
   :config
+  (dolist (details cljr--all-helpers)
+    (let ((key (car details))
+          (fn (cadr details)))
+      (keys :prefix ",r"
+            :keymaps '(clojure-mode-map clojurescript-mode-map)
+            key fn)))
   (add-to-list 'cljr-magic-require-namespaces
                '("reagent"  . "reagent.core")))
 
@@ -231,9 +226,7 @@
         helm-apropos-fuzzy-match t
         helm-recentf-fuzzy-match t)
   :config
-  (keys-l "b" 'helm-projectile-switch-to-buffer
-          "p" 'helm-projectile-switch-project
-          "B" 'helm-mini
+  (keys-l "B" 'helm-mini
           "y" 'helm-show-kill-ring)
 
   (keys :states nil
@@ -243,8 +236,11 @@
   :diminish projectile-mode
   :init
   (setq projectile-create-missing-test-files t
+        projectile-completion-system 'helm
         projectile-switch-project-action 'helm-projectile-find-file)
   :config
+  (keys-l "p" 'projectile-command-map)
+  (keys-l "b" 'projectile-switch-to-buffer)
   (projectile-global-mode t))
 
 (use-package helm-projectile
