@@ -290,4 +290,10 @@
   :config
   (global-anzu-mode t))
 
+(use-package indent-guide
+  :init
+  (setq indent-guide-delay 0.5)
+  :config
+  (indent-guide-global-mode))
+
 (provide 'init-packages)
