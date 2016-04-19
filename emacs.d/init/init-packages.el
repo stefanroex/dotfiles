@@ -71,6 +71,7 @@
 (use-package ag
   :defer t
   :init
+  (setq ag-reuse-buffers t)
   (keys-l "s" 'ag))
 
 (use-package company
