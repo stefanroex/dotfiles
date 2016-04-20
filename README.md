@@ -1,4 +1,5 @@
 Dotfiles
 ========
 
-    rake install
+    ./install.sh
+    ./symlink-dotfiles.sh
