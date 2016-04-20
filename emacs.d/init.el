@@ -2,13 +2,18 @@
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
 
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-(require 'init-vars)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
+
 (require 'init-use-package)
 (require 'init-functions)
-(require 'init-packages)
-(require 'init-custom)
+(require 'init-editor-packages)
+(require 'init-editor-custom)
+(require 'init-evil)
+(require 'init-magit)
+(require 'init-lisp)
+(require 'init-clojure)
+(require 'symbol-focus)

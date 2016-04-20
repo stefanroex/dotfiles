@@ -6,7 +6,7 @@
 (defun open-emacs-config ()
   "Open the emacs packages file for quick changes."
   (interactive)
-  (find-file "~/.emacs.d/init/init-packages.el"))
+  (find-file "~/.emacs.d/init.el"))
 
 (defun circle-code-buffers (circle-fn)
   (let ((bread-crumb (buffer-name)))
