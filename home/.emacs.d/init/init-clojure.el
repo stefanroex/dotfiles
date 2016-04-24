@@ -8,6 +8,7 @@
   :defer t
   :init
   (setq cider-show-error-buffer t
+        cider-prompt-for-symbol nil
         cider-repl-display-help-banner nil
         cider-eval-result-duration nil
         cider-auto-select-error-buffer t
@@ -22,12 +23,14 @@
       clojurescript-mode-map))
 
   (keys :keymaps cider-mode-maps
+        "gf" 'cider-find-var
         "\\" 'cider-eval-defun-at-point)
 
   (keys-l :keymaps cider-mode-maps
           "E" 'cider-pprint-eval-last-sexp
           "T" 'cider-test-run-test
           "d" 'cider-doc
+          "D" 'cider-grimoire-web
           "e" 'cider-eval-last-sexp)
 
   (keys :keymaps cider-mode-maps
@@ -35,7 +38,7 @@
         "I" 'cider-display-connection-info
         "J" 'cider-jack-in-clojurescript
         "R" 'cider-restart
-        "c" 'cider-connection-browser
+        "C" 'cider-connection-browser
         "d" 'cider-doc-map
         "eb" 'cider-load-buffer
         "ef" 'cider-eval-defun-at-point
