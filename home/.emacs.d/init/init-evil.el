@@ -36,6 +36,7 @@
   :init
   (global-evil-search-highlight-persist t)
   :config
-  (keys "RET" 'evil-search-highlight-persist-remove-all))
+  (keys :keymaps 'prog-mode-map
+        "RET" 'evil-search-highlight-persist-remove-all))
 
 (provide 'init-evil)
