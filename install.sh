@@ -29,6 +29,7 @@ brew cask install 1password
 brew cask install alfred
 brew cask install apptrap
 brew cask install bittorrent-sync
+brew cask install caffeine
 brew cask install dropbox
 brew cask install flux
 brew cask install google-chrome
