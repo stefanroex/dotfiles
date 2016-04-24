@@ -16,4 +16,8 @@
 (require 'init-magit)
 (require 'init-lisp)
 (require 'init-clojure)
+(require 'init-org)
 (require 'symbol-focus)
+
+;; Start emacs in dired mode.
+(dired ".")
