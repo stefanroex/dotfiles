@@ -1,3 +1,30 @@
+[user]
+  email = info@stefanroex.nl
+  name = Stefan Roex
+[core]
+  autocrlf = input
+  editor = vim
+  excludesfile = ~/.gitignore
+[branch]
+  # Tells git branch and git checkout to set up new branches so that git-pull will appropriately merge from the starting point branch
+  autosetupmerge = true
+[pull]
+  # Rebase branches on top of the fetched branch
+  rebase = true
+[rerere]
+  # Activate recording of resolved conflicts, so that identical conflict hunks can be resolved automatically.
+  enabled = true
+[credential]
+  # Specify an external helper to be called when a username or password credential is needed
+  helper = osxkeychain
+[alias]
+  b = branch -v
+  d = diff
+  dc = diff --cached
+  l = log --graph --date=short
+  rc = rebase --continue
+  r = remote -v
+  st = status
 [color "branch"]
   current = yellow reverse
   local = yellow
@@ -7,40 +34,5 @@
   frag = magenta bold
   old = red bold
   new = green bold
-[alias]
-  b = branch -v                     # branch (verbose)
-  d = diff                          # diff unstaged changes
-  dc = diff --cached                # diff staged changes
-  l = log --graph --date=short
-  rc = rebase --continue            # continue rebase
-  rs = rebase --skip                # skip rebase
-  r = remote -v                     # show remotes (verbose)
-  st = status                       # status
 [format]
   pretty = format:%C(white)%ad%Creset %C(green)%h%C(yellow)%d%Creset %C(white)%s %C(magenta) [%an]%Creset
-[merge]
-  summary = true
-  verbosity = 1
-[advice]
-  statusHints = false
-[apply]
-  whitespace = nowarn
-[branch]
-  autosetupmerge = true
-[core]
-  autocrlf = input
-  editor = vim
-  excludesfile = ~/.gitignore
-[diff]
-  mnemonicprefix = true
-[push]
-  default = simple
-[pull]
-  rebase = true
-[rerere]
-  enabled = true
-[credential]
-  helper = osxkeychain
-[user]
-  email = info@stefanroex.nl
-  name = Stefan Roex
