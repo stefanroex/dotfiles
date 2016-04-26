@@ -23,3 +23,4 @@ export EDITOR='mvim -v'
 export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="./bin:$PATH"
+export HOMEBREW_NO_ANALYTICS=1
