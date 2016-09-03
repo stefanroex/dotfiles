@@ -29,7 +29,7 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/gitignore'
-
+Plug 'facebook/vim-flow'
 Plug 'w0ng/vim-hybrid'
 
 " Syntax
@@ -48,6 +48,8 @@ Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
+Plug 'leafgarland/typescript-vim'
+Plug 'JulesWang/css.vim'
 
 " Syntaxhighlight tweaking
 " Plug 'lilydjwg/colorizer'
@@ -103,7 +105,8 @@ let g:ackprg = 'ag --nogroup --column'
 
 " (Hopefully) removes the delay when hitting esc in insert mode
 set ttimeout
-set ttimeoutlen=20
+set timeoutlen=1000
+set ttimeoutlen=0
 set notimeout
 
 if !has('nvim')
@@ -124,6 +127,7 @@ set wildmode=list:full
 
 " Javascript settings
 let g:javascript_enable_domhtmlcss = 1
+let g:javascript_plugin_flow = 0
 let g:jsx_ext_required = 0
 
 " Statusline
@@ -196,6 +200,9 @@ let g:terminal_color_13 = '#ad7fa8'
 let g:terminal_color_14 = '#00f5e9'
 let g:terminal_color_15 = '#eeeeec'
 
+" Vim Flow
+let g:flow#autoclose = 1
+
 " ========================================================================
 "  Mappings
 " ========================================================================
@@ -218,7 +225,7 @@ map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
 map <leader>q :bd<CR>
-map <leader>s :Neomake<cr><cr>
+map <leader>s :Neomake<cr>
 map <leader>t :TestFile<cr>
 map <leader>v :tabe $MYVIMRC<CR>
 map <leader>w :bp<CR>:bd#<CR>
@@ -261,6 +268,7 @@ if has("autocmd")
   " Treat ERB as ruby erb file
   au BufRead,BufNewFile *.{skim,slim} set filetype=slim
   au BufRead,BufNewFile *.erb set filetype=eruby.html
+  au BufRead,BufNewFile *.css set filetype=scss
 
   " Trim whitespace
   au FileWritePre,FileAppendPre,FilterWritePre,BufWritePre * :call TrimWhiteSpace()

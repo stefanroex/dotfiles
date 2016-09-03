@@ -1,5 +1,26 @@
 (use-package clojure-mode
-  :defer t)
+  :defer t
+  :config
+  (define-clojure-indent
+    ;; om & om-tools indenting
+    (display-name 'defun)
+    (init-state 'defun)
+    (will-mount 'defun)
+    (did-mount 'defun)
+    (will-unmount 'defun)
+    (render 'defun)
+    (render-state 'defun)
+    (should-update 'defun)
+    (will-update 'defun)
+    (will-receive-props 'defun)
+    (did-update 'defun)
+    ;; om.next
+    (params 'defun)
+    (query 'defun)
+    (ident 'defun)
+    (componentWillReceiveProps 'defun)
+    (componentDidMount 'defun)
+    (componentWillUnmount 'defun)))
 
 (use-package clojure-mode-extra-font-locking
   :defer t)
@@ -69,7 +90,9 @@
         cljr-favor-prefix-notation nil
         cljr-favor-private-functions nil
         cljr-clojure-test-declaration
-        "[cljs.test :refer-macros [deftest is]]")
+        "[cljs.test :refer-macros [deftest is]]"
+        cider-refresh-before-fn "reloaded.repl/stop"
+        cider-refresh-after-fn "reloaded.repl/start")
   (add-hook 'clojure-mode-hook #'clj-refactor-mode)
   :config
   (dolist (details cljr--all-helpers)

@@ -62,6 +62,15 @@
   (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
   (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer))
 
+(use-package company-flow
+  :defer t
+  :commands company-flow
+  :init
+  (progn
+    (push 'company-flow company-backends))
+  :config
+  (add-to-list 'company-flow-modes 'web-mode))
+
 (use-package project-explorer
   :defer t
   :init

@@ -7,9 +7,9 @@ autoload -U compinit
 compinit
 
 # Save a ton of history
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
 
 # Disable autocorrection
 unsetopt correct_all

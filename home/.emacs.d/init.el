@@ -16,7 +16,11 @@
 (require 'init-magit)
 (require 'init-lisp)
 (require 'init-clojure)
+(require 'init-javascript)
+(require 'init-css)
 (require 'init-org)
+(require 'init-elm)
+(require 'init-flycheck)
 (require 'symbol-focus)
 
 ;; Start emacs in dired mode.
