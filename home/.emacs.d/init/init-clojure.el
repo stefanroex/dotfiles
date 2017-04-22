@@ -27,7 +27,7 @@
 
 (use-package cider
   :defer t
-  :init
+  :config
   (setq cider-show-error-buffer t
         cider-prompt-for-symbol nil
         cider-repl-display-help-banner nil
@@ -35,9 +35,14 @@
         cider-auto-select-error-buffer t
         cider-request-dispatch 'static
         cider-repl-history-file "~/.emacs.d/cider-history"
-        cider-repl-wrap-history t)
+        cider-repl-wrap-history t
+        cider-refresh-before-fn "reloaded.repl/suspend"
+        cider-refresh-after-fn "reloaded.repl/resume")
 
-  :config
+  (add-hook 'cider-mode-hook
+            (lambda ()
+              (add-hook 'after-save-hook 'cider-refresh)))
+
   (defvar cider-mode-maps
     '(cider-repl-mode-map
       clojure-mode-map
@@ -90,9 +95,7 @@
         cljr-favor-prefix-notation nil
         cljr-favor-private-functions nil
         cljr-clojure-test-declaration
-        "[cljs.test :refer-macros [deftest is]]"
-        cider-refresh-before-fn "reloaded.repl/stop"
-        cider-refresh-after-fn "reloaded.repl/start")
+        "[cljs.test :refer-macros [deftest is]]")
   (add-hook 'clojure-mode-hook #'clj-refactor-mode)
   :config
   (dolist (details cljr--all-helpers)

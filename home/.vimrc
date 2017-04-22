@@ -4,6 +4,10 @@ endif
 set shell=bash
 filetype off
 
+if has('nvim')
+  language en_US
+endif
+
 " ========================================================================
 " Vim Plug
 " ========================================================================
@@ -25,31 +29,29 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/gitignore'
-Plug 'facebook/vim-flow'
 Plug 'w0ng/vim-hybrid'
 
+if !has('nvim')
+  Plug 'tpope/vim-sensible'
+endif
+
 " Syntax
-Plug 'amdt/vim-niji'
+Plug 'JulesWang/css.vim'
 Plug 'claco/jasmine.vim'
-Plug 'derekwyatt/vim-scala'
-Plug 'elixir-lang/vim-elixir'
+Plug 'cyberkov/openhab-vim'
 Plug 'groenewege/vim-less'
 Plug 'guns/vim-clojure-static'
 Plug 'kchmck/vim-coffee-script'
 Plug 'mtscout6/vim-cjsx'
 Plug 'mxw/vim-jsx'
-Plug 'nono/vim-handlebars'
 Plug 'pangloss/vim-javascript'
 Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
-Plug 'leafgarland/typescript-vim'
-Plug 'JulesWang/css.vim'
 
 " Syntaxhighlight tweaking
 " Plug 'lilydjwg/colorizer'
@@ -99,15 +101,6 @@ set smartcase
 " Use Ack instead of grep
 set grepprg=ag
 let g:ackprg = 'ag --nogroup --column'
-
-" Able to 'gf' files
-" set suffixesadd=.rb,.coffee,.js
-
-" (Hopefully) removes the delay when hitting esc in insert mode
-set ttimeout
-set timeoutlen=1000
-set ttimeoutlen=0
-set notimeout
 
 if !has('nvim')
   set ttyfast
@@ -179,9 +172,9 @@ let g:EasyMotion_smartcase = 1
 let test#javascript#mocha#executable = 'node_modules/.bin/mocha --compilers js:babel-core/register --require ./test/testHelper.js'
 
 " Neomake
-let g:neomake_javascript_enabled_makers = ['eslint']
+" let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_ruby_enabled_makers = ['rubocop']
-let g:neomake_javascript_eslint_exe = './node_modules/.bin/eslint'
+" let g:neomake_javascript_eslint_exe = './node_modules/.bin/eslint'
 
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
@@ -271,9 +264,10 @@ if has("autocmd")
   au BufRead,BufNewFile *.css set filetype=scss
 
   " Trim whitespace
-  au FileWritePre,FileAppendPre,FilterWritePre,BufWritePre * :call TrimWhiteSpace()
+  " au FileWritePre,FileAppendPre,FilterWritePre,BufWritePre * :call TrimWhiteSpace()
 
-  " au BufWritePost * Neomake
+  " Run Neomake after saving the file
+  au BufWritePost * Neomake
 
   " Reload vimrc on save
   augroup reload_vimrc " {

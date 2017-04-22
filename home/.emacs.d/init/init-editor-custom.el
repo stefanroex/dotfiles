@@ -80,6 +80,7 @@
 (setq large-file-warning-threshold 100000000)
 
 ;; font settings
+(set-face-attribute 'default t :font "Menlo")
 (set-face-attribute 'default nil :height 150)
 (setq-default line-spacing 4)
 

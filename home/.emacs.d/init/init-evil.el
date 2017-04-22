@@ -5,7 +5,6 @@
         evil-shift-width 2)
   :config
   (evil-mode t)
-
   (keys :states nil
         :keymaps '(minibuffer-local-map
                    minibuffer-local-ns-map

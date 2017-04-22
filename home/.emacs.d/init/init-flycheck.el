@@ -6,7 +6,9 @@
   :ensure t
   :init
   (global-flycheck-mode)
-  :config)
+  :config
+  (setq flycheck-idle-change-delay 0.5
+        flycheck-check-syntax-automatically '(save mode-enabled idle-change)))
 
 ;; Flow (JS) flycheck config (http://flowtype.org)
 ;; from https://github.com/bodil/emacs.d/blob/master/bodil/bodil-js.el
@@ -37,8 +39,8 @@
   :command ("flow" "check-contents" "--json" source-original)
   :standard-input t
   :error-parser flycheck-parse-flow
-  :modes web-mode
-  :next-checkers ((error . javascript-eslint)))
+  :next-checkers ((warning . javascript-eslint))
+  :modes web-mode)
 
 (add-to-list 'flycheck-checkers 'javascript-flow)
 
@@ -46,6 +48,7 @@
   "A Javascript syntax and style checker using eslint.
 See URL `https://github.com/eslint/eslint'."
   :command ("eslint" "--format=checkstyle"
+            "--cache"
             (config-file "--config" flycheck-eslintrc)
             (option-list "--rulesdir" flycheck-eslint-rules-directories)
             "--rule" "{\"import/no-unresolved\": 0}"

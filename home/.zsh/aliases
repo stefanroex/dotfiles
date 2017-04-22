@@ -5,7 +5,7 @@ alias amend="git commit --amend"
 alias ass='rm -rf tmp/cache && pow restart'
 alias cbundle='rm -rf vendor/bundle && bundle install --system --binstubs'
 alias d='cd ~/.dotfiles'
-alias e='mvim -v'
+alias e='nvim'
 alias ga='git add . && git add -u && gs'
 alias gc='git commit'
 alias gci="git pull --rebase && rake && git push"
@@ -24,8 +24,8 @@ alias n='e notes.txt'
 alias pc='production-console'
 alias pow='powder'
 alias rbh="rbenv rehash"
-alias rdm="rake db:migrate && rake db:migrate RAILS_ENV=test"
-alias rdr="rake db:rollback && rake db:rollback RAILS_ENV=test"
+alias rdm="rake db:migrate"
+alias rdr="rake db:rollback"
 alias re='powder restart'
 alias restart_postgres="stoppostgres && startpostgres"
 alias restore='pg_restore --verbose --clean --no-acl --no-owner -h localhost -d `basename $PWD`_development '

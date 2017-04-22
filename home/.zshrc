@@ -23,4 +23,5 @@ export EDITOR='mvim -v'
 export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="./bin:$PATH"
+export PATH="/usr/local/opt/elasticsearch@2.4/bin:$PATH"
 export HOMEBREW_NO_ANALYTICS=1

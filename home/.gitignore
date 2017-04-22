@@ -11,6 +11,7 @@
 # Ruby
 .ruby-version
 .rbenv-version
+.rbenv-vars
 .bundle
 vendor/bundle
 db/*.sqlite3
@@ -34,6 +35,8 @@ log/
 # Node
 node_modules/
 npm-debug.log
+.importjs.js
+flow-coverage/
 
 # Datbase backups
 *.dump

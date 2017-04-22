@@ -17,3 +17,15 @@ function hs() {
 function hp() {
   heroku "$@" --remote production
 }
+
+function copr() {
+  git fetch origin pull/$@/head:pr-$@; git checkout pr-$@;
+}
+
+function bundle-update() {
+  cat Gemfile | grep 'gem "' | sed 's/.*gem "\([a-z0-9_-]*\).*/\1/' | while read gem
+  do
+    bundle update $gem
+    git commit -am "Upgrade Ruby dependency: $gem"
+  done
+}

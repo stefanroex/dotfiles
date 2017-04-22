@@ -2,13 +2,20 @@
   :pin melpa-stable)
 
 (use-package base16-theme
+  :ensure t
   :init
-  (load-theme 'base16-ashes-dark t))
+  (load-theme 'base16-ashes t)
+  (set-background-color "black"))
 
 (use-package exec-path-from-shell
   :pin melpa-stable
   :config
   (exec-path-from-shell-initialize))
+
+(use-package smart-mode-line
+  :ensure t
+  :config
+  (sml/setup))
 
 (use-package general
   :config
@@ -127,5 +134,19 @@
   :config
   (keys-l "f" 'helm-projectile
           "F" 'helm-find-files))
+
+(use-package yaml-mode
+  :ensure t)
+
+(use-package markdown-mode
+  :ensure t)
+
+(use-package slim-mode
+  :ensure t)
+
+(use-package nlinum
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'nlinum-mode))
 
 (provide 'init-editor-packages)
