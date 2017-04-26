@@ -144,9 +144,4 @@
 (use-package slim-mode
   :ensure t)
 
-(use-package nlinum
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook 'nlinum-mode))
-
 (provide 'init-editor-packages)
