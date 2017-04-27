@@ -29,8 +29,7 @@
 
     (keys-l :states 'normal
             :keymaps 'emacs-lisp-mode-map
-            "e" 'eval-last-sexp
-            "d" 'helm-apropos)
+            "e" 'eval-last-sexp)
 
     (keys-l "hk" 'describe-key
             "hm" 'describe-mode
@@ -109,34 +108,41 @@
   (which-key-mode +1)
   (which-key-setup-side-window-right))
 
-(use-package helm
+(use-package flx
+  :ensure t)
+
+(use-package ivy
+  :ensure t
+  :diminish ivy-mode
   :init
-  (setq helm-M-x-fuzzy-match t
-        helm-buffers-fuzzy-matching t
-        helm-projectile-fuzzy-match t
-        helm-autoresize-mode t
-        helm-apropos-fuzzy-match t
-        helm-recentf-fuzzy-match t)
+  (ivy-mode t)
   :config
-  (keys-l "b" 'helm-buffers-list
-          "y" 'helm-show-kill-ring)
+  (setq ivy-height 20
+        ivy-count-format "(%d/%d) "
+        ivy-use-virtual-buffers t
+        ivy-initial-inputs-alist nil
+        enable-recursive-minibuffers t)
+
+  (keys-l "b" 'ivy-switch-buffer))
+
+(use-package counsel
+  :ensure t
+  :config
+  (keys-l "y" 'counsel-yank-pop
+          "f" 'counsel-projectile
+          "F" 'counsel-find-file)
   (keys :states nil
-        "M-x" 'helm-M-x))
+        "M-x" 'counsel-M-x))
 
 (use-package projectile
   :diminish projectile-mode
   :init
   (setq projectile-create-missing-test-files t
-        projectile-completion-system 'helm
-        projectile-switch-project-action 'helm-projectile-find-file)
+        projectile-completion-system 'ivy
+        projectile-switch-project-action 'counsel-projectile-find-file)
   :config
   (keys-l "p" 'projectile-command-map)
   (projectile-global-mode t))
-
-(use-package helm-projectile
-  :config
-  (keys-l "f" 'helm-projectile
-          "F" 'helm-find-files))
 
 (use-package yaml-mode
   :ensure t)

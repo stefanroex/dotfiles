@@ -24,6 +24,7 @@
   (add-hooks #'aggressive-indent-mode '(clojure-mode-hook emacs-lisp-mode-hook)))
 
 (use-package indent-guide
+  :diminish indent-guide-mode
   :init
   (setq indent-guide-delay 0.5)
   (add-hooks #'indent-guide-mode '(clojure-mode-hook emacs-lisp-mode-hook)))
