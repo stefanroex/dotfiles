@@ -44,3 +44,4 @@ flow-coverage/
 
 notes.txt
 rails_best_practices_output.html
+.dir-locals.el

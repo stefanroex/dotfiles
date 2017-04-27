@@ -88,6 +88,7 @@
   :config
   (keys :keymaps 'project-explorer-mode-map
         "o" 'pe/return
+        "i" 'pe/toggle-omit
         "r" 'pe/rename-file
         "TAB" 'pe/tab
         "q" 'pe/quit
@@ -143,7 +144,16 @@
   (keys-l "p" 'projectile-command-map
           "s" 'projectile-ag)
 
+  (defun advice-projectile-no-sub-project-files ()
+    "Directly call `projectile-get-ext-command'. No need to try to get a
+        list of sub-project files if the vcs is git."
+    (projectile-files-via-ext-command (projectile-get-ext-command)))
+  (advice-add 'projectile-get-repo-files :override #'advice-projectile-no-sub-project-files)
+
   (projectile-global-mode t))
+
+(use-package projectile-rails
+  :ensure t)
 
 (use-package yaml-mode
   :ensure t)
@@ -158,5 +168,11 @@
   :ensure t
   :config
   (keys-l "o" 'reveal-in-osx-finder))
+
+(use-package rspec-mode
+  :ensure t
+  :config
+  (keys-l :keymaps 'rspec-mode-map
+          "t" 'rspec-verify))
 
 (provide 'init-editor-packages)
