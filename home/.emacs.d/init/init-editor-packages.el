@@ -42,6 +42,7 @@
             "x" 'next-code-buffer
             "S" 'sf/focus-at-point
             "z" 'previous-code-buffer
+            "B" 'ibuffer
             "v" 'open-emacs-config)))
 
 (use-package undo-tree
@@ -58,8 +59,7 @@
 (use-package ag
   :defer t
   :init
-  (setq ag-reuse-buffers t)
-  (keys-l "s" 'ag))
+  (setq ag-reuse-buffers t))
 
 (use-package company
   :diminish company-mode
@@ -119,18 +119,17 @@
   :config
   (setq ivy-height 20
         ivy-count-format "(%d/%d) "
-        ivy-use-virtual-buffers t
         ivy-initial-inputs-alist nil
-        enable-recursive-minibuffers t)
-
-  (keys-l "b" 'ivy-switch-buffer))
+        ivy-re-builders-alist '((t . ivy--regex-fuzzy))
+        enable-recursive-minibuffers t))
 
 (use-package counsel
   :ensure t
   :config
   (keys-l "y" 'counsel-yank-pop
           "f" 'counsel-projectile
-          "F" 'counsel-find-file)
+          "F" 'counsel-find-file
+          "b" 'counsel-projectile-switch-to-buffer)
   (keys :states nil
         "M-x" 'counsel-M-x))
 
@@ -141,7 +140,9 @@
         projectile-completion-system 'ivy
         projectile-switch-project-action 'counsel-projectile-find-file)
   :config
-  (keys-l "p" 'projectile-command-map)
+  (keys-l "p" 'projectile-command-map
+          "s" 'projectile-ag)
+
   (projectile-global-mode t))
 
 (use-package yaml-mode
@@ -152,5 +153,10 @@
 
 (use-package slim-mode
   :ensure t)
+
+(use-package reveal-in-osx-finder
+  :ensure t
+  :config
+  (keys-l "o" 'reveal-in-osx-finder))
 
 (provide 'init-editor-packages)
