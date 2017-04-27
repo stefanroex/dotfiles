@@ -2,7 +2,7 @@
   :defer t
   :init
   (keys-l "gs" 'magit-status
-          "gl" 'magit-log
+          "gl" 'magit-log-head
           "gb" 'magit-blame)
   :config
   (setq magit-display-buffer-function 'magit-buffer-full-screen)
