@@ -39,18 +39,22 @@
         cider-refresh-before-fn "reloaded.repl/suspend"
         cider-refresh-after-fn "reloaded.repl/resume")
 
-  (add-hook 'cider-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook 'cider-refresh)))
-
   (defvar cider-mode-maps
     '(cider-repl-mode-map
       clojure-mode-map
       clojurescript-mode-map))
 
   (keys :keymaps cider-mode-maps
+        :modes 'normal
         "gf" 'cider-find-var
         "\\" 'cider-eval-defun-at-point)
+
+  (keys :keymaps '(cider-repl-mode-map)
+        :modes 'normal
+        "<return>" 'cider-repl-return)
+
+  (define-key cider-repl-mode-map (kbd "<up>") 'cider-repl-previous-input)
+  (define-key cider-repl-mode-map (kbd "<down>") 'cider-repl-next-input)
 
   (keys-l :keymaps cider-mode-maps
           "E" 'cider-pprint-eval-last-sexp
