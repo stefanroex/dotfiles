@@ -32,7 +32,7 @@
   :defer t
   :init
   (setq evil-cleverparens-use-regular-insert t)
-  (add-hooks #'evil-cleverparens-mode '(clojure-mode-hook emacs-lisp-mode-hook)))
+  (add-hooks #'evil-cleverparens-mode paredit-hooks))
 
 (use-package eldoc
   :defer t
