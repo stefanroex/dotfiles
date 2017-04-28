@@ -1,4 +1,5 @@
 (use-package elm-mode
+  :defer t
   :init
   (setq elm-format-on-save t)
   (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)

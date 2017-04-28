@@ -3,10 +3,10 @@
 ;;; Code:
 
 (use-package flycheck
+  :defer 1
   :ensure t
-  :init
-  (global-flycheck-mode)
   :config
+  (global-flycheck-mode)
   (setq flycheck-idle-change-delay 0.5
         flycheck-check-syntax-automatically '(save mode-enabled idle-change)))
 

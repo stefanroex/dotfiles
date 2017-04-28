@@ -21,9 +21,10 @@
   (sml/setup))
 
 (use-package general
+  :init
+  (setq general-default-states '(normal emacs motion))
   :config
   (progn
-    (setq general-default-states '(normal emacs motion))
     (general-create-definer keys-l :prefix ",")
     (defalias 'keys 'general-define-key)
 
@@ -45,11 +46,6 @@
             "B" 'ibuffer
             "v" 'open-emacs-config)))
 
-(use-package undo-tree
-  :diminish undo-tree-mode
-  :config
-  (global-undo-tree-mode t))
-
 (use-package yasnippet
   :pin melpa-stable
   :diminish yas-minor-mode
@@ -58,14 +54,13 @@
 
 (use-package ag
   :defer t
-  :init
+  :config
   (setq ag-reuse-buffers t))
 
 (use-package company
   :diminish company-mode
-  :init
-  (global-company-mode t)
   :config
+  (global-company-mode t)
   (define-key prog-mode-map (kbd "<tab>") 'company-complete)
   (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
   (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
@@ -73,19 +68,16 @@
 
 (use-package company-flow
   :defer t
-  :commands company-flow
-  :init
-  (progn
-    (push 'company-flow company-backends))
   :config
+  (push 'company-flow company-backends)
   (add-to-list 'company-flow-modes 'web-mode))
 
 (use-package project-explorer
-  :defer t
+  :commands project-explorer-toggle
   :init
-  (setq pe/omit-gitignore t)
   (keys-l "a" 'project-explorer-toggle)
   :config
+  (setq pe/omit-gitignore t)
   (keys :keymaps 'project-explorer-mode-map
         "o" 'pe/return
         "i" 'pe/toggle-omit
@@ -98,10 +90,12 @@
         "RET" 'pe/return))
 
 (use-package ace-jump-mode
+  :commands ace-jump-mode
   :init
   (keys "SPC" 'ace-jump-mode))
 
 (use-package which-key
+  :defer 1
   :diminish which-key-mode
   :config
   (setq which-key-side-window-max-width 0.7
@@ -115,9 +109,8 @@
 (use-package ivy
   :ensure t
   :diminish ivy-mode
-  :init
-  (ivy-mode t)
   :config
+  (ivy-mode t)
   (setq ivy-height 20
         ivy-count-format "(%d/%d) "
         ivy-initial-inputs-alist nil
@@ -136,11 +129,11 @@
 
 (use-package projectile
   :diminish projectile-mode
-  :init
+  :config
   (setq projectile-create-missing-test-files t
         projectile-completion-system 'ivy
         projectile-switch-project-action 'counsel-projectile-find-file)
-  :config
+
   (keys-l "p" 'projectile-command-map
           "s" 'projectile-ag)
 
@@ -148,21 +141,22 @@
     "Directly call `projectile-get-ext-command'. No need to try to get a
         list of sub-project files if the vcs is git."
     (projectile-files-via-ext-command (projectile-get-ext-command)))
+
   (advice-add 'projectile-get-repo-files :override #'advice-projectile-no-sub-project-files)
 
   (projectile-global-mode t))
 
-(use-package projectile-rails
-  :ensure t)
-
 (use-package yaml-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package markdown-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package slim-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package reveal-in-osx-finder
   :ensure t
@@ -170,6 +164,7 @@
   (keys-l "o" 'reveal-in-osx-finder))
 
 (use-package rspec-mode
+  :defer t
   :ensure t
   :config
   (keys-l :keymaps 'rspec-mode-map

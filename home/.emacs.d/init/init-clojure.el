@@ -111,6 +111,4 @@
   (add-to-list 'cljr-magic-require-namespaces
                '("reagent"  . "reagent.core")))
 
-(use-package kibit-helper)
-
 (provide 'init-clojure)
