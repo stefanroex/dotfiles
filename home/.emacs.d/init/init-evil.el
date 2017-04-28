@@ -14,6 +14,9 @@
                    ivy-minibuffer-map)
         [escape] 'minibuffer-keyboard-quit)
 
+  (evil-add-hjkl-bindings dired-mode-map 'emacs)
+  (evil-add-hjkl-bindings ibuffer-mode-map 'emacs)
+
   (keys "C-n" 'next-error
         "C-p" 'previous-error
         "C-h" 'evil-window-left
