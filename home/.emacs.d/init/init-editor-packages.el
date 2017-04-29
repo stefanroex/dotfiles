@@ -69,7 +69,11 @@
   :init
   (keys-l "a" 'project-explorer-toggle)
   :config
-  (setq pe/omit-gitignore t)
+  (add-hook 'project-explorer-mode-hook
+            (lambda () (linum-mode -1)))
+
+  (setq pe/omit-gitignore t
+        pe/omit-regex "^#\\|^\\.git$\\|~$\\|^node_modules$")
   (keys :keymaps 'project-explorer-mode-map
         "o" 'pe/return
         "i" 'pe/toggle-omit
