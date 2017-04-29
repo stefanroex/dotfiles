@@ -52,4 +52,10 @@
       (magit-display-buffer-traditional buffer)
     (display-buffer buffer '(display-buffer-full-screen))))
 
+(defun open-iterm-in-project-root ()
+  "Opens iTerm for current directory."
+  (interactive)
+  (projectile-with-default-dir (projectile-project-root)
+    (shell-command "open -a iTerm $PWD && echo 'Opening' $PWD 'in iTerm...'")))
+
 (provide 'init-functions)

@@ -44,6 +44,7 @@
             "S" 'sf/focus-at-point
             "z" 'previous-code-buffer
             "B" 'ibuffer
+            "O" 'open-iterm-in-project-root
             "v" 'open-emacs-config)))
 
 (use-package yasnippet
