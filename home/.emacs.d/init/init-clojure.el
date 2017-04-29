@@ -46,7 +46,7 @@
 
   (keys :keymaps cider-mode-maps
         :modes 'normal
-        "gf" 'cider-find-var
+        "gd" 'cider-find-var
         "\\" 'cider-eval-defun-at-point)
 
   (keys :keymaps '(cider-repl-mode-map)
