@@ -132,8 +132,7 @@
   :diminish projectile-mode
   :config
   (setq projectile-create-missing-test-files t
-        projectile-completion-system 'ivy
-        projectile-switch-project-action 'counsel-projectile-find-file)
+        projectile-completion-system 'ivy)
 
   (keys-l "p" 'projectile-command-map
           "s" 'projectile-ag)
@@ -144,8 +143,12 @@
     (projectile-files-via-ext-command (projectile-get-ext-command)))
 
   (advice-add 'projectile-get-repo-files :override #'advice-projectile-no-sub-project-files)
-
   (projectile-global-mode t))
+
+(use-package counsel-projectile
+  :ensure t
+  :config
+  (setq projectile-switch-project-action 'counsel-projectile-find-file))
 
 (use-package yaml-mode
   :ensure t
