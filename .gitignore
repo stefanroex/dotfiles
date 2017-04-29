@@ -27,3 +27,4 @@ home/.emacs.d/tramp
 home/.emacs.d/url/
 home/.lein/repl-history
 home/.zpresto
+home/.emacs.d/custom.el
