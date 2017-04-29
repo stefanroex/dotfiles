@@ -115,6 +115,7 @@
   (setq ivy-height 20
         ivy-count-format "(%d/%d) "
         ivy-initial-inputs-alist nil
+        ivy-on-del-error-function nil
         ivy-re-builders-alist '((t . ivy--regex-fuzzy))
         enable-recursive-minibuffers t))
 
