@@ -1,12 +1,6 @@
 (use-package better-defaults
   :pin melpa-stable)
 
-;; (use-package base16-theme
-;;   :ensure t
-;;   :init
-;;   (load-theme 'base16-ashes t)
-;;   (set-background-color "black"))
-
 (use-package challenger-deep-theme
   :ensure t)
 
