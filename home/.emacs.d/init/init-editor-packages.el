@@ -174,4 +174,13 @@
   (keys-l :keymaps 'rspec-mode-map
           "t" 'rspec-verify))
 
+(use-package dumb-jump
+  :commands 'dumb-jump-go
+  :ensure t
+  :init
+  (setq dumb-jump-selector 'ivy)
+  (keys :keymaps 'prog-mode-map
+        :modes 'normal
+        "gD" 'dumb-jump-go))
+
 (provide 'init-editor-packages)
