@@ -83,10 +83,12 @@
         "d" 'pe/delete-file
         "RET" 'pe/return))
 
-(use-package ace-jump-mode
-  :commands ace-jump-mode
+(use-package avy
+  :ensure t
+  :commands avy-goto-char-time
   :init
-  (keys "SPC" 'ace-jump-mode))
+  (setq avy-timeout-seconds 0.2)
+  (keys "SPC" 'avy-goto-char-timer))
 
 (use-package which-key
   :defer 1
