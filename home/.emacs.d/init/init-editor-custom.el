@@ -87,13 +87,6 @@
 ;; Automatically remove trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; Less intriguing colors for isearch
-(custom-set-faces
- '(isearch ((t (:background "#fff" :foreground "#555"))))
- '(isearch-lazy-highlight-face ((t (:background "#fff" :foreground "#333"))))
- `(evil-search-highlight-persist-highlight-face ((t (:background "#fff" :foreground "#333"))))
- '(isearch-fail ((t (:background "#fff" :foreground "red")))))
-
 ;; enabled line numbers
 (linum-mode)
 
@@ -109,5 +102,8 @@
 
 ;; Save cursor position for files.
 (save-place-mode 1)
+
+;; Load latest compiled elisp file
+(setq load-prefer-newer t)
 
 (provide 'init-editor-custom)
