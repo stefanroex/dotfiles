@@ -4,11 +4,11 @@
 
 (use-package flycheck
   :defer 1
-  :ensure t
   :config
-  (global-flycheck-mode)
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (setq flycheck-idle-change-delay 0.5
-        flycheck-check-syntax-automatically '(save mode-enabled idle-change)))
+        flycheck-check-syntax-automatically '(save mode-enabled idle-change))
+  (global-flycheck-mode))
 
 ;; Flow (JS) flycheck config (http://flowtype.org)
 ;; from https://github.com/bodil/emacs.d/blob/master/bodil/bodil-js.el

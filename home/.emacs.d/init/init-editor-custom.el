@@ -88,7 +88,7 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; enabled line numbers
-(linum-mode)
+(global-linum-mode)
 
 ;; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)

@@ -1,8 +1,7 @@
 (use-package better-defaults
   :pin melpa-stable)
 
-(use-package challenger-deep-theme
-  :ensure t)
+(use-package challenger-deep-theme)
 
 (use-package exec-path-from-shell
   :pin melpa-stable
@@ -10,7 +9,6 @@
   (exec-path-from-shell-initialize))
 
 (use-package smart-mode-line
-  :ensure t
   :config
   (sml/setup))
 
@@ -84,10 +82,9 @@
         "RET" 'pe/return))
 
 (use-package avy
-  :ensure t
   :commands avy-goto-char-time
   :init
-  (setq avy-timeout-seconds 0.2)
+  (setq avy-timeout-seconds 0.3)
   (keys "SPC" 'avy-goto-char-timer))
 
 (use-package which-key
@@ -99,11 +96,9 @@
   (which-key-mode +1)
   (which-key-setup-side-window-right))
 
-(use-package flx
-  :ensure t)
+(use-package flx)
 
 (use-package ivy
-  :ensure t
   :diminish ivy-mode
   :config
   (ivy-mode t)
@@ -115,7 +110,6 @@
         enable-recursive-minibuffers t))
 
 (use-package counsel
-  :ensure t
   :config
   (keys-l "y" 'counsel-yank-pop
           "f" 'counsel-projectile
@@ -142,41 +136,39 @@
   (projectile-global-mode t))
 
 (use-package counsel-projectile
-  :ensure t
   :config
   (setq projectile-switch-project-action 'counsel-projectile-find-file))
 
 (use-package yaml-mode
-  :ensure t
   :defer t)
 
 (use-package markdown-mode
-  :ensure t
   :defer t)
 
 (use-package slim-mode
-  :ensure t
   :defer t)
 
 (use-package reveal-in-osx-finder
-  :ensure t
   :config
   (keys-l "o" 'reveal-in-osx-finder))
 
 (use-package rspec-mode
   :defer t
-  :ensure t
   :config
   (keys-l :keymaps 'rspec-mode-map
           "t" 'rspec-verify))
 
 (use-package dumb-jump
   :commands 'dumb-jump-go
-  :ensure t
   :init
   (setq dumb-jump-selector 'ivy)
   (keys :keymaps 'prog-mode-map
         :modes 'normal
         "gD" 'dumb-jump-go))
+
+(use-package evil-snipe
+  :config
+  (evil-snipe-override-mode 1)
+  (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode))
 
 (provide 'init-editor-packages)

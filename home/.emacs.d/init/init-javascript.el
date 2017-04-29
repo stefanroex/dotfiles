@@ -1,5 +1,4 @@
 (use-package web-mode
-  :ensure t
   :mode (("\\.js$" . web-mode))
   :config
   (setq web-mode-markup-indent-offset 2
