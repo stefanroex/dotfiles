@@ -41,7 +41,6 @@
             "q" 'kill-buffer-and-window
             "w" 'delete-window
             "x" 'next-code-buffer
-            "S" 'sf/focus-at-point
             "z" 'previous-code-buffer
             "B" 'ibuffer
             "O" 'open-iterm-in-project-root

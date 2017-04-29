@@ -21,6 +21,5 @@
 (require 'init-css)
 (require 'init-elm)
 (require 'init-flycheck)
-(require 'symbol-focus)
 
 (projectile-switch-project)
