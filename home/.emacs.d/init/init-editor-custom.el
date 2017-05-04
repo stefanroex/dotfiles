@@ -87,6 +87,12 @@
 ;; Automatically remove trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; whitespace-mode config
+(require 'whitespace)
+(whitespace-mode t)
+(setq whitespace-line-column 80
+      whitespace-style '(face tabs empty trailing lines-tail))
+
 ;; enabled line numbers
 (global-linum-mode)
 
