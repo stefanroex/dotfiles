@@ -171,8 +171,37 @@
         "gD" 'dumb-jump-go))
 
 (use-package evil-snipe
+  :diminish 'evil-snipe-local-mode
   :config
   (evil-snipe-override-mode 1)
   (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode))
 
+(use-package expand-region
+  :commands 'er/expand-region
+  :init
+  (keys "<C-return>" 'er/expand-region))
+
+
+(use-package shell-pop
+  :commands 'shell-pop
+  :init
+  (keys-l "j" 'shell-pop)
+  :config
+  (add-hook 'shell-pop-in-hook
+            (lambda ()
+              (custom-set-variables
+               '(shell-pop-default-directory
+                 (projectile-project-root)))))
+
+  (keys :modes 'eshell-mode
+        :states 'normal
+        "q" 'kill-buffer-and-window)
+
+  (custom-set-variables
+   '(shell-pop-full-span t)
+   '(shell-pop-autocd-to-working-dir nil)
+   '(shell-pop-shell-type
+     (quote ("eshell" "*eshell*" (lambda nil (eshell)))))))
+
+;; (shell-pop-in-hook)
 (provide 'init-editor-packages)
