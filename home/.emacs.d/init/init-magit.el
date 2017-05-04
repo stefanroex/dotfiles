@@ -1,4 +1,5 @@
 (use-package magit
+  :diminish 'auto-revert-mode
   :defer 1
   :init
   (keys-l "gs" 'magit-status
