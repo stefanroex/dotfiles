@@ -15,14 +15,15 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Plugins
+" Plug 'Galooshi/vim-import-js'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'benekastah/neomake'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dockyard/vim-easydir'
 Plug 'ervandew/supertab'
 Plug 'janko-m/vim-test'
 Plug 'kien/ctrlp.vim'
 Plug 'rking/ag.vim'
+Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
@@ -33,6 +34,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/gitignore'
 Plug 'w0ng/vim-hybrid'
+Plug 'w0rp/ale'
+Plug 'flowtype/vim-flow'
 
 if !has('nvim')
   Plug 'tpope/vim-sensible'
@@ -171,11 +174,6 @@ let g:EasyMotion_smartcase = 1
 " Vim-test
 let test#javascript#mocha#executable = 'node_modules/.bin/mocha --compilers js:babel-core/register --require ./test/testHelper.js'
 
-" Neomake
-" let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_ruby_enabled_makers = ['rubocop']
-" let g:neomake_javascript_eslint_exe = './node_modules/.bin/eslint'
-
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
 let g:terminal_color_2  = '#4e9a06'
@@ -194,7 +192,12 @@ let g:terminal_color_14 = '#00f5e9'
 let g:terminal_color_15 = '#eeeeec'
 
 " Vim Flow
+let g:flow#enable = 0
 let g:flow#autoclose = 1
+
+" Prettier
+" autocmd FileType javascript setlocal formatprg=prettier\ --stdin\ --trailing-comma\ all
+" let g:neoformat_try_formatprg = 1
 
 " ========================================================================
 "  Mappings
@@ -214,11 +217,10 @@ map <leader>cc :TComment<cr>
 nnoremap <silent> ,d :call neoterm#close()<cr>
 map <leader>cf <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 map <leader>f :CtrlP<cr>
-map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
+" map <leader>i :%s/\t/  /g<CR> :KillWhitespace<CR>
 map <leader>n :call RenameFile()<cr>
 map <leader>o :! open .<cr><cr>
 map <leader>q :bd<CR>
-map <leader>s :Neomake<cr>
 map <leader>t :TestFile<cr>
 map <leader>v :tabe $MYVIMRC<CR>
 map <leader>w :bp<CR>:bd#<CR>
@@ -266,14 +268,13 @@ if has("autocmd")
   " Trim whitespace
   " au FileWritePre,FileAppendPre,FilterWritePre,BufWritePre * :call TrimWhiteSpace()
 
-  " Run Neomake after saving the file
-  au BufWritePost * Neomake
-
   " Reload vimrc on save
   augroup reload_vimrc " {
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
   augroup END " }
+
+  " autocmd BufWritePre *.js Neoformat
 endif
 
 " ========================================================================

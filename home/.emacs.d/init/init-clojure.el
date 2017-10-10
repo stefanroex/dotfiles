@@ -1,7 +1,19 @@
+;;;  -*- lexical-binding: t -*-
+(require 'subr-x)
+
 (use-package clojure-mode
   :defer t
   :config
   (define-clojure-indent
+    ;; midje
+    (fact 'defun)
+    (facts 'defun)
+    (fact-group 'defun)
+    (silent-fact 'defun)
+    (future-fact 'defun)
+    (tabular 'defun)
+    (against-background 'defun)
+    (provided 0)
     ;; om & om-tools indenting
     (display-name 'defun)
     (init-state 'defun)
@@ -28,29 +40,46 @@
 (use-package cider
   :defer t
   :config
-  (setq cider-show-error-buffer t
-        cider-prompt-for-symbol nil
+  (defun cider-refresh-eval ()
+    (nrepl-make-response-handler (current-buffer)
+                                 (lambda (_buffer value)
+                                   (message "refresh: %s"
+                                            (string-trim
+                                             (cider-font-lock-as-clojure value))))
+                                 (lambda (_buffer out)
+                                   (message "refresh: %s"
+
+                                            (string-trim
+                                             (cider-font-lock-as-clojure out))))
+                                 (lambda (buffer err)
+                                   (cider-handle-compilation-errors err buffer))
+                                 '()))
+
+  (defun my-cider-refresh ()
+    (interactive)
+    (cider-ensure-connected)
+    (cider-save-project-buffers)
+    (let ((log-buffer (or (get-buffer cider-refresh-log-buffer)
+                          (cider-make-popup-buffer cider-refresh-log-buffer))))
+      (cider-interactive-eval
+       "(dev/reset)"
+       (cider-refresh-eval))))
+
+  (setq cider-prompt-for-symbol nil
         cider-repl-display-help-banner nil
         cider-eval-result-duration nil
-        cider-auto-select-error-buffer t
-        cider-request-dispatch 'static
+        cider-repl-use-pretty-printing t
         cider-repl-history-file "~/.emacs.d/cider-history"
-        cider-repl-wrap-history t
-        cider-refresh-before-fn "reloaded.repl/suspend"
-        cider-refresh-after-fn "reloaded.repl/resume")
+        cider-repl-wrap-history t)
 
   (defvar cider-mode-maps
     '(cider-repl-mode-map
       clojure-mode-map
       clojurescript-mode-map))
 
-  (keys :keymaps cider-mode-maps
-        :modes 'normal
-        "gd" 'cider-find-var
-        "\\" 'cider-eval-defun-at-point)
-
   (keys :keymaps '(cider-repl-mode-map)
         :modes 'normal
+        ";" 'cider-repl-shortcuts-help
         "<return>" 'cider-repl-return)
 
   (define-key cider-repl-mode-map (kbd "<up>") 'cider-repl-previous-input)
@@ -58,16 +87,15 @@
 
   (keys-l :keymaps cider-mode-maps
           "E" 'cider-pprint-eval-last-sexp
-          "T" 'cider-test-run-test
+          "T" 'cider-test-run-project-tests
+          "t" 'cider-test-run-ns-tests
           "d" 'cider-doc
+          "n" 'cider-eval-sexp-at-point
           "D" 'cider-grimoire-web
           "e" 'cider-eval-last-sexp)
 
   (keys :keymaps cider-mode-maps
         :prefix ",c"
-        "I" 'cider-display-connection-info
-        "J" 'cider-jack-in-clojurescript
-        "R" 'cider-restart
         "C" 'cider-connection-browser
         "d" 'cider-doc-map
         "eb" 'cider-load-buffer
@@ -77,15 +105,17 @@
         "er" 'cider-eval-last-sexp-and-replace
         "i" 'cider-inspect
         "j" 'cider-jack-in
+        "J" 'cider-restart
         "m" 'cider-macroexpand-1
         "pf" 'cider-pprint-eval-defun-at-point
         "pl" 'cider-pprint-eval-last-sexp
         "q" 'cider-quit
-        "r" 'cider-refresh
+        "r" 'my-cider-refresh
+        "R" 'cider-refresh
         "sc" 'cider-rotate-default-connection
         "sn" 'cider-repl-set-ns
         "sr" 'cider-switch-to-repl-buffer
-        "t" 'cider-test-run-tests)
+        "t" 'cider-test-run-project-tests)
 
   (add-to-list 'evil-emacs-state-modes 'cider-connections-buffer-mode)
   (evil-add-hjkl-bindings cider-connections-buffer-mode-map 'emacs)

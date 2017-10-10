@@ -1,13 +1,17 @@
 (use-package web-mode
   :mode (("\\.js$" . web-mode))
   :config
-  (setq web-mode-markup-indent-offset 2
+  (setq web-mode-enable-auto-quoting nil
+        web-mode-markup-indent-offset 2
         web-mode-css-indent-offset 2
         web-mode-code-indent-offset 2
+        web-mode-attr-indent-offset 2
         web-mode-indent-style 2)
 
   (keys-l :keymaps 'web-mode-map
           "d" 'flow-type)
+
+  (add-to-list 'company-dabbrev-code-modes 'web-mode)
 
   (add-hook 'web-mode-hook
             (lambda ()
@@ -15,22 +19,26 @@
                   (web-mode-set-content-type "jsx")
                 (message "now set to: %s" web-mode-content-type)))))
 
-(defun import-js/word-at-point ()
-  (save-excursion
-    (skip-chars-backward "A-Za-z0-9:_")
-    (let ((beg (point)) module)
-      (skip-chars-forward "A-Za-z0-9:_")
-      (setq module (buffer-substring beg (point)))
-      module)))
+(use-package prettier-js
+  :config
+  (setq prettier-js-args '(
+                           "--trailing-comma" "all"
+                           "--single-quote" "false"))
+  (add-hook 'web-mode-hook 'prettier-js-mode))
 
-(defun import-js/word ()
-  (interactive)
-  (let ((default-directory (projectile-project-root))
-        (command (concat "importjs word --overwrite "
-                         (import-js-word-at-point)
-                         " "
-                         (file-relative-name (buffer-file-name) default-directory))))
-    (shell-command command)
-    (revert-buffer t t t)))
+(use-package import-js
+  :commands import-js-fix
+  :init
+  (defun fix-js-file ()
+    (interactive)
+    (import-js-fix)
+    (prettier-js))
+  (setq import-js-project-root "~/Code/cep")
+  (keys-l "i" 'fix-js-file))
+
+(use-package add-node-modules-path
+  :defer t
+  :init
+  (add-hook 'web-mode-hook #'add-node-modules-path))
 
 (provide 'init-javascript)

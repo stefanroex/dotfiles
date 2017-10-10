@@ -20,8 +20,12 @@ source $HOME/.zsh/functions
 
 export TERM=xterm-256color
 export EDITOR='mvim -v'
+export HOMEBREW_NO_ANALYTICS=1
+export ANDROID_HOME=${HOME}/Library/Android/sdk
+
 export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="./bin:$PATH"
 export PATH="/usr/local/opt/elasticsearch@2.4/bin:$PATH"
-export HOMEBREW_NO_ANALYTICS=1
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools

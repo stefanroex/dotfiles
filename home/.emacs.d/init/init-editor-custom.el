@@ -112,4 +112,18 @@
 ;; Load latest compiled elisp file
 (setq load-prefer-newer t)
 
+;; meaningful names for buffers with the same name
+;; (require 'uniquify)
+;; (setq uniquify-buffer-name-style 'forward
+;;       uniquify-separator "/"
+;;       uniquify-min-dir-content 1
+;;       uniquify-ignore-buffers-re "^\\*")
+
+;; sensible undo
+(global-undo-tree-mode)
+(diminish 'undo-tree-mode)
+
+;; prevent new windows
+(setq pop-up-frames nil)
+
 (provide 'init-editor-custom)

@@ -40,7 +40,6 @@ flow-coverage/
 
 # Datbase backups
 *.dump
-*.sql
 
 notes.txt
 rails_best_practices_output.html

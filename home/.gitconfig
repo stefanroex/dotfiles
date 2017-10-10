@@ -1,6 +1,6 @@
 [user]
-  email = stefanroex@gmail.com
-  name = Stefan Roex
+	email = stefanroex@gmail.com
+	name = Stefan Roex
 [core]
   autocrlf = input
   editor = vim

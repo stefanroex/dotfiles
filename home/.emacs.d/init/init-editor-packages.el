@@ -61,29 +61,61 @@
 (use-package company-flow
   :defer t
   :config
-  (push 'company-flow company-backends)
-  (add-to-list 'company-flow-modes 'web-mode))
+  (eval-after-load 'company
+    '(add-to-list 'company-backends 'company-flow)))
 
-(use-package project-explorer
-  :commands project-explorer-toggle
+(defun neotree-project-root ()
+  "Open NeoTree using the git root."
+  (interactive)
+  (let ((project-dir (projectile-project-root))
+        (file-name (buffer-file-name)))
+    (neotree-show)
+    (if project-dir
+        (progn
+          (neotree-dir project-dir)
+          (neotree-find file-name)))))
+
+(defun neotree-toggle-project-root ()
+  (interactive)
+  (if (neo-global--window-exists-p)
+      (neotree-hide)
+    (neotree-project-root)))
+
+(use-package neotree
   :init
-  (keys-l "a" 'project-explorer-toggle)
+  (keys-l "a" 'neotree-toggle-project-root)
   :config
-  (add-hook 'project-explorer-mode-hook
-            (lambda () (linum-mode -1)))
+  (keys :keymaps 'neotree-mode-map
+        "o" 'neotree-enter
+        "i" 'neotree-hidden-file-toggle
+        "r" 'neotree-rename-node
+        "TAB" 'neotree-dir
+        "q" 'neotree-hide
+        "c" 'neotree-copy-node
+        "R" 'neotree-refresh
+        "d" 'neotree-delete-node
+        "RET" 'neotree-enter))
 
-  (setq pe/omit-gitignore t
-        pe/omit-regex "^#\\|^\\.git$\\|~$\\|^node_modules$")
-  (keys :keymaps 'project-explorer-mode-map
-        "o" 'pe/return
-        "i" 'pe/toggle-omit
-        "r" 'pe/rename-file
-        "TAB" 'pe/tab
-        "q" 'pe/quit
-        "c" 'pe/copy-file
-        "R" 'revert-buffer
-        "d" 'pe/delete-file
-        "RET" 'pe/return))
+;; (use-package project-explorer
+;;   :commands project-explorer-toggle
+;;   :init
+;;   (keys-l "a" 'project-explorer-toggle)
+;;   :config
+;;   (add-hook 'project-explorer-mode-hook
+;;             (lambda () (linum-mode -1)))
+
+;;   (setq pe/omit-gitignore t
+;;         pe/omit-regex "^#\\|^\\.git$\\|~$\\|^node_modules$")
+;;   (keys :keymaps 'project-explorer-mode-map
+;;         "o" 'pe/return
+;;         "i" 'pe/toggle-omit
+;;         "r" 'pe/rename-file
+;;         "TAB" 'pe/tab
+;;         "q" 'pe/quit
+;;         "c" 'pe/copy-file
+;;         "R" 'revert-buffer
+;;         "d" 'pe/delete-file
+;;         "RET" 'pe/return))
 
 (use-package avy
   :commands avy-goto-char-time
@@ -110,6 +142,7 @@
         ivy-count-format "(%d/%d) "
         ivy-initial-inputs-alist nil
         ivy-on-del-error-function nil
+        ivy-virtual-abbreviate 'full
         ivy-re-builders-alist '((t . ivy--regex-fuzzy))
         enable-recursive-minibuffers t))
 
@@ -180,7 +213,6 @@
   :commands 'er/expand-region
   :init
   (keys "<C-return>" 'er/expand-region))
-
 
 (use-package shell-pop
   :commands 'shell-pop
