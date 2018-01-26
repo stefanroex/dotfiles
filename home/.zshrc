@@ -29,3 +29,5 @@ export PATH="./bin:$PATH"
 export PATH="/usr/local/opt/elasticsearch@2.4/bin:$PATH"
 export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -5,6 +5,11 @@
   :defer t
   :config
   (define-clojure-indent
+    (GET 'defun)
+    (POST 'defun)
+    (PATCH 'defun)
+    (DELETE 'defun)
+
     ;; midje
     (fact 'defun)
     (facts 'defun)
@@ -65,6 +70,15 @@
        "(dev/reset)"
        (cider-refresh-eval))))
 
+  (defun cider-switch-to-clj-repl ()
+    (interactive)
+    (cider-ensure-connected)
+    (cider-eval- ":cljs/quit"))
+  (defun cider-switch-to-cljs-repl ()
+    (interactive)
+    (cider-ensure-connected)
+    (cider-interactive-eval "(cljs)"))
+
   (setq cider-prompt-for-symbol nil
         cider-repl-display-help-banner nil
         cider-eval-result-duration nil
@@ -77,6 +91,19 @@
       clojure-mode-map
       clojurescript-mode-map))
 
+  (add-to-list 'evil-emacs-state-modes 'cider-inspector-mode)
+  (add-to-list 'evil-emacs-state-modes 'cider-connections-buffer-mode)
+  (evil-add-hjkl-bindings cider-connections-buffer-mode-map 'emacs)
+
+  (keys :keymaps '(cider-inspector-mode-map)
+        :modes 'emacs
+        "u" 'cider-inspector-pop
+        "j" 'evil-next-line
+        "k" 'evil-previous-line
+        "h" 'evil-backward-char
+        "l" 'evil-forward-char
+        "o" 'cider-inspector-operate-on-point)
+
   (keys :keymaps '(cider-repl-mode-map)
         :modes 'normal
         ";" 'cider-repl-shortcuts-help
@@ -84,6 +111,9 @@
 
   (define-key cider-repl-mode-map (kbd "<up>") 'cider-repl-previous-input)
   (define-key cider-repl-mode-map (kbd "<down>") 'cider-repl-next-input)
+
+  (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+  (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
 
   (keys-l :keymaps cider-mode-maps
           "E" 'cider-pprint-eval-last-sexp
@@ -95,8 +125,16 @@
           "e" 'cider-eval-last-sexp)
 
   (keys :keymaps cider-mode-maps
+        "gf" 'cider-find-var)
+
+  (keys-l :keymaps '(clojurescript-mode-map)
+          "C" 'cider-switch-to-cljs-repl)
+
+  (keys-l :keymaps '(clojure-mode-map)
+          "C" 'cider-switch-to-clj-repl)
+
+  (keys :keymaps cider-mode-maps
         :prefix ",c"
-        "C" 'cider-connection-browser
         "d" 'cider-doc-map
         "eb" 'cider-load-buffer
         "ef" 'cider-eval-defun-at-point
@@ -112,13 +150,10 @@
         "q" 'cider-quit
         "r" 'my-cider-refresh
         "R" 'cider-refresh
-        "sc" 'cider-rotate-default-connection
         "sn" 'cider-repl-set-ns
         "sr" 'cider-switch-to-repl-buffer
+        "l" 'cider-inspect-last-result
         "t" 'cider-test-run-project-tests)
-
-  (add-to-list 'evil-emacs-state-modes 'cider-connections-buffer-mode)
-  (evil-add-hjkl-bindings cider-connections-buffer-mode-map 'emacs)
 
   (advice-add 'evil-search-highlight-persist-remove-all :after #'cider--remove-result-overlay))
 
@@ -129,7 +164,8 @@
         cljr-favor-prefix-notation nil
         cljr-favor-private-functions nil
         cljr-clojure-test-declaration
-        "[cljs.test :refer-macros [deftest is]]")
+        "[clojure.test :refer :all]")
+
   (add-hook 'clojure-mode-hook #'clj-refactor-mode)
   :config
   (dolist (details cljr--all-helpers)
@@ -138,7 +174,9 @@
       (keys :prefix ",r"
             :keymaps '(clojure-mode-map clojurescript-mode-map)
             key fn)))
-  (add-to-list 'cljr-magic-require-namespaces
-               '("reagent"  . "reagent.core")))
+  (add-to-list 'cljr-magic-require-namespaces '("r"  . "reagent.core"))
+  (add-to-list 'cljr-magic-require-namespaces '("rf" . "re-frame.core"))
+  (add-to-list 'cljr-magic-require-namespaces '("subs" . "bm.client.subs"))
+  (add-to-list 'cljr-magic-require-namespaces '("events" . "bm.client.events")))
 
 (provide 'init-clojure)

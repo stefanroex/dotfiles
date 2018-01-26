@@ -7,7 +7,9 @@
 
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)
+
+(use-package diminish
+  :ensure t)
 
 (setq use-package-verbose nil
       use-package-check-before-init t

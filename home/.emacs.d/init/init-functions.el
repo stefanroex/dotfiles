@@ -8,24 +8,27 @@
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
-(defun circle-code-buffers (circle-fn)
-  (let ((bread-crumb (buffer-name)))
-    (funcall circle-fn)
-    (while
-        (and
-         (string-match-p "^\*" (buffer-name))
-         (not (equal bread-crumb (buffer-name))) )
-      (funcall circle-fn))))
+(setq my-skippable-buffers '("*Messages*" "*scratch*" "*Help*"))
+
+(defun my-change-buffer (change-buffer)
+  "Call CHANGE-BUFFER until current buffer is not in `my-skippable-buffers'."
+  (let ((initial (current-buffer)))
+    (funcall change-buffer)
+    (let ((first-change (current-buffer)))
+      (catch 'loop
+        (while (member (buffer-name) my-skippable-buffers)
+          (funcall change-buffer)
+          (when (eq (current-buffer) first-change)
+            (switch-to-buffer initial)
+            (throw 'loop t)))))))
 
 (defun next-code-buffer ()
-  "Open next active buffer, ignoring non-code related buffers."
   (interactive)
-  (circle-code-buffers 'next-buffer))
+  (my-change-buffer 'next-buffer))
 
 (defun previous-code-buffer ()
-  "Open next active buffer, ignoring non-code related buffers."
   (interactive)
-  (circle-code-buffers 'previous-buffer))
+  (my-change-buffer 'previous-buffer))
 
 (defun kill-other-buffers ()
   "Kill all other buffers."

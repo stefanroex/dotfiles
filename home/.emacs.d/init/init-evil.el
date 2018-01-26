@@ -3,6 +3,7 @@
   (setq evil-intercept-esc 'always
         evil-want-fine-undo t
         evil-shift-width 2)
+
   (keys :states nil
         :keymaps '(minibuffer-local-map
                    minibuffer-local-ns-map
@@ -12,13 +13,6 @@
                    ivy-minibuffer-map)
         [escape] 'minibuffer-keyboard-quit)
 
-  (evil-add-hjkl-bindings 'dired-mode-map 'emacs)
-  (evil-add-hjkl-bindings 'ibuffer-mode-map 'emacs)
-
-  (keys :states 'emacs
-        :keymap 'ibuffer-mode-map
-        "J" 'ibuffer-jump-to-buffer)
-
   (keys "C-n" 'next-error
         "C-p" 'previous-error
         "C-h" 'evil-window-left
@@ -27,6 +21,13 @@
         "C-l" 'evil-window-right)
 
   (evil-mode t))
+
+(use-package evil-collection
+  :after evil
+  :init
+  (setq evil-collection-mode-list '(dired ibuffer))
+  :config
+  (evil-collection-init))
 
 (use-package evil-surround
   :config

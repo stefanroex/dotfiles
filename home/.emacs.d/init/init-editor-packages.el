@@ -32,8 +32,8 @@
             "k" 'kill-other-buffers
             "q" 'kill-buffer-and-window
             "w" 'delete-window
-            "x" 'next-code-buffer
-            "z" 'previous-code-buffer
+            "z" 'next-code-buffer
+            "x" 'previous-code-buffer
             "B" 'ibuffer
             "O" 'open-iterm-in-project-root
             "v" 'open-emacs-config)))
@@ -52,8 +52,9 @@
 (use-package company
   :diminish company-mode
   :config
+  (setq company-idle-delay nil)
   (global-company-mode t)
-  (define-key prog-mode-map (kbd "<tab>") 'company-complete)
+  (define-key prog-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
   (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
   (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
   (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer))
@@ -95,27 +96,6 @@
         "R" 'neotree-refresh
         "d" 'neotree-delete-node
         "RET" 'neotree-enter))
-
-;; (use-package project-explorer
-;;   :commands project-explorer-toggle
-;;   :init
-;;   (keys-l "a" 'project-explorer-toggle)
-;;   :config
-;;   (add-hook 'project-explorer-mode-hook
-;;             (lambda () (linum-mode -1)))
-
-;;   (setq pe/omit-gitignore t
-;;         pe/omit-regex "^#\\|^\\.git$\\|~$\\|^node_modules$")
-;;   (keys :keymaps 'project-explorer-mode-map
-;;         "o" 'pe/return
-;;         "i" 'pe/toggle-omit
-;;         "r" 'pe/rename-file
-;;         "TAB" 'pe/tab
-;;         "q" 'pe/quit
-;;         "c" 'pe/copy-file
-;;         "R" 'revert-buffer
-;;         "d" 'pe/delete-file
-;;         "RET" 'pe/return))
 
 (use-package avy
   :commands avy-goto-char-time
@@ -234,6 +214,8 @@
    '(shell-pop-autocd-to-working-dir nil)
    '(shell-pop-shell-type
      (quote ("eshell" "*eshell*" (lambda nil (eshell)))))))
+
+(use-package fzf)
 
 ;; (shell-pop-in-hook)
 (provide 'init-editor-packages)

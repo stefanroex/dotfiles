@@ -36,3 +36,5 @@
   new = green bold
 [format]
   pretty = format:%C(white)%ad%Creset %C(green)%h%C(yellow)%d%Creset %C(white)%s %C(magenta) [%an]%Creset
+[github]
+	user = stefanroex

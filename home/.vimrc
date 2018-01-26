@@ -55,6 +55,7 @@ Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
+Plug 'hachibeeDI/vim-vbnet'
 
 " Syntaxhighlight tweaking
 " Plug 'lilydjwg/colorizer'
