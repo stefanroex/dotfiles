@@ -204,7 +204,7 @@ let g:flow#autoclose = 1
 "  Mappings
 " ========================================================================
 
-let mapleader=","
+let mapleader="\<Space>"
 
 nnoremap <leader><leader> <c-^>
 

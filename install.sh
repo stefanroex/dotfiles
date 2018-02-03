@@ -17,6 +17,7 @@ brew install ruby-build
 brew install ssh-copy-id
 brew install the_silver_searcher
 brew install zsh
+brew install httpie
 
 brew cleanup
 

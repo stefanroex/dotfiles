@@ -13,30 +13,37 @@
   (sml/setup))
 
 (use-package general
-  :init
-  (setq general-default-states '(normal emacs motion))
+  :demand
   :config
   (progn
-    (general-create-definer keys-l :prefix ",")
-    (defalias 'keys 'general-define-key)
+    (general-create-definer
+     keys
+     :states '(normal emacs motion))
 
-    (keys-l :states 'normal
-            :keymaps 'emacs-lisp-mode-map
-            "e" 'eval-last-sexp)
+    (general-create-definer
+     keys-l
+     :prefix "SPC"
+     :states '(normal emacs motion))
 
-    (keys-l "hk" 'describe-key
-            "hm" 'describe-mode
-            "hf" 'describe-function
-            "hv" 'describe-variable
-            "," 'my-switch-to-other-buffer
-            "k" 'kill-other-buffers
-            "q" 'kill-buffer-and-window
-            "w" 'delete-window
-            "z" 'next-code-buffer
-            "x" 'previous-code-buffer
-            "B" 'ibuffer
-            "O" 'open-iterm-in-project-root
-            "v" 'open-emacs-config)))
+    (keys-l
+     :states 'normal
+     :keymaps 'emacs-lisp-mode-map
+     "e" 'eval-last-sexp)
+
+    (keys-l
+     "hk" 'describe-key
+     "hm" 'describe-mode
+     "hf" 'describe-function
+     "hv" 'describe-variable
+     "SPC" 'my-switch-to-other-buffer
+     "k" 'kill-other-buffers
+     "q" 'kill-buffer-and-window
+     "w" 'delete-window
+     "z" 'next-code-buffer
+     "x" 'previous-code-buffer
+     "B" 'ibuffer
+     "O" 'open-iterm-in-project-root
+     "v" 'open-emacs-config)))
 
 (use-package yasnippet
   :pin melpa-stable
@@ -46,6 +53,9 @@
 
 (use-package ag
   :defer t
+  :init
+  (keys-l "s" 'ag-project-regexp
+          "S" 'ag-project)
   :config
   (setq ag-reuse-buffers t))
 
@@ -101,7 +111,8 @@
   :commands avy-goto-char-time
   :init
   (setq avy-timeout-seconds 0.3)
-  (keys "SPC" 'avy-goto-char-timer))
+  ;; (keys "SPC" 'avy-goto-char-timer)
+  )
 
 (use-package which-key
   :defer 1
@@ -141,8 +152,7 @@
   (setq projectile-create-missing-test-files t
         projectile-completion-system 'ivy)
 
-  (keys-l "p" 'projectile-command-map
-          "s" 'projectile-ag)
+  (keys-l "p" 'projectile-command-map)
 
   (defun advice-projectile-no-sub-project-files ()
     "Directly call `projectile-get-ext-command'. No need to try to get a

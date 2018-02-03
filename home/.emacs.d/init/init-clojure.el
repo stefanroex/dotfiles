@@ -59,6 +59,22 @@
                                  (lambda (buffer err)
                                    (cider-handle-compilation-errors err buffer))
                                  '()))
+  (defun re-frame-jump-to-reg ()
+    (interactive)
+    (let* ((kw (cider-symbol-at-point 'look-back))
+           (ns-qualifier (and
+                          (string-match "^:+\\(.+\\)/.+$" kw)
+                          (match-string 1 kw)))
+           (kw-ns (if ns-qualifier
+                      (cider-resolve-alias (cider-current-ns) ns-qualifier)
+                    (cider-current-ns)))
+           (kw-to-find (concat "::" (replace-regexp-in-string "^:+\\(.+/\\)?" "" kw))))
+
+      (when (and ns-qualifier (string= kw-ns (cider-current-ns)))
+        (error "Could not resolve alias \"%s\" in %s" ns-qualifier (cider-current-ns)))
+
+      (progn (cider-find-ns "-" kw-ns)
+             (search-forward-regexp (concat "reg-[a-zA-Z-]*[ \\\n]+" kw-to-find) nil 'noerror))))
 
   (defun my-cider-refresh ()
     (interactive)
@@ -125,7 +141,8 @@
           "e" 'cider-eval-last-sexp)
 
   (keys :keymaps cider-mode-maps
-        "gf" 'cider-find-var)
+        "gf" 'cider-find-var
+        "gF" 're-frame-jump-to-reg)
 
   (keys-l :keymaps '(clojurescript-mode-map)
           "C" 'cider-switch-to-cljs-repl)
@@ -134,7 +151,7 @@
           "C" 'cider-switch-to-clj-repl)
 
   (keys :keymaps cider-mode-maps
-        :prefix ",c"
+        :prefix "SPC c"
         "d" 'cider-doc-map
         "eb" 'cider-load-buffer
         "ef" 'cider-eval-defun-at-point
@@ -171,7 +188,7 @@
   (dolist (details cljr--all-helpers)
     (let ((key (car details))
           (fn (cadr details)))
-      (keys :prefix ",r"
+      (keys :prefix "SPC r"
             :keymaps '(clojure-mode-map clojurescript-mode-map)
             key fn)))
   (add-to-list 'cljr-magic-require-namespaces '("r"  . "reagent.core"))

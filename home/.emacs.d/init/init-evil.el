@@ -1,4 +1,5 @@
 (use-package evil
+  :demand
   :config
   (setq evil-intercept-esc 'always
         evil-want-fine-undo t
@@ -41,6 +42,7 @@
    "cc" 'evilnc-comment-or-uncomment-lines))
 
 (use-package evil-search-highlight-persist
+  :demand
   :config
   (global-evil-search-highlight-persist t)
   (keys :keymaps 'prog-mode-map
