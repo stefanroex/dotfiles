@@ -15,13 +15,15 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Plugins
-" Plug 'Galooshi/vim-import-js'
-Plug 'Lokaltog/vim-easymotion'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dockyard/vim-easydir'
 Plug 'ervandew/supertab'
+Plug 'flowtype/vim-flow'
+Plug 'hashivim/vim-terraform'
 Plug 'janko-m/vim-test'
+Plug 'juliosueiras/vim-terraform-completion'
 Plug 'kien/ctrlp.vim'
+Plug 'neomake/neomake'
 Plug 'rking/ag.vim'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdtree'
@@ -33,9 +35,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/gitignore'
-Plug 'w0ng/vim-hybrid'
-Plug 'w0rp/ale'
-Plug 'flowtype/vim-flow'
 
 if !has('nvim')
   Plug 'tpope/vim-sensible'
@@ -168,10 +167,6 @@ if !has('nvim')
   set ttymouse=xterm2
 endif
 
-" Easymotion
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-
 " Vim-test
 let test#javascript#mocha#executable = 'node_modules/.bin/mocha --compilers js:babel-core/register --require ./test/testHelper.js'
 
@@ -199,6 +194,12 @@ let g:flow#autoclose = 1
 " Prettier
 " autocmd FileType javascript setlocal formatprg=prettier\ --stdin\ --trailing-comma\ all
 " let g:neoformat_try_formatprg = 1
+"" (Optional)Remove Info(Preview) window
+
+" Terraform
+let g:terraform_align=1
+let g:terraform_fold_sections=1
+let g:terraform_fmt_on_save=1
 
 " ========================================================================
 "  Mappings
@@ -240,8 +241,6 @@ nnoremap <silent> p p`]
 
 map <C-n> :cn<CR>
 map <C-p> :cp<CR>
-
-nmap <Space><Space> <Plug>(easymotion-s)
 
 " ========================================================================
 "  Autocmd
