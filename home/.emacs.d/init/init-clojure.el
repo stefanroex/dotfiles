@@ -83,7 +83,7 @@
     (let ((log-buffer (or (get-buffer cider-refresh-log-buffer)
                           (cider-make-popup-buffer cider-refresh-log-buffer))))
       (cider-interactive-eval
-       "(dev/reset)"
+       "(user/reset)"
        (cider-refresh-eval))))
 
   (defun cider-switch-to-clj-repl ()
@@ -195,5 +195,7 @@
   (add-to-list 'cljr-magic-require-namespaces '("rf" . "re-frame.core"))
   (add-to-list 'cljr-magic-require-namespaces '("subs" . "bm.client.subs"))
   (add-to-list 'cljr-magic-require-namespaces '("events" . "bm.client.events")))
+
+(use-package kibit-helper)
 
 (provide 'init-clojure)

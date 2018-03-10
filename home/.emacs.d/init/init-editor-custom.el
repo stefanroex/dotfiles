@@ -126,4 +126,7 @@
 ;; prevent new windows
 (setq pop-up-frames nil)
 
+;; sh indentation
+(setq sh-basic-offset 2)
+
 (provide 'init-editor-custom)

@@ -193,12 +193,6 @@
         :modes 'normal
         "gD" 'dumb-jump-go))
 
-(use-package evil-snipe
-  :diminish 'evil-snipe-local-mode
-  :config
-  (evil-snipe-override-mode 1)
-  (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode))
-
 (use-package expand-region
   :commands 'er/expand-region
   :init
@@ -226,6 +220,12 @@
      (quote ("eshell" "*eshell*" (lambda nil (eshell)))))))
 
 (use-package fzf)
+
+(use-package prettier-js
+  :config
+  (add-hook 'markdown-mode-hook 'prettier-js-mode)
+  (add-hook 'css-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode))
 
 ;; (shell-pop-in-hook)
 (provide 'init-editor-packages)

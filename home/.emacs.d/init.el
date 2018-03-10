@@ -14,12 +14,10 @@
 (require 'init-editor-custom)
 (require 'init-evil)
 (require 'init-magit)
-(require 'init-lisp)
 (require 'init-clojure)
+(require 'init-lisp)
 (require 'init-javascript)
 (require 'init-flow)
 (require 'init-css)
 (require 'init-elm)
 (require 'init-flycheck)
-
-(projectile-switch-project)

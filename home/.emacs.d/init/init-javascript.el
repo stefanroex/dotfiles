@@ -19,13 +19,6 @@
                   (web-mode-set-content-type "jsx")
                 (message "now set to: %s" web-mode-content-type)))))
 
-(use-package prettier-js
-  :config
-  (setq prettier-js-args '(
-                           "--trailing-comma" "all"
-                           "--single-quote" "false"))
-  (add-hook 'web-mode-hook 'prettier-js-mode))
-
 (use-package import-js
   :commands import-js-fix
   :init

@@ -1,5 +1,6 @@
 (use-package evil
-  :demand
+  :init
+  (setq evil-want-integration nil)
   :config
   (setq evil-intercept-esc 'always
         evil-want-fine-undo t
@@ -26,7 +27,7 @@
 (use-package evil-collection
   :after evil
   :init
-  (setq evil-collection-mode-list '(dired ibuffer))
+  (setq evil-collection-mode-list '(dired ibuffer ivy help eshell))
   :config
   (evil-collection-init))
 
@@ -47,5 +48,11 @@
   (global-evil-search-highlight-persist t)
   (keys :keymaps 'prog-mode-map
         "RET" 'evil-search-highlight-persist-remove-all))
+
+(use-package evil-snipe
+  :diminish 'evil-snipe-local-mode
+  :config
+  (evil-snipe-override-mode 1)
+  (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode))
 
 (provide 'init-evil)
