@@ -9,5 +9,4 @@ source $HOME/.zsh/functions
 export EDITOR='nvim'
 export HOMEBREW_NO_ANALYTICS=1
 
-export PATH="$HOME/.rbenv/shims:$PATH"
-export PATH="$HOME/.bin:$PATH"
+source "$HOME/.profile"
