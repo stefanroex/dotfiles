@@ -199,6 +199,4 @@
   (add-to-list 'cljr-magic-require-namespaces '("subs" . "bm.client.subs"))
   (add-to-list 'cljr-magic-require-namespaces '("events" . "bm.client.events")))
 
-(use-package kibit-helper)
-
 (provide 'init-clojure)

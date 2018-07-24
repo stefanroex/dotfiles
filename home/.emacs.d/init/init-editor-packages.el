@@ -22,9 +22,12 @@
   (progn
     (general-auto-unbind-keys)
 
+    (general-define-key :states 'motion "SPC" nil)
+
     (general-create-definer
      keys
      :states '(normal emacs motion))
+
 
     (general-create-definer
      keys-l
@@ -61,14 +64,14 @@
   :defer t
   :init
   (keys-l "s" 'ag-project-regexp
-          "S" 'ag-project)
+    "S" 'ag-project)
   :config
-  (setq ag-reuse-buffers t))
+  (setq ag-reuse-buffers t)
+  (define-key ag-mode-map (kbd "k") nil))
 
 (use-package company
   :diminish company-mode
   :config
-  (setq company-idle-delay nil)
   (global-company-mode t)
   (define-key prog-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
   (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
