@@ -25,11 +25,11 @@
   (evil-mode t))
 
 (use-package evil-collection
-  :after evil
-  :init
-  (setq evil-collection-mode-list '(dired ibuffer ivy help eshell))
-  :config
-  (evil-collection-init))
+ :after evil
+ :init
+ (setq evil-collection-mode-list '(dired ibuffer ivy help eshell))
+ :config
+ (evil-collection-init))
 
 (use-package evil-surround
   :config

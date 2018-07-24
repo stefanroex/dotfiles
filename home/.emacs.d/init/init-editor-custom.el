@@ -119,14 +119,16 @@
 ;;       uniquify-min-dir-content 1
 ;;       uniquify-ignore-buffers-re "^\\*")
 
-;; sensible undo
-(global-undo-tree-mode)
-(diminish 'undo-tree-mode)
-
 ;; prevent new windows
 (setq pop-up-frames nil)
 
 ;; sh indentation
 (setq sh-basic-offset 2)
+
+;; osx titlebar
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq ns-use-proxy-icon  nil)
+(setq frame-title-format nil)
 
 (provide 'init-editor-custom)

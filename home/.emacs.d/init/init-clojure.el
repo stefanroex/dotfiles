@@ -4,6 +4,9 @@
 (use-package clojure-mode
   :defer t
   :config
+  (put-clojure-indent 'assoc 1)
+  (put-clojure-indent 'try-let 'defun)
+
   (define-clojure-indent
     (GET 'defun)
     (POST 'defun)
@@ -83,7 +86,7 @@
     (let ((log-buffer (or (get-buffer cider-refresh-log-buffer)
                           (cider-make-popup-buffer cider-refresh-log-buffer))))
       (cider-interactive-eval
-       "(user/reset)"
+       "(dev/reset)"
        (cider-refresh-eval))))
 
   (defun cider-switch-to-clj-repl ()

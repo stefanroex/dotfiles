@@ -8,6 +8,10 @@
   :config
   (exec-path-from-shell-initialize))
 
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :init (global-undo-tree-mode))
+
 (use-package smart-mode-line
   :config
   (sml/setup))
@@ -16,6 +20,8 @@
   :demand
   :config
   (progn
+    (general-auto-unbind-keys)
+
     (general-create-definer
      keys
      :states '(normal emacs motion))
@@ -140,7 +146,7 @@
 (use-package counsel
   :config
   (keys-l "y" 'counsel-yank-pop
-          "f" 'counsel-projectile
+          "f" 'counsel-projectile-find-file
           "F" 'counsel-find-file
           "b" 'counsel-projectile-switch-to-buffer)
   (keys :states nil
