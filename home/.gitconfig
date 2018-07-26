@@ -3,7 +3,6 @@
 	name = Stefan Roex
 [core]
   autocrlf = input
-  editor = vim
   excludesfile = ~/.gitignore
 [branch]
   # Tells git branch and git checkout to set up new branches so that git-pull will appropriately merge from the starting point branch

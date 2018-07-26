@@ -1,3 +1,7 @@
+;; reduce the frequency of garbage collection by making it happen on
+;; each 50MB of allocated data (the default is on every 0.76MB)
+(setq gc-cons-threshold 50000000)
+
 ;; Show column and linum in mode-line
 (line-number-mode 1)
 (column-number-mode 1)
@@ -14,6 +18,8 @@
 
 ;; Spaces instead of tabs
 (setq c-basic-offset 2
+      js-indent-level 2
+      css-indent-offset 2
       tab-width 2
       indent-tabs-mode nil)
 
@@ -72,12 +78,8 @@
 (set-language-environment "UTF-8")
 (prefer-coding-system 'utf-8)
 
-;; reduce the frequency of garbage collection by making it happen on
-;; each 50MB of allocated data (the default is on every 0.76MB)
-(setq gc-cons-threshold 50000000)
-
-;; warn when opening files bigger than 100MB
-(setq large-file-warning-threshold 100000000)
+;; warn when opening files bigger than 10MB
+(setq large-file-warning-threshold 10000000)
 
 ;; font settings
 (set-face-attribute 'default t :font "Menlo")
@@ -99,25 +101,16 @@
 ;; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
 
-;; Use aspell for spell checking: brew install aspell --lang=en
-(setq ispell-program-name "/usr/local/bin/aspell")
-
 ;; Move to trash when deleting stuff
 (setq delete-by-moving-to-trash t
       trash-directory "~/.Trash/emacs")
 
 ;; Save cursor position for files.
 (save-place-mode 1)
+(setq save-place-file (locate-user-emacs-file "places"))
 
 ;; Load latest compiled elisp file
 (setq load-prefer-newer t)
-
-;; meaningful names for buffers with the same name
-;; (require 'uniquify)
-;; (setq uniquify-buffer-name-style 'forward
-;;       uniquify-separator "/"
-;;       uniquify-min-dir-content 1
-;;       uniquify-ignore-buffers-re "^\\*")
 
 ;; prevent new windows
 (setq pop-up-frames nil)
@@ -130,5 +123,14 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (setq ns-use-proxy-icon  nil)
 (setq frame-title-format nil)
+
+;; Always follow symlinks
+(setq vc-follow-symlinks t)
+
+;; Don't confirm when creating new file
+(setq confirm-nonexistent-file-or-buffer nil)
+
+;; Scroll in compilation mode
+(setq compilation-scroll-output t)
 
 (provide 'init-editor-custom)

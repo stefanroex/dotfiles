@@ -48,20 +48,6 @@
 (use-package cider
   :defer t
   :config
-  (defun cider-refresh-eval ()
-    (nrepl-make-response-handler (current-buffer)
-                                 (lambda (_buffer value)
-                                   (message "refresh: %s"
-                                            (string-trim
-                                             (cider-font-lock-as-clojure value))))
-                                 (lambda (_buffer out)
-                                   (message "refresh: %s"
-
-                                            (string-trim
-                                             (cider-font-lock-as-clojure out))))
-                                 (lambda (buffer err)
-                                   (cider-handle-compilation-errors err buffer))
-                                 '()))
   (defun re-frame-jump-to-reg ()
     (interactive)
     (let* ((kw (cider-symbol-at-point 'look-back))
@@ -79,24 +65,18 @@
       (progn (cider-find-ns "-" kw-ns)
              (search-forward-regexp (concat "reg-[a-zA-Z-]*[ \\\n]+" kw-to-find) nil 'noerror))))
 
-  (defun my-cider-refresh ()
-    (interactive)
-    (cider-ensure-connected)
-    (cider-save-project-buffers)
-    (let ((log-buffer (or (get-buffer cider-refresh-log-buffer)
-                          (cider-make-popup-buffer cider-refresh-log-buffer))))
-      (cider-interactive-eval
-       "(dev/reset)"
-       (cider-refresh-eval))))
-
   (defun cider-switch-to-clj-repl ()
     (interactive)
     (cider-ensure-connected)
     (cider-eval- ":cljs/quit"))
+
   (defun cider-switch-to-cljs-repl ()
     (interactive)
     (cider-ensure-connected)
     (cider-interactive-eval "(cljs)"))
+
+  (setq cider-ns-refresh-before-fn "reloaded.repl/suspend"
+        cider-ns-refresh-after-fn "reloaded.repl/resume")
 
   (setq cider-prompt-for-symbol nil
         cider-repl-display-help-banner nil
@@ -115,18 +95,18 @@
   (evil-add-hjkl-bindings cider-connections-buffer-mode-map 'emacs)
 
   (keys :keymaps '(cider-inspector-mode-map)
-        :modes 'emacs
-        "u" 'cider-inspector-pop
-        "j" 'evil-next-line
-        "k" 'evil-previous-line
-        "h" 'evil-backward-char
-        "l" 'evil-forward-char
-        "o" 'cider-inspector-operate-on-point)
+    :modes 'emacs
+    "u" 'cider-inspector-pop
+    "j" 'evil-next-line
+    "k" 'evil-previous-line
+    "h" 'evil-backward-char
+    "l" 'evil-forward-char
+    "o" 'cider-inspector-operate-on-point)
 
   (keys :keymaps '(cider-repl-mode-map)
-        :modes 'normal
-        ";" 'cider-repl-shortcuts-help
-        "<return>" 'cider-repl-return)
+    :modes 'normal
+    ";" 'cider-repl-shortcuts-help
+    "<return>" 'cider-repl-return)
 
   (define-key cider-repl-mode-map (kbd "<up>") 'cider-repl-previous-input)
   (define-key cider-repl-mode-map (kbd "<down>") 'cider-repl-next-input)
@@ -135,45 +115,44 @@
   (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
 
   (keys-l :keymaps cider-mode-maps
-          "E" 'cider-pprint-eval-last-sexp
-          "T" 'cider-test-run-project-tests
-          "t" 'cider-test-run-ns-tests
-          "d" 'cider-doc
-          "n" 'cider-eval-sexp-at-point
-          "D" 'cider-grimoire-web
-          "e" 'cider-eval-last-sexp)
+    "E" 'cider-pprint-eval-last-sexp
+    "T" 'cider-test-run-project-tests
+    "t" 'cider-test-run-ns-tests
+    "d" 'cider-doc
+    "n" 'cider-eval-sexp-at-point
+    "D" 'cider-grimoire-web
+    "e" 'cider-eval-last-sexp)
 
   (keys :keymaps cider-mode-maps
-        "gf" 'cider-find-var
-        "gF" 're-frame-jump-to-reg)
+    "gf" 'cider-find-var
+    "gF" 're-frame-jump-to-reg)
 
   (keys-l :keymaps '(clojurescript-mode-map)
-          "C" 'cider-switch-to-cljs-repl)
+    "C" 'cider-switch-to-cljs-repl)
 
   (keys-l :keymaps '(clojure-mode-map)
-          "C" 'cider-switch-to-clj-repl)
+    "C" 'cider-switch-to-clj-repl)
 
   (keys :keymaps cider-mode-maps
-        :prefix "SPC c"
-        "d" 'cider-doc-map
-        "eb" 'cider-load-buffer
-        "ef" 'cider-eval-defun-at-point
-        "ef" 'cider-load-file
-        "el" 'cider-eval-last-sexp
-        "er" 'cider-eval-last-sexp-and-replace
-        "i" 'cider-inspect
-        "j" 'cider-jack-in
-        "J" 'cider-restart
-        "m" 'cider-macroexpand-1
-        "pf" 'cider-pprint-eval-defun-at-point
-        "pl" 'cider-pprint-eval-last-sexp
-        "q" 'cider-quit
-        "r" 'my-cider-refresh
-        "R" 'cider-refresh
-        "sn" 'cider-repl-set-ns
-        "sr" 'cider-switch-to-repl-buffer
-        "l" 'cider-inspect-last-result
-        "t" 'cider-test-run-project-tests)
+    :prefix "SPC c"
+    "d" 'cider-doc-map
+    "eb" 'cider-load-buffer
+    "ef" 'cider-eval-defun-at-point
+    "ef" 'cider-load-file
+    "el" 'cider-eval-last-sexp
+    "er" 'cider-eval-last-sexp-and-replace
+    "i" 'cider-inspect
+    "j" 'cider-jack-in
+    "J" 'cider-restart
+    "m" 'cider-macroexpand-1
+    "pf" 'cider-pprint-eval-defun-at-point
+    "pl" 'cider-pprint-eval-last-sexp
+    "q" 'cider-quit
+    "r" 'cider-ns-refresh
+    "sn" 'cider-repl-set-ns
+    "sr" 'cider-switch-to-repl-buffer
+    "l" 'cider-inspect-last-result
+    "t" 'cider-test-run-project-tests)
 
   (advice-add 'evil-search-highlight-persist-remove-all :after #'cider--remove-result-overlay))
 

@@ -8,9 +8,6 @@
 (eval-when-compile
   (require 'use-package))
 
-(use-package diminish
-  :ensure t)
-
 (setq use-package-verbose nil
       use-package-check-before-init t
       use-package-always-ensure t)

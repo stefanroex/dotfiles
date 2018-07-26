@@ -6,30 +6,32 @@
         evil-want-fine-undo t
         evil-shift-width 2)
 
+  (fset 'evil-visual-update-x-selection 'ignore)
+
   (keys :states nil
-        :keymaps '(minibuffer-local-map
-                   minibuffer-local-ns-map
-                   minibuffer-local-completion-map
-                   minibuffer-local-must-match-map
-                   minibuffer-local-isearch-map
-                   ivy-minibuffer-map)
-        [escape] 'minibuffer-keyboard-quit)
+    :keymaps '(minibuffer-local-map
+               minibuffer-local-ns-map
+               minibuffer-local-completion-map
+               minibuffer-local-must-match-map
+               minibuffer-local-isearch-map
+               ivy-minibuffer-map)
+    [escape] 'minibuffer-keyboard-quit)
 
   (keys "C-n" 'next-error
-        "C-p" 'previous-error
-        "C-h" 'evil-window-left
-        "C-j" 'evil-window-down
-        "C-k" 'evil-window-up
-        "C-l" 'evil-window-right)
+    "C-p" 'previous-error
+    "C-h" 'evil-window-left
+    "C-j" 'evil-window-down
+    "C-k" 'evil-window-up
+    "C-l" 'evil-window-right)
 
   (evil-mode t))
 
 (use-package evil-collection
- :after evil
- :init
- (setq evil-collection-mode-list '(dired ibuffer ivy help eshell))
- :config
- (evil-collection-init))
+  :after evil
+  :init
+  (setq evil-collection-mode-list '(dired ibuffer ivy help eshell))
+  :config
+  (evil-collection-init))
 
 (use-package evil-surround
   :config
@@ -39,20 +41,20 @@
   :commands 'evilnc-comment-or-uncomment-lines
   :init
   (keys-l
-   :states '(normal visual)
-   "cc" 'evilnc-comment-or-uncomment-lines))
+    :states '(normal visual)
+    "cc" 'evilnc-comment-or-uncomment-lines))
 
 (use-package evil-search-highlight-persist
   :demand
   :config
   (global-evil-search-highlight-persist t)
   (keys :keymaps 'prog-mode-map
-        "RET" 'evil-search-highlight-persist-remove-all))
+    "RET" 'evil-search-highlight-persist-remove-all))
 
-(use-package evil-snipe
-  :diminish 'evil-snipe-local-mode
+(use-package evil-magit
   :config
-  (evil-snipe-override-mode 1)
-  (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode))
+  (add-hook 'git-commit-mode-hook 'evil-insert-state)
+  (keys :keymaps 'magit-status-mode-map
+    "K" 'magit-discard))
 
 (provide 'init-evil)

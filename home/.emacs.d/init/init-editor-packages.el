@@ -1,3 +1,6 @@
+(use-package diminish
+  :ensure t)
+
 (use-package better-defaults
   :pin melpa-stable)
 
@@ -6,6 +9,7 @@
 (use-package exec-path-from-shell
   :pin melpa-stable
   :config
+  (setq exec-path-from-shell-check-startup-files nil)
   (exec-path-from-shell-initialize))
 
 (use-package undo-tree
@@ -25,40 +29,34 @@
     (general-define-key :states 'motion "SPC" nil)
 
     (general-create-definer
-     keys
-     :states '(normal emacs motion))
+      keys
+      :states '(normal emacs motion))
 
 
     (general-create-definer
-     keys-l
-     :prefix "SPC"
-     :states '(normal emacs motion))
+      keys-l
+      :prefix "SPC"
+      :states '(normal emacs motion))
 
     (keys-l
-     :states 'normal
-     :keymaps 'emacs-lisp-mode-map
-     "e" 'eval-last-sexp)
+      :states 'normal
+      :keymaps 'emacs-lisp-mode-map
+      "e" 'eval-last-sexp)
 
     (keys-l
-     "hk" 'describe-key
-     "hm" 'describe-mode
-     "hf" 'describe-function
-     "hv" 'describe-variable
-     "SPC" 'my-switch-to-other-buffer
-     "k" 'kill-other-buffers
-     "q" 'kill-buffer-and-window
-     "w" 'delete-window
-     "z" 'next-code-buffer
-     "x" 'previous-code-buffer
-     "B" 'ibuffer
-     "O" 'open-iterm-in-project-root
-     "v" 'open-emacs-config)))
-
-(use-package yasnippet
-  :pin melpa-stable
-  :diminish yas-minor-mode
-  :config
-  (yas-global-mode 1))
+      "hk" 'describe-key
+      "hm" 'describe-mode
+      "hf" 'describe-function
+      "hv" 'describe-variable
+      "SPC" 'my-switch-to-other-buffer
+      "k" 'kill-other-buffers
+      "q" 'kill-buffer-and-window
+      "w" 'delete-window
+      "z" 'next-code-buffer
+      "x" 'previous-code-buffer
+      "B" 'ibuffer
+      "O" 'open-iterm-in-project-root
+      "v" 'open-emacs-config)))
 
 (use-package ag
   :defer t
@@ -71,50 +69,31 @@
 
 (use-package company
   :diminish company-mode
+  :init (global-company-mode)
   :config
-  (global-company-mode t)
-  (define-key prog-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
-  (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-  (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
-  (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer))
-
-(use-package company-flow
-  :defer t
-  :config
-  (eval-after-load 'company
-    '(add-to-list 'company-backends 'company-flow)))
-
-(defun neotree-project-root ()
-  "Open NeoTree using the git root."
-  (interactive)
-  (let ((project-dir (projectile-project-root))
-        (file-name (buffer-file-name)))
-    (neotree-show)
-    (if project-dir
-        (progn
-          (neotree-dir project-dir)
-          (neotree-find file-name)))))
-
-(defun neotree-toggle-project-root ()
-  (interactive)
-  (if (neo-global--window-exists-p)
-      (neotree-hide)
-    (neotree-project-root)))
+  (keys :states 'insert
+    "<tab>" 'company-complete-common-or-cycle)
+  (general-def 'company-active-map
+    "C-s" 'company-filter-candidates
+    "C-d" 'company-show-doc-buffer
+    "<tab>" 'company-complete-common-or-cycle
+    "S-<tab>" 'company-select-previous-or-abort))
 
 (use-package neotree
   :init
   (keys-l "a" 'neotree-toggle-project-root)
   :config
+  (setq neo-theme 'arrow)
   (keys :keymaps 'neotree-mode-map
-        "o" 'neotree-enter
-        "i" 'neotree-hidden-file-toggle
-        "r" 'neotree-rename-node
-        "TAB" 'neotree-dir
-        "q" 'neotree-hide
-        "c" 'neotree-copy-node
-        "R" 'neotree-refresh
-        "d" 'neotree-delete-node
-        "RET" 'neotree-enter))
+    "o" 'neotree-enter
+    "i" 'neotree-hidden-file-toggle
+    "r" 'neotree-rename-node
+    "TAB" 'neotree-dir
+    "q" 'neotree-hide
+    "c" 'neotree-copy-node
+    "R" 'neotree-refresh
+    "d" 'neotree-delete-node
+    "RET" 'neotree-enter))
 
 (use-package avy
   :commands avy-goto-char-time
@@ -219,8 +198,8 @@
                  (projectile-project-root)))))
 
   (keys :modes 'eshell-mode
-        :states 'normal
-        "q" 'kill-buffer-and-window)
+    :states 'normal
+    "q" 'kill-buffer-and-window)
 
   (custom-set-variables
    '(shell-pop-full-span t)
@@ -228,13 +207,64 @@
    '(shell-pop-shell-type
      (quote ("eshell" "*eshell*" (lambda nil (eshell)))))))
 
-(use-package fzf)
-
 (use-package prettier-js
   :config
   (add-hook 'markdown-mode-hook 'prettier-js-mode)
   (add-hook 'css-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook 'prettier-js-mode))
 
-;; (shell-pop-in-hook)
+(use-package flycheck
+  :defer 1
+  :config
+  (setq-default flycheck-disabled-checkers
+                '(emacs-lisp-checkdoc
+                  javascript-jshint
+                  handlebars
+                  scss-lint
+                  scss))
+  (setq flycheck-idle-change-delay 1
+        flycheck-check-syntax-automatically '(save mode-enabled idle-change))
+  (global-flycheck-mode))
+
+(use-package web-mode
+  :mode (("\\.js$" . web-mode))
+  :config
+  (setq web-mode-enable-auto-quoting nil
+        web-mode-markup-indent-offset 2 web-mode-css-indent-offset 2
+        web-mode-code-indent-offset 2
+        web-mode-attr-indent-offset 2
+        web-mode-indent-style 2)
+
+  (keys-l :keymaps 'web-mode-map
+    "d" 'flow-type)
+
+  (add-to-list 'company-dabbrev-code-modes 'web-mode)
+
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (if (equal web-mode-content-type "javascript")
+                  (web-mode-set-content-type "jsx")
+                (message "now set to: %s" web-mode-content-type)))))
+
+(use-package magit
+  :diminish 'auto-revert-mode
+  :defer 1
+  :init
+  (keys-l "gs" 'magit-status
+    "gl" 'magit-log-head
+    "gb" 'magit-blame)
+  :config
+  (setq magit-display-buffer-function 'magit-buffer-full-screen)
+  (global-auto-revert-mode t))
+
+(use-package css-mode
+  :config
+  (setq css-indent-offset 2))
+
+(use-package sass-mode
+  :mode "\\.sass\\'")
+
+(use-package scss-mode
+  :mode "\\.scss\\'")
+
 (provide 'init-editor-packages)

@@ -8,19 +8,16 @@
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
-(setq my-skippable-buffers '("*Messages*" "*scratch*" "*Help*"))
+(defconst my-skippable-buffers '("*Messages*" "*scratch*" "*Help*"))
 
-(defun my-change-buffer (change-buffer)
-  "Call CHANGE-BUFFER until current buffer is not in `my-skippable-buffers'."
-  (let ((initial (current-buffer)))
-    (funcall change-buffer)
-    (let ((first-change (current-buffer)))
-      (catch 'loop
-        (while (member (buffer-name) my-skippable-buffers)
-          (funcall change-buffer)
-          (when (eq (current-buffer) first-change)
-            (switch-to-buffer initial)
-            (throw 'loop t)))))))
+(defun my-change-buffer (circle-fn)
+  (let ((bread-crumb (buffer-name)))
+    (funcall circle-fn)
+    (while
+        (and
+         (not (code-buffer? (buffer-name)))
+         (not (equal bread-crumb (buffer-name))) )
+      (funcall circle-fn))))
 
 (defun next-code-buffer ()
   (interactive)
@@ -55,10 +52,21 @@
       (magit-display-buffer-traditional buffer)
     (display-buffer buffer '(display-buffer-full-screen))))
 
-(defun open-iterm-in-project-root ()
-  "Opens iTerm for current directory."
+(defun neotree-project-root ()
+  "Open NeoTree using the git root."
   (interactive)
-  (projectile-with-default-dir (projectile-project-root)
-    (shell-command "open -a iTerm $PWD && echo 'Opening' $PWD 'in iTerm...'")))
+  (let ((project-dir (projectile-project-root))
+        (file-name (buffer-file-name)))
+    (neotree-show)
+    (if project-dir
+        (progn
+          (neotree-dir project-dir)
+          (neotree-find file-name)))))
+
+(defun neotree-toggle-project-root ()
+  (interactive)
+  (if (neo-global--window-exists-p)
+      (neotree-hide)
+    (neotree-project-root)))
 
 (provide 'init-functions)

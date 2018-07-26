@@ -9,4 +9,4 @@ source $HOME/.zsh/functions
 export EDITOR='nvim'
 export HOMEBREW_NO_ANALYTICS=1
 
-source "$HOME/.profile"
+source $HOME/.profile
