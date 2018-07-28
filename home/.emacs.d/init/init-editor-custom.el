@@ -6,6 +6,17 @@
 (line-number-mode 1)
 (column-number-mode 1)
 
+;; osx titlebar
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq ns-use-proxy-icon  nil)
+(setq frame-title-format nil)
+
+;; font settings
+(set-face-attribute 'default t :font "Menlo")
+(set-face-attribute 'default nil :height 150)
+(setq-default line-spacing 4)
+
 ;; Nowrap
 (setq-default truncate-lines t)
 
@@ -81,11 +92,6 @@
 ;; warn when opening files bigger than 10MB
 (setq large-file-warning-threshold 10000000)
 
-;; font settings
-(set-face-attribute 'default t :font "Menlo")
-(set-face-attribute 'default nil :height 150)
-(setq-default line-spacing 4)
-
 ;; Automatically remove trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -117,12 +123,6 @@
 
 ;; sh indentation
 (setq sh-basic-offset 2)
-
-;; osx titlebar
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq ns-use-proxy-icon  nil)
-(setq frame-title-format nil)
 
 ;; Always follow symlinks
 (setq vc-follow-symlinks t)

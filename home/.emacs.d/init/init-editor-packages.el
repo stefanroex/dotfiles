@@ -1,10 +1,10 @@
+(use-package challenger-deep-theme)
+
 (use-package diminish
   :ensure t)
 
 (use-package better-defaults
   :pin melpa-stable)
-
-(use-package challenger-deep-theme)
 
 (use-package exec-path-from-shell
   :pin melpa-stable
@@ -123,16 +123,19 @@
         ivy-on-del-error-function nil
         ivy-virtual-abbreviate 'full
         ivy-re-builders-alist '((t . ivy--regex-fuzzy))
-        enable-recursive-minibuffers t))
+        enable-recursive-minibuffers t)
+  (general-def 'ivy-minibuffer-map
+    "C-j" 'ivy-next-line
+    "C-k" 'ivy-previous-line))
 
 (use-package counsel
   :config
   (keys-l "y" 'counsel-yank-pop
-          "f" 'counsel-projectile-find-file
-          "F" 'counsel-find-file
-          "b" 'counsel-projectile-switch-to-buffer)
+    "f" 'counsel-projectile-find-file
+    "F" 'counsel-find-file
+    "b" 'counsel-projectile-switch-to-buffer)
   (keys :states nil
-        "M-x" 'counsel-M-x))
+    "M-x" 'counsel-M-x))
 
 (use-package projectile
   :diminish projectile-mode
