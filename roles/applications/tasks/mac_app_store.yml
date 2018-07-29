@@ -31,3 +31,9 @@
   - { name: "Theine", id: 955848755 }
   - { name: "Things", id: 904280696 }
   - { name: "WhatsApp", id: 1147396723 }
+
+- name: Mac App Store - Set Alfred settings dir
+  osx_defaults:
+    domain: com.runningwithcrayons.Alfred-Preferences-3
+    key: syncfolder
+    value: "{{ role_path }}/files/alfred"

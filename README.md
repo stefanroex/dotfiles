@@ -4,10 +4,6 @@
 
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/stefanroex/dotfiles/master/install.sh)"
 
-## Additional steps
-
-- Set syncing folder of Alfred under "Advanced" to: `~/.dotfiles/roles/base.apps/files/alfred`.
-
 ## License
 
 The MIT license.
