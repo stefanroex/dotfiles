@@ -14,6 +14,12 @@
     formula: gnutls
     state: installed
 
+- name: Emacs - ensure custom.el exists
+  copy:
+    content: ""
+    dest: "{{ role_path }}/files/emacs.d/custom.el"
+    force: no
+
 - name: Emacs - copy emacs.d
   file:
     src: "{{ role_path }}/files/emacs.d"
