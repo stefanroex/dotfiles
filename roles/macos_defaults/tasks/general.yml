@@ -49,3 +49,11 @@
     key: InitialKeyRepeat
     type: int
     value: 15
+
+- name: General - Trackpad tap to click
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+    key: Clicking
+    type: bool
+    value: true

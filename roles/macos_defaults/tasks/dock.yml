@@ -15,6 +15,30 @@
     type: float
     value: 0
 
+- name: Dock - Size
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.Dock
+    key: tilesize
+    type: float
+    value: 40
+
+- name: Dock - Magnification
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.Dock
+    key: magnifications
+    type: bool
+    value: true
+
+- name: Dock - Size (magnified)
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.Dock
+    key: largesize
+    type: float
+    value: 80
+
 - name: Dock - Install Dock CLI
   notify: killall osx
   homebrew:
