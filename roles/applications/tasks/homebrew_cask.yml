@@ -1,0 +1,17 @@
+---
+- name: Homebrew casks - Install
+  homebrew_cask:
+    name: "{{ item }}"
+    state: installed
+  ignore_errors: true
+  loop:
+  - alfred
+  - chromedriver
+  - google-chrome
+  - gpg-suite
+  - plex-media-server
+  - slack
+  - spectacle
+  - spotify
+  - transmission
+  - tunnelblick

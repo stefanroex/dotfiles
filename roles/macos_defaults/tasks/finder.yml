@@ -1,0 +1,22 @@
+---
+- name: Finder - Search from current folder
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.finder
+    key: FXDefaultSearchScope
+    value: SCcf
+
+- name: Finder - Disable warning when changing file extension
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.finder
+    key: FXEnableExtensionChangeWarning
+    type: bool
+    value: false
+
+- name: Finder - Default to show Finder windows in list style
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.finder
+    key: FXPreferredViewStyle
+    value: Nlsv

@@ -1,0 +1,3 @@
+---
+- name: killall osx
+  command: killall Finder && killall Dock && killall SystemUIServer

@@ -27,6 +27,10 @@
 (setq initial-scratch-message "")
 (setq inhibit-startup-message t)
 
+;; Disable message in echo area
+(defun display-startup-echo-area-message ()
+  (message ""))
+
 ;; Spaces instead of tabs
 (setq c-basic-offset 2
       js-indent-level 2

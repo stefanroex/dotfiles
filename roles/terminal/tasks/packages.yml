@@ -1,0 +1,25 @@
+---
+- name: Homebrew - Update & Upgrade
+  homebrew:
+    update_homebrew: yes
+    upgrade_all: yes
+
+- name: Homebrew - Install packages
+  homebrew:
+    formula: "{{ item }}"
+    state: present
+  ignore_errors: true
+  loop:
+    - awscli
+    - cloc
+    - git
+    - heroku
+    - httpie
+    - jq
+    - openssl
+    - pgcli
+    - postgresql
+    - ssh-copy-id
+    - terraform
+    - the_silver_searcher
+    - zsh

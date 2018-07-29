@@ -1,0 +1,20 @@
+---
+- name: Ruby - Install packages
+  homebrew:
+    formula: "{{ item }}"
+    state: present
+  ignore_errors: true
+  loop:
+    - rbenv
+    - ruby-build
+
+- name: Ruby - Copy dotfiles
+  file:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "~/.{{ item }}"
+    state: link
+  loop:
+    - bundle
+    - gemrc
+    - irbrc
+    - rspec

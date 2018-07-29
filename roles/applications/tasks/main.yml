@@ -1,0 +1,3 @@
+---
+- include: homebrew_cask.yml
+- include: mac_app_store.yml

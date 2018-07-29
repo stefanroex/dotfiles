@@ -1,0 +1,20 @@
+---
+- name: Dotfiles - Copy zprezto
+  git:
+    repo: "https://github.com/sorin-ionescu/prezto.git"
+    dest: "~/.zprezto"
+    depth: 1
+
+- name: Dotfiles - Copy dotfiles
+  file:
+    src: "{{ role_path }}/files/dotfiles/{{ item }}"
+    dest: "~/.{{ item }}"
+    state: link
+  loop:
+    - agignore
+    - gitconfig
+    - gitignore
+    - profile
+    - zpreztorc
+    - zsh
+    - zshrc

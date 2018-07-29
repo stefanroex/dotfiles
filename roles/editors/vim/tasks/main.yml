@@ -1,0 +1,33 @@
+---
+- name: Vim - Install
+  homebrew:
+    formula: neovim
+    state: present
+
+- name: Vim - Copy .vim
+  file:
+    src: "{{ role_path }}/files/vim"
+    dest: "~/.vim"
+    state: link
+
+- name: Vim - Copy .vimrc
+  file:
+    src: "{{ role_path }}/files/vimrc"
+    dest: "~/.vimrc"
+    state: link
+
+- name: Vim - Copy .nvim
+  file:
+    src: "{{ role_path }}/files/vim"
+    dest: "~/.config/nvim"
+    state: link
+
+- name: Vim - inject Vim Plug
+  git:
+    repo: "https://github.com/junegunn/vim-plug.git"
+    dest: "{{ role_path }}/files/vim/vendor/vim-plug"
+    depth: 1
+
+- name: Vim - Install VIM packages
+  command: nvim +PlugInstall +qall
+  changed_when: false

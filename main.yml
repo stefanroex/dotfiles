@@ -1,0 +1,11 @@
+---
+- hosts: laptop
+  roles:
+    - applications
+    - terminal
+    - macos_defaults
+    - editors/emacs
+    - editors/vim
+    - languages/clojure
+    - languages/ruby
+    - languages/node

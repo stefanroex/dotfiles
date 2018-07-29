@@ -1,35 +1,30 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-git submodule update --init --recursive
+set -eu -o pipefail
 
-xcode-select --install
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew doctor
-brew update
+REPO="https://github.com/stefanroex/dotfiles.git"
+TARGET_DIR="$HOME/.dotfiles"
 
-brew install git
-brew install heroku/brew/heroku
-brew install neovim
-brew install openssl
-brew install pgcli
-brew install rbenv
-brew install ruby-build
-brew install ssh-copy-id
-brew install the_silver_searcher
-brew install zsh
-brew install httpie
+if ! xcode-select --print-path &> /dev/null; then
+  xcode-select --install &> /dev/null
 
-brew cleanup
+  until xcode-select --print-path &> /dev/null; do
+    sleep 5
+  done
+fi
 
-brew cask install 1password
-brew cask install alfred
-brew cask install flux
-brew cask install slack
-brew cask install spectacle
-brew cask install spotify
-brew cask install tunnelblick
+if test ! $(which brew); then
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
 
-brew cask alfred link
-brew cask cleanup
+if test ! $(which ansible); then
+  brew install ansible
+fi
 
-./symlink-dotfiles.sh
+if [ ! -d "$TARGET_DIR" ]; then
+  mkdir -p "$TARGET_DIR" && git clone "$REPO" "$TARGET_DIR"
+fi
+
+cd "$TARGET_DIR"
+
+ansible-playbook main.yml

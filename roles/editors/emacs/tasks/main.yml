@@ -1,0 +1,21 @@
+---
+- name: Emacs - Add cask tap
+  homebrew_tap:
+    name: railwaycat/emacsmacport
+    state: present
+
+- name: Emacs - Install
+  homebrew_cask:
+    name: emacs-mac
+    state: installed
+
+- name: Emacs - Install GNU utils
+  homebrew:
+    formula: gnutls
+    state: installed
+
+- name: Emacs - copy emacs.d
+  file:
+    src: "{{ role_path }}/files/emacs.d"
+    dest: "~/.emacs.d"
+    state: link

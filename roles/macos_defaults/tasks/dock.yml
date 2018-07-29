@@ -1,0 +1,34 @@
+---
+- name: Dock - Hide Dock
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.dock
+    key: autohide
+    type: bool
+    value: true
+
+- name: Dock - Disable Dock Hide delay
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.Dock
+    key: autohide-delay
+    type: float
+    value: 0
+
+- name: Dock - Install Dock CLI
+  notify: killall osx
+  homebrew:
+    formula: dockutil
+    state: present
+
+- name: Dock - Remove unused items
+  shell: dockutil --remove all
+  changed_when: false
+
+- name: Dock - Add items
+  shell: dockutil --add '{{ item }}'
+  changed_when: false
+  loop:
+  - "/Applications/Google Chrome.app"
+  - "/Applications/Things3.app"
+  - "/Applications/Airmail 3.app"

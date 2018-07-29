@@ -1,0 +1,51 @@
+---
+- name: Show ~/Library
+  shell: chflags nohidden ~/Library
+  changed_when: False
+
+- name: General - Show battery percentage
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.menuextra.battery
+    key: ShowPercent
+    value: YES
+
+- name: General - Disable opening application warnings
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.LaunchServices
+    key: LSQuarantine
+    type: bool
+    value: false
+
+- name: General - Prevent Time Machine from prompting to use new hard drives as backup volume
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.TimeMachine
+    key: DoNotOfferNewDisksForBackup
+    type: bool
+    value: true
+
+- name: General - Avoid creating .DS_Store files on network volumes
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.desktopservices
+    key: DSDontWriteNetworkStores
+    type: bool
+    value: true
+
+- name: General - Fast key repeat
+  notify: killall osx
+  osx_defaults:
+    domain: NSGlobalDomain
+    key: KeyRepeat
+    type: int
+    value: 2
+
+- name: General - Initial key repeat
+  notify: killall osx
+  osx_defaults:
+    domain: NSGlobalDomain
+    key: InitialKeyRepeat
+    type: int
+    value: 15

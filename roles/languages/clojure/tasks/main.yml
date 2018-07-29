@@ -1,0 +1,16 @@
+---
+- name: Clojure - Install packages
+  homebrew:
+    formula: "{{ item }}"
+    state: present
+  loop:
+    - clojure
+    - leiningen
+
+- name: Clojure - Copy dotfiles
+  file:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "~/.{{ item }}"
+    state: link
+  loop:
+    - lein

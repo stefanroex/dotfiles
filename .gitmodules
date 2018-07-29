@@ -1,6 +1,0 @@
-[submodule "home/.vim/vendor/vim-plug"]
-	path = home/.vim/vendor/vim-plug
-	url = https://github.com/junegunn/vim-plug.git
-[submodule "home/.zprezto"]
-	path = home/.zprezto
-	url = https://github.com/sorin-ionescu/prezto.git
