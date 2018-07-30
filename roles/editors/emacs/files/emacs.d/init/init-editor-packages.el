@@ -268,4 +268,6 @@
 (use-package scss-mode
   :mode "\\.scss\\'")
 
+(use-package esup)
+
 (provide 'init-editor-packages)
