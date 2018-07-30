@@ -1,9 +1,9 @@
-(defun add-hooks (mode mode-hooks)
+(defun add-hooks (mode-hooks mode)
   "Add mode to all mode hooks"
   (dolist (mode-hook mode-hooks)
     (add-hook mode-hook mode)))
 
-(defvar paredit-hooks
+(defconst lisp-hooks
   '(cider-mode-hook
     cider-repl-mode-hook
     clojure-mode-hook
@@ -12,33 +12,46 @@
     lisp-interaction-mode-hook
     scheme-mode-hook))
 
-(use-package paredit
+(use-package lispy
   :defer t
   :init
-  (add-hooks #'paredit-mode paredit-hooks))
+  (add-hooks lisp-hooks #'lispy-mode))
+
+(use-package lispyville
+  :defer t
+  :init
+  (add-hook 'lispy-mode-hook #'lispyville-mode)
+  :config
+  (lispyville-set-key-theme '(operators
+                              additional
+                              additional-wrap
+                              additional-movement
+                              additional-insert
+                              escape
+                              slurp/barf-lispy)))
 
 (use-package aggressive-indent
   :defer t
   :diminish aggressive-indent-mode
   :init
-  (add-hooks #'aggressive-indent-mode '(clojure-mode-hook emacs-lisp-mode-hook)))
+  (add-hooks
+   '(clojure-mode-hook emacs-lisp-mode-hook)
+   #'aggressive-indent-mode))
 
 (use-package indent-guide
   :diminish indent-guide-mode
   :init
   (setq indent-guide-delay 0.5)
-  (add-hooks #'indent-guide-mode '(clojure-mode-hook emacs-lisp-mode-hook)))
-
-(use-package evil-cleverparens
-  :defer t
-  :init
-  (setq evil-cleverparens-use-regular-insert t)
-  (add-hooks #'evil-cleverparens-mode paredit-hooks))
+  (add-hooks
+   '(clojure-mode-hook emacs-lisp-mode-hook)
+   #'indent-guide-mode))
 
 (use-package eldoc
   :defer t
   :diminish eldoc-mode
   :init
-  (add-hooks #'eldoc-mode '(cider-mode-hook emacs-lisp-mode-hook)))
+  (add-hooks
+   '(cider-mode-hook emacs-lisp-mode-hook)
+   #'eldoc-mode))
 
 (provide 'init-lisp)
