@@ -95,13 +95,6 @@
     "d" 'neotree-delete-node
     "RET" 'neotree-enter))
 
-(use-package avy
-  :commands avy-goto-char-time
-  :init
-  (setq avy-timeout-seconds 0.3)
-  ;; (keys "SPC" 'avy-goto-char-timer)
-  )
-
 (use-package which-key
   :defer 1
   :diminish which-key-mode
