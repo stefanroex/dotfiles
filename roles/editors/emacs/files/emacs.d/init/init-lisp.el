@@ -23,12 +23,13 @@
   (add-hook 'lispy-mode-hook #'lispyville-mode)
   :config
   (lispyville-set-key-theme '(operators
+                              c-w
+                              escape
+                              slurp/barf-lispy
                               additional
                               additional-wrap
                               additional-movement
-                              additional-insert
-                              escape
-                              slurp/barf-lispy)))
+                              additional-insert)))
 
 (use-package aggressive-indent
   :defer t
