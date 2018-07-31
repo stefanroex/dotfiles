@@ -13,23 +13,26 @@
     scheme-mode-hook))
 
 (use-package lispy
-  :defer t
-  :init
-  (add-hooks lisp-hooks #'lispy-mode))
+  :defer t)
 
 (use-package lispyville
   :defer t
   :init
-  (add-hook 'lispy-mode-hook #'lispyville-mode)
+  (add-hooks lisp-hooks #'lispyville-mode)
   :config
   (lispyville-set-key-theme '(operators
                               c-w
                               escape
                               slurp/barf-lispy
                               additional
+                              additional-motions
                               additional-wrap
-                              additional-movement
-                              additional-insert)))
+                              additional-insert))
+  (keys
+    :keymaps 'lispyville-mode-map
+    :modes 'motion
+    "{" #'evil-backward-paragraph
+    "}" #'evil-forward-paragraph))
 
 (use-package aggressive-indent
   :defer t

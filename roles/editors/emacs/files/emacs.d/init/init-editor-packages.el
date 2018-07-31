@@ -173,9 +173,10 @@
   :commands 'dumb-jump-go
   :init
   (setq dumb-jump-selector 'ivy)
-  (keys :keymaps 'prog-mode-map
-        :modes 'normal
-        "gD" 'dumb-jump-go))
+  (keys
+    :keymaps 'prog-mode-map
+    :modes 'normal
+    "gD" 'dumb-jump-go))
 
 (use-package expand-region
   :commands 'er/expand-region
