@@ -7,5 +7,6 @@
     - editors/emacs
     - editors/vim
     - development/clojure
+    - development/docker
     - development/node
     - development/ruby

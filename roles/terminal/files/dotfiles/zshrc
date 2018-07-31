@@ -5,6 +5,8 @@ fi
 source $HOME/.zsh/aliases
 source $HOME/.zsh/functions
 
+export fpath=(/usr/local/share/zsh/site-functions $fpath)
+
 # export TERM=xterm-256color
 export EDITOR='nvim'
 export HOMEBREW_NO_ANALYTICS=1
