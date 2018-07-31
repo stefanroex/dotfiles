@@ -6,6 +6,6 @@
     - macos_defaults
     - editors/emacs
     - editors/vim
-    - languages/clojure
-    - languages/ruby
-    - languages/node
+    - development/clojure
+    - development/node
+    - development/ruby
