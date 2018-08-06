@@ -1,5 +1,5 @@
 alias ...='../..'
-alias a='ls -lrthG'
+alias a='ahoy'
 alias aliases='mvim -v ~/.dotfiles/zsh/aliases'
 alias amend="git commit --amend"
 alias ass='rm -rf tmp/cache && pow restart'

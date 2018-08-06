@@ -4,12 +4,20 @@
     update_homebrew: yes
     upgrade_all: yes
 
+- name: Homebrew - tap
+  homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - devinci-code/tap # for ahoy
+
 - name: Homebrew - Install packages
   homebrew:
     formula: "{{ item }}"
     state: present
   ignore_errors: true
   loop:
+    - ahoy
     - awscli
     - cloc
     - git
@@ -22,4 +30,5 @@
     - ssh-copy-id
     - terraform
     - the_silver_searcher
+    - wget
     - zsh

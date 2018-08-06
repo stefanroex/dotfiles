@@ -13,6 +13,6 @@ export HOMEBREW_NO_ANALYTICS=1
 # Bash autocomplete compatibility
 autoload bashcompinit
 bashcompinit
+complete -F "ahoy --generate-bash-completion" ahoy
 
 source $HOME/.profile
-
