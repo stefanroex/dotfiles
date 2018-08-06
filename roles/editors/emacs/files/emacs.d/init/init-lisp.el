@@ -13,20 +13,24 @@
     scheme-mode-hook))
 
 (use-package lispy
-  :defer t)
+  :init
+  (add-hooks lisp-hooks #'lispy-mode)
+  :config
+  (define-key lispy-mode-map-lispy "[" #'lispy-brackets)
+  (define-key lispy-mode-map-lispy "]" #'lispy-brackets)
+  (lispy-set-key-theme '(lispy c-digits)))
 
 (use-package lispyville
-  :defer t
   :init
   (add-hooks lisp-hooks #'lispyville-mode)
   :config
   (lispyville-set-key-theme '(operators
+                              wrap
                               c-w
                               escape
                               slurp/barf-lispy
                               additional
                               additional-motions
-                              additional-wrap
                               additional-insert))
   (keys
     :keymaps 'lispyville-mode-map
