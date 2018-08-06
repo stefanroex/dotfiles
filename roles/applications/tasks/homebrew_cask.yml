@@ -6,6 +6,7 @@
   ignore_errors: true
   loop:
   - alfred
+  - aws-vault
   - chromedriver
   - google-chrome
   - gpg-suite
