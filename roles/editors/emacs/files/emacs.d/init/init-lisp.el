@@ -25,11 +25,11 @@
   (add-hooks lisp-hooks #'lispyville-mode)
   :config
   (lispyville-set-key-theme '(operators
-                              wrap
                               c-w
                               escape
                               slurp/barf-lispy
                               additional
+                              additional-wrap
                               additional-motions
                               additional-insert))
   (keys
