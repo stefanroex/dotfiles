@@ -4,14 +4,17 @@
 (use-package clojure-mode
   :defer t
   :config
-  (put-clojure-indent 'assoc 1)
-  (put-clojure-indent 'try-let 'defun)
 
   (define-clojure-indent
     (GET 'defun)
     (POST 'defun)
     (PATCH 'defun)
     (DELETE 'defun)
+
+    (assoc 1)
+    ;; Custom
+    (try-let 'defun)
+    (for-all 'defun)
 
     ;; midje
     (fact 'defun)
@@ -171,8 +174,10 @@
     (let ((key (car details))
           (fn (cadr details)))
       (keys :prefix "SPC r"
-            :keymaps '(clojure-mode-map clojurescript-mode-map)
-            key fn)))
+        :keymaps '(clojure-mode-map clojurescript-mode-map)
+        key fn)))
+  (keys :prefix "SPC r"
+    "r n" 'cljr-rename-file)
   (add-to-list 'cljr-magic-require-namespaces '("r"  . "reagent.core"))
   (add-to-list 'cljr-magic-require-namespaces '("rf" . "re-frame.core"))
   (add-to-list 'cljr-magic-require-namespaces '("subs" . "bm.client.subs"))
