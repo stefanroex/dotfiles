@@ -16,9 +16,10 @@
   :diminish undo-tree-mode
   :init (global-undo-tree-mode))
 
-(use-package smart-mode-line
-  :config
-  (sml/setup))
+(use-package doom-modeline
+  :ensure t
+  :defer t
+  :hook (after-init . doom-modeline-init))
 
 (use-package general
   :demand
