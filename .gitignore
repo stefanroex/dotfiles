@@ -32,5 +32,6 @@ roles/editors/vim/files/vim/vendor/vim-plug
 
 roles/terminal/files/lein/repl-history
 roles/applications/files/alfred/Alfred.alfredpreferences/remote
+roles/development/ruby/files/bundle/cache
 
 .ansible
