@@ -151,6 +151,11 @@
   :config
   (setq projectile-switch-project-action 'counsel-projectile-find-file))
 
+(use-package yasnippet
+  :ensure t
+  :init (add-hook 'prog-mode-hook #'yas-minor-mode)
+  :config (yas-reload-all))
+
 (use-package yaml-mode
   :defer t)
 
