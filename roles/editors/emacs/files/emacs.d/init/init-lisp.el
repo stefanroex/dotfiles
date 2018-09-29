@@ -12,31 +12,15 @@
     lisp-interaction-mode-hook
     scheme-mode-hook))
 
-(use-package lispy
+(use-package paredit
   :init
-  (add-hooks lisp-hooks #'lispy-mode)
-  :config
-  (define-key lispy-mode-map-lispy "[" #'lispy-brackets)
-  (define-key lispy-mode-map-lispy "]" #'lispy-brackets)
-  (lispy-set-key-theme '(lispy c-digits)))
+  (add-hooks lisp-hooks #'paredit-mode))
 
-(use-package lispyville
+(use-package evil-cleverparens
+  :defer t
   :init
-  (add-hooks lisp-hooks #'lispyville-mode)
-  :config
-  (lispyville-set-key-theme '(operators
-                              c-w
-                              escape
-                              slurp/barf-lispy
-                              additional
-                              additional-wrap
-                              additional-motions
-                              additional-insert))
-  (keys
-    :keymaps 'lispyville-mode-map
-    :modes 'motion
-    "{" #'evil-backward-paragraph
-    "}" #'evil-forward-paragraph))
+  (setq evil-cleverparens-use-regular-insert t)
+  (add-hooks lisp-hooks #'evil-cleverparens-mode))
 
 (use-package aggressive-indent
   :defer t
