@@ -1,6 +1,7 @@
 (use-package evil
   :init
-  (setq evil-want-integration nil)
+  (setq evil-want-integration nil
+        evil-want-keybinding nil)
   :config
   (setq evil-intercept-esc 'always
         evil-want-fine-undo t
