@@ -16,6 +16,12 @@
     (try-let 'defun)
     (for-all 'defun)
 
+    ;; scope capture
+    (letsc 'defun)
+
+    ;; core.match
+    (match 'defun)
+
     ;; midje
     (fact 'defun)
     (facts 'defun)
@@ -25,6 +31,7 @@
     (tabular 'defun)
     (against-background 'defun)
     (provided 0)
+
     ;; om & om-tools indenting
     (display-name 'defun)
     (init-state 'defun)
@@ -160,6 +167,7 @@
   (advice-add 'evil-search-highlight-persist-remove-all :after #'cider--remove-result-overlay))
 
 (use-package clj-refactor
+  :pin melpa-stable
   :defer t
   :init
   (setq cljr-auto-sort-ns t
