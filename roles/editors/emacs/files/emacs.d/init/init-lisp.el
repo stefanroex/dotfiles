@@ -46,4 +46,15 @@
    '(cider-mode-hook emacs-lisp-mode-hook)
    #'eldoc-mode))
 
+(use-package paxedit
+  :defer t
+  :init
+  (add-hooks lisp-hooks #'paxedit-mode)
+  :config
+  (keys
+    :states 'normal
+    :keymaps 'override
+    "M-j" 'paxedit-transpose-backward
+    "M-k" 'paxedit-transpose-forward))
+
 (provide 'init-lisp)
