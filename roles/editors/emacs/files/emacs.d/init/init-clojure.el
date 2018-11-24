@@ -165,6 +165,7 @@
   (setq cljr-auto-sort-ns t
         cljr-favor-prefix-notation nil
         cljr-favor-private-functions nil
+        cljr-project-clean-prompt nil
         cljr-clojure-test-declaration
         "[clojure.test :refer :all]")
 

@@ -257,6 +257,7 @@
     "gl" 'magit-log-head
     "gb" 'magit-blame)
   :config
+  (setq magit-diff-refine-hunk t)
   (setq magit-display-buffer-function 'magit-buffer-full-screen)
   (global-auto-revert-mode t))
 
