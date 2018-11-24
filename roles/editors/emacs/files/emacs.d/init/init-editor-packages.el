@@ -33,7 +33,6 @@
       keys
       :states '(normal emacs motion))
 
-
     (general-create-definer
       keys-l
       :prefix "SPC"
@@ -256,9 +255,16 @@
   (keys-l "gs" 'magit-status
     "gl" 'magit-log-head
     "gb" 'magit-blame)
+  (keys
+    :keymaps 'magit-blame-mode-map
+    :states 'normal
+    [return] 'magit-show-commit
+    "c" 'magit-blame-cycle-style)
+
   :config
   (setq magit-diff-refine-hunk t)
   (setq magit-display-buffer-function 'magit-buffer-full-screen)
+  (define-key magit-mode-map (kbd "SPC") nil)
   (global-auto-revert-mode t))
 
 (use-package magithub
