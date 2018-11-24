@@ -8,24 +8,31 @@
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
-(defconst my-skippable-buffers '("*Messages*" "*scratch*" "*Help*"))
-
-(defun my-change-buffer (circle-fn)
-  (let ((bread-crumb (buffer-name)))
-    (funcall circle-fn)
-    (while
-        (and
-         (not (code-buffer? (buffer-name)))
-         (not (equal bread-crumb (buffer-name))) )
-      (funcall circle-fn))))
+(defun non-code-buffer-q ()
+  (interactive)
+  (or
+   (string-equal major-mode "dired-mode")
+   (string-equal "*" (substring (buffer-name) 0 1))))
 
 (defun next-code-buffer ()
   (interactive)
-  (my-change-buffer 'next-buffer))
+  (next-buffer)
+  (let ((i 0))
+    (while (< i 20)
+      (if (non-code-buffer-q)
+          (progn (next-buffer)
+                 (setq i (1+ i)))
+        (progn (setq i 100))))))
 
 (defun previous-code-buffer ()
   (interactive)
-  (my-change-buffer 'previous-buffer))
+  (previous-buffer)
+  (let ((i 0))
+    (while (< i 20)
+      (if (non-code-buffer-q)
+          (progn (previous-buffer)
+                 (setq i (1+ i)))
+        (progn (setq i 100))))))
 
 (defun kill-other-buffers ()
   "Kill all other buffers."
