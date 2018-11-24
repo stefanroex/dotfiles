@@ -3,7 +3,11 @@ tags
 tmp
 dist
 vendor
-*.sql
 *.dump
 node_modules
 bower_components
+*.po
+*.pot
+_http
+_fixtures
+_snapshots
