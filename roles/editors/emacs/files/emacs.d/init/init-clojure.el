@@ -85,15 +85,23 @@
     (cider-ensure-connected)
     (cider-interactive-eval "(cljs)"))
 
+  (defun cider-project-cljs ()
+    (interactive)
+    (cider-connect-cljs '(:host "localhost" :port 9632)))
+
   (setq cider-ns-refresh-before-fn "reloaded.repl/suspend"
         cider-ns-refresh-after-fn "reloaded.repl/resume")
 
   (setq cider-prompt-for-symbol nil
         cider-repl-display-help-banner nil
+        cider-preferred-build-tool "lein"
+        cider-default-cljs-repl 'shadow-select
         cider-eval-result-duration nil
         cider-repl-use-pretty-printing t
         cider-repl-history-file "~/.emacs.d/cider-history"
         cider-repl-wrap-history t)
+
+  (setq nrepl-hide-special-buffers t)
 
   (defvar cider-mode-maps
     '(cider-repl-mode-map
@@ -153,7 +161,7 @@
     "er" 'cider-eval-last-sexp-and-replace
     "i" 'cider-inspect
     "j" 'cider-jack-in
-    "J" 'cider-restart
+    "J" 'cider-project-cljs
     "m" 'cider-macroexpand-1
     "pf" 'cider-pprint-eval-defun-at-point
     "pl" 'cider-pprint-eval-last-sexp
