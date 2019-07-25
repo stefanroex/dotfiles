@@ -10,10 +10,6 @@ function hp() {
   heroku "$@" --remote production
 }
 
-function awss() {
-  sed -i -e "s/\(AWS_PROFILE=\).*/\1$@/g" ~/.zshenv
-}
-
-function awsl() {
-  sed -i -e "s/\(AWS_SESSION_TOKEN=\).*/\1$@/g" ~/.zshenv
+function awsv() {
+  aws-vault exec --assume-role-ttl=60m bm-$@
 }
