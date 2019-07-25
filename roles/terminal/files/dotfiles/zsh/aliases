@@ -1,6 +1,6 @@
 alias ...='../..'
 alias a='ahoy'
-alias aliases='mvim -v ~/.dotfiles/zsh/aliases'
+alias aliases='nvim ~/.dotfiles/roles/terminal/files/dotfiles/zsh/aliases'
 alias amend="git commit --amend"
 alias ass='rm -rf tmp/cache && pow restart'
 alias cbundle='rm -rf vendor/bundle && bundle install --system --binstubs'
@@ -36,7 +36,7 @@ alias s='pow open && e'
 alias server='python -m SimpleHTTPServer'
 alias so='source ~/.dotfiles/zsh/aliases'
 alias startredis='redis-server /usr/local/etc/redis.conf &'
-alias vi='mvim -v'
+alias vi='nvim'
 alias z="zeus"
 
 alias -g M='| more'
