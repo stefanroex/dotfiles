@@ -272,11 +272,6 @@
   (define-key magit-mode-map (kbd "SPC") nil)
   (global-auto-revert-mode t))
 
-(use-package magithub
-  :after magit
-  :defer t
-  :config (magithub-feature-autoinject t))
-
 (use-package css-mode
   :config
   (setq css-indent-offset 2))

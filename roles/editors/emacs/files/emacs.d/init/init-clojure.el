@@ -12,6 +12,7 @@
     (DELETE 'defun)
 
     (assoc 1)
+    (do-at 1)
     ;; Custom
     (try-let 'defun)
     (for-all 'defun)
@@ -56,6 +57,7 @@
   :defer t)
 
 (use-package cider
+  :pin melpa-stable
   :defer t
   :config
   (defun re-frame-jump-to-reg ()
@@ -145,14 +147,10 @@
     "gf" 'cider-find-var
     "gF" 're-frame-jump-to-reg)
 
-  (keys-l :keymaps '(clojurescript-mode-map)
-    "C" 'cider-switch-to-cljs-repl)
-
-  (keys-l :keymaps '(clojure-mode-map)
-    "C" 'cider-switch-to-clj-repl)
-
   (keys :keymaps cider-mode-maps
     :prefix "SPC c"
+    "J" 'cider-project-cljs
+    "c" 'cider-repl-switch-to-other
     "d" 'cider-doc-map
     "eb" 'cider-load-buffer
     "ef" 'cider-eval-defun-at-point
@@ -161,7 +159,7 @@
     "er" 'cider-eval-last-sexp-and-replace
     "i" 'cider-inspect
     "j" 'cider-jack-in
-    "J" 'cider-project-cljs
+    "l" 'cider-inspect-last-result
     "m" 'cider-macroexpand-1
     "pf" 'cider-pprint-eval-defun-at-point
     "pl" 'cider-pprint-eval-last-sexp
@@ -169,7 +167,6 @@
     "r" 'cider-ns-refresh
     "sn" 'cider-repl-set-ns
     "sr" 'cider-switch-to-repl-buffer
-    "l" 'cider-inspect-last-result
     "t" 'cider-test-run-project-tests)
 
   (advice-add 'evil-search-highlight-persist-remove-all :after #'cider--remove-result-overlay))
