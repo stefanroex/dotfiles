@@ -261,6 +261,10 @@
     [return] 'magit-show-commit
     "c" 'magit-blame-cycle-style)
 
+  (general-def 'transient-map        "q" 'transient-quit-one)
+  (general-def 'transient-edit-map   "q" 'transient-quit-one)
+  (general-def 'transient-sticky-map "q" 'transient-quit-seq)
+
   :config
   (setq magit-diff-refine-hunk t)
   (setq magit-display-buffer-function 'magit-buffer-full-screen)

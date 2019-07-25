@@ -18,7 +18,14 @@
                ivy-minibuffer-map)
     [escape] 'minibuffer-keyboard-quit)
 
-  (keys "C-n" 'next-error
+  (defun evil-execute-q-macro ()
+    "Execute @q"
+    (interactive)
+    (evil-execute-macro 1 "@q"))
+
+  (keys
+    "Q" 'evil-execute-q-macro
+    "C-n" 'next-error
     "C-p" 'previous-error
     "C-h" 'evil-window-left
     "C-j" 'evil-window-down
