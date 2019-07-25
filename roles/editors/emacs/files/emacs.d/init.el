@@ -15,4 +15,5 @@
 (require 'init-editor-packages)
 (require 'init-evil)
 (require 'init-clojure)
+(require 'init-ruby)
 (require 'init-lisp)

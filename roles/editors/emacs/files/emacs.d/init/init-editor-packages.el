@@ -220,6 +220,7 @@
   :config
   (setq-default flycheck-disabled-checkers
                 '(emacs-lisp-checkdoc
+                  ruby-reek
                   javascript-jshint
                   handlebars
                   scss-lint
