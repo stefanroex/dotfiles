@@ -168,12 +168,6 @@
   :config
   (keys-l "o" 'reveal-in-osx-finder))
 
-(use-package rspec-mode
-  :defer t
-  :config
-  (keys-l :keymaps 'rspec-mode-map
-          "t" 'rspec-verify))
-
 (use-package dumb-jump
   :commands 'dumb-jump-go
   :init
@@ -256,11 +250,18 @@
   (keys-l "gs" 'magit-status
     "gl" 'magit-log-head
     "gb" 'magit-blame)
+
   (keys
     :keymaps 'magit-blame-mode-map
     :states 'normal
     [return] 'magit-show-commit
     "c" 'magit-blame-cycle-style)
+
+
+  (keys
+    :keymaps 'magit-status-mode-map
+    :states 'normal
+    "\"" 'circleci-transient)
 
   (general-def 'transient-map        "q" 'transient-quit-one)
   (general-def 'transient-edit-map   "q" 'transient-quit-one)
@@ -271,6 +272,8 @@
   (setq magit-display-buffer-function 'magit-buffer-full-screen)
   (define-key magit-mode-map (kbd "SPC") nil)
   (global-auto-revert-mode t))
+
+(use-package magit-circleci)
 
 (use-package css-mode
   :config
@@ -283,5 +286,14 @@
   :mode "\\.scss\\'")
 
 (use-package esup)
+
+(use-package smart-jump
+  :commands (smart-jump smart-jump-go)
+  :init
+  (keys
+    "M-." 'smart-jump-go
+    "M-," 'smart-jump-back)
+  :config
+  (smart-jump-setup-default-registers))
 
 (provide 'init-editor-packages)
