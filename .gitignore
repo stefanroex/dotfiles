@@ -35,3 +35,4 @@ roles/applications/files/alfred/Alfred.alfredpreferences/remote
 roles/development/ruby/files/bundle/cache
 
 .ansible
+/roles/editors/emacs/files/emacs.d/transient/
