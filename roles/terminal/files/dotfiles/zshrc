@@ -17,3 +17,6 @@ bashcompinit
 complete -F "ahoy --generate-bash-completion" ahoy
 
 source $HOME/.profile
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="/usr/local/opt/node@10/bin:$PATH"
