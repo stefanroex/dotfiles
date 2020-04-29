@@ -11,5 +11,5 @@ function hp() {
 }
 
 function awsv() {
-  aws-vault exec --assume-role-ttl=60m bm-$@
+  aws-vault exec bm-$@
 }
