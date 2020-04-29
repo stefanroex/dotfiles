@@ -27,7 +27,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Chrome -&gt; Brave</string>
+	<string>Chrome -&gt; Firefox</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -40,7 +40,7 @@
 				<key>subtext</key>
 				<string></string>
 				<key>text</key>
-				<string>Brave</string>
+				<string>Firefox</string>
 				<key>withspace</key>
 				<false/>
 			</dict>
@@ -56,7 +56,7 @@
 			<dict>
 				<key>paths</key>
 				<array>
-					<string>/Applications/Brave Browser.app</string>
+					<string>/Applications/Firefox.app</string>
 				</array>
 				<key>toggle</key>
 				<false/>
