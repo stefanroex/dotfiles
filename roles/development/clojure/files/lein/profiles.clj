@@ -1,6 +1,9 @@
 {:user {:plugins [[lein-ancient "0.6.15"]
-                  [lein-pprint "1.2.0"]
+                  [lein-ns-dep-graph "0.2.0-SNAPSHOT"]
+                  [ns-graph "0.1.3"]
                   [lein-nvd "1.2.0"]
+                  [lein-pprint "1.2.0"]
+                  [refactor-nrepl "2.4.0"]
                   [cider/cider-nrepl "0.22.4"]]
         :jvm-opts ["-Djdk.attach.allowAttachSelf"]
         :middleware [refactor-nrepl.plugin/middleware
