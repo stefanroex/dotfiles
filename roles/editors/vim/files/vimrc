@@ -245,7 +245,15 @@ map <C-p> :cp<CR>
 "  Autocmd
 " ========================================================================
 
+fun! s:DetectBB()
+    if getline(1) == '#!/usr/bin/env bb'
+        set ft=clojure
+    endif
+endfun
+
 if has("autocmd")
+  " babashka
+  au BufRead,BufNewFile * call s:DetectBB()
 
   " Remember last location in file, but not for commit messages.
   " see :help last-position-jump
