@@ -64,45 +64,12 @@
   :pin melpa-stable
   :defer t
   :config
-  ;; (defun re-frame-jump-to-reg ()
-  ;;   (interactive)
-  ;;   (let* ((kw (cider-symbol-at-point 'look-back))
-  ;;          (ns-qualifier (and
-  ;;                         (string-match "^:+\\(.+\\)/.+$" kw)
-  ;;                         (match-string 1 kw)))
-  ;;          (kw-ns (if ns-qualifier
-  ;;                     (cider-resolve-alias (cider-current-ns) ns-qualifier)
-  ;;                   (cider-current-ns)))
-  ;;          (kw-to-find (concat "::" (replace-regexp-in-string "^:+\\(.+/\\)?" "" kw))))
-
-  ;;     (when (and ns-qualifier (string= kw-ns (cider-current-ns)))
-  ;;       (error "Could not resolve alias \"%s\" in %s" ns-qualifier (cider-current-ns)))
-
-  ;;     (progn (cider-find-ns "-" kw-ns)
-  ;;            (search-forward-regexp (concat "reg-[a-zA-Z-]*[ \\\n]+" kw-to-find) nil 'noerror))))
-
-  ;; (defun cider-switch-to-clj-repl ()
-  ;;   (interactive)
-  ;;   (cider-ensure-connected)
-  ;;   (cider-eval- ":cljs/quit"))
-
-  ;; (defun cider-switch-to-cljs-repl ()
-  ;;   (interactive)
-  ;;   (cider-ensure-connected)
-  ;;   (cider-interactive-eval "(cljs)"))
-
-  ;; (defun cider-project-cljs ()
-  ;;   (interactive)
-  ;;   (cider-connect-cljs '(:host "localhost" :port 9632)))
-
   (setq cider-ns-refresh-before-fn "reloaded.repl/suspend"
         cider-ns-refresh-after-fn "reloaded.repl/resume")
 
   (setq cider-prompt-for-symbol nil
         cider-repl-display-help-banner nil
-        ;; cider-preferred-build-tool "lein"
-        ;; cider-default-cljs-repl 'shadow-select
-        ;; cider-eval-result-duration nil
+        cider-eval-result-duration nil
         cider-repl-use-pretty-printing t
         cider-repl-history-file "~/.emacs.d/cider-history"
         cider-repl-wrap-history t)
@@ -185,7 +152,7 @@
         cljr-favor-private-functions nil
         cljr-project-clean-prompt nil
         cljr-clojure-test-declaration
-        "[clojure.test :refer :all]")
+        "[clojure.test :refer [deftest is testing]]")
 
   (add-hook 'clojure-mode-hook #'clj-refactor-mode)
   :config

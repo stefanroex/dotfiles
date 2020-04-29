@@ -59,10 +59,4 @@
   (keys :keymaps 'prog-mode-map
     "RET" 'evil-search-highlight-persist-remove-all))
 
-(use-package evil-magit
-  :config
-  (add-hook 'git-commit-mode-hook 'evil-insert-state)
-  (keys :keymaps 'magit-status-mode-map
-    "K" 'magit-discard))
-
 (provide 'init-evil)

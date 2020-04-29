@@ -76,4 +76,9 @@
       (neotree-hide)
     (neotree-project-root)))
 
+(defun add-hooks (mode-hooks mode)
+  "Add mode to all mode hooks"
+  (dolist (mode-hook mode-hooks)
+    (add-hook mode-hook mode)))
+
 (provide 'init-functions)

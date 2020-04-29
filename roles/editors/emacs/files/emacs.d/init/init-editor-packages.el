@@ -79,21 +79,41 @@
     "<tab>" 'company-complete-common-or-cycle
     "S-<tab>" 'company-select-previous-or-abort))
 
-(use-package neotree
+(use-package treemacs
+  :ensure t
+  :defer t
   :init
-  (keys-l "a" 'neotree-toggle-project-root)
+  (keys-l "a" 'treemacs)
   :config
-  (setq neo-theme 'arrow)
-  (keys :keymaps 'neotree-mode-map
-    "o" 'neotree-enter
-    "i" 'neotree-hidden-file-toggle
-    "r" 'neotree-rename-node
-    "TAB" 'neotree-dir
-    "q" 'neotree-hide
-    "c" 'neotree-copy-node
-    "R" 'neotree-refresh
-    "d" 'neotree-delete-node
-    "RET" 'neotree-enter))
+  (keys :keymaps 'treemacs-mode-map
+    "o" 'treemacs-RET-action
+    "R" 'treemacs-refresh
+    "r" 'treemacs-rename
+    "i" 'treemacs-toggle-show-dotfiles)
+  (setq treemacs-collapse-dirs 3
+        treemacs-eldoc-display nil
+        treemacs-no-png-images t)
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode t)
+  (treemacs-git-mode 'deferred))
+
+(use-package treemacs-evil
+  :after treemacs evil
+  :ensure t)
+
+(use-package treemacs-projectile
+  :after treemacs projectile
+  :ensure t)
+
+(use-package treemacs-icons-dired
+  :after treemacs dired
+  :ensure t
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :after treemacs magit
+  :ensure t)
 
 (use-package which-key
   :defer 1
@@ -245,35 +265,24 @@
 
 (use-package magit
   :diminish 'auto-revert-mode
-  :defer 1
+  :defer t
   :init
-  (keys-l "gs" 'magit-status
+  (keys-l
+    "gs" 'magit-status
     "gl" 'magit-log-head
     "gb" 'magit-blame)
-
-  (keys
-    :keymaps 'magit-blame-mode-map
-    :states 'normal
-    [return] 'magit-show-commit
-    "c" 'magit-blame-cycle-style)
-
-
-  (keys
-    :keymaps 'magit-status-mode-map
-    :states 'normal
-    "\"" 'circleci-transient)
-
+  :config
+  (use-package evil-magit)
   (general-def 'transient-map        "q" 'transient-quit-one)
   (general-def 'transient-edit-map   "q" 'transient-quit-one)
   (general-def 'transient-sticky-map "q" 'transient-quit-seq)
-
-  :config
+  (keys :keymaps 'magit-status-mode-map
+    "K" 'magit-discard)
+  (add-hook 'git-commit-mode-hook 'evil-insert-state)
   (setq magit-diff-refine-hunk t)
   (setq magit-display-buffer-function 'magit-buffer-full-screen)
   (define-key magit-mode-map (kbd "SPC") nil)
   (global-auto-revert-mode t))
-
-(use-package magit-circleci)
 
 (use-package css-mode
   :config

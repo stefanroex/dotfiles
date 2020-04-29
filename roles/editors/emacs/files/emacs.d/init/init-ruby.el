@@ -14,7 +14,7 @@
   :defer t
   :config
   (setq rspec-use-bundler-when-possible nil)
-  (keys-l :keymaps 'rspec-mode-map
+  (keys-l :keymaps 'ruby-mode-map
     "t" 'rspec-verify
     "T" 'rspec-verify-single
     "l" 'rspec-rerun))
