@@ -137,4 +137,7 @@
 ;; Scroll in compilation mode
 (setq compilation-scroll-output t)
 
+;; Increase how much data is read from process
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+
 (provide 'init-editor-custom)

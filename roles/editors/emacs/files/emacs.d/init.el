@@ -17,3 +17,4 @@
 (require 'init-clojure)
 (require 'init-ruby)
 (require 'init-lisp)
+(put 'dired-find-alternate-file 'disabled nil)

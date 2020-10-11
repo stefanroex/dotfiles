@@ -50,15 +50,40 @@
     (will-receive-props 'defun)
     (did-update 'defun)
     ;; om.next
-    (params 'defun)
-    (query 'defun)
-    (ident 'defun)
-    (componentWillReceiveProps 'defun)
-    (componentDidMount 'defun)
-    (componentWillUnmount 'defun)))
+    ;; (params 'defun)
+    ;; (query 'defun)
+    ;; (ident 'defun)
+    ;; (componentWillReceiveProps 'defun)
+    ;; (componentDidMount 'defun)
+    ;; (componentWillUnmount 'defun)
+    ))
 
 (use-package clojure-mode-extra-font-locking
   :defer t)
+
+(use-package lsp-mode
+  :ensure t
+  :hook ((clojure-mode . lsp)
+         (clojurec-mode . lsp)
+         (clojurescript-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :config
+  (dolist (m '(clojure-mode
+               clojurec-mode
+               clojurescript-mode
+               clojurex-mode))
+    (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
+  (keys :prefix "SPC l"
+    "R" 'lsp-rename
+    "r" 'lsp-find-references)
+  (setq lsp-keymap-prefix "SPC l"
+        lsp-enable-indentation nil
+        lsp-enable-completion-at-point nil
+        lsp-enable-symbol-highlighting nil
+        lsp-diagnostic-package :none))
+
+(use-package lsp-ui
+  :ensure t)
 
 (use-package cider
   :pin melpa-stable
