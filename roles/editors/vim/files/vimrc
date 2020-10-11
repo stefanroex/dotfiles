@@ -252,6 +252,9 @@ fun! s:DetectBB()
 endfun
 
 if has("autocmd")
+  highlight nonascii guibg=Red ctermbg=1 term=standout
+  au BufReadPost * syntax match nonascii "[^\u0000-\u007F]"
+
   " babashka
   au BufRead,BufNewFile * call s:DetectBB()
 
