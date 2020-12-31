@@ -68,6 +68,8 @@
          (clojurescript-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config
+  (add-to-list 'lsp-file-watch-ignored "[/\\\\]node_modules$")
+  (add-to-list 'lsp-file-watch-ignored "[/\\\\]target$")
   (dolist (m '(clojure-mode
                clojurec-mode
                clojurescript-mode
@@ -78,9 +80,11 @@
     "r" 'lsp-find-references)
   (setq lsp-keymap-prefix "SPC l"
         lsp-enable-indentation nil
-        lsp-enable-completion-at-point nil
+        lsp-completion-enable nil
         lsp-enable-symbol-highlighting nil
-        lsp-diagnostic-package :none))
+        lsp-eldoc-enable-hover nil
+        lsp-completion-provider :capf
+        lsp-diagnostics-provider :none))
 
 (use-package lsp-ui
   :ensure t)

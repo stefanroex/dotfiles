@@ -8,6 +8,4 @@ node_modules
 bower_components
 *.po
 *.pot
-_http
 _fixtures
-_snapshots

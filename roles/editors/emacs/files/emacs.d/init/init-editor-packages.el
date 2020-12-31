@@ -1,4 +1,6 @@
-(use-package challenger-deep-theme)
+(use-package challenger-deep-theme
+  :init
+  (load-theme 'challenger-deep t))
 
 (use-package diminish
   :ensure t)
