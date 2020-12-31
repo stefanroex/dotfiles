@@ -15,20 +15,14 @@
   register: mas_result
   changed_when: '"already installed" not in mas_result.stdout'
   loop:
-  - { name: "1Password", id: 1333542190 }
-  - { name: "Airmail", id: 918858936 }
   - { name: "DaisyDisk", id: 411643860 }
   - { name: "Harvest", id: 506189836 }
   - { name: "Keynote", id: 409183694 }
-  - { name: "Letterspace", id: 950145466 }
-  - { name: "Microsoft Remote Desktop", id: 1295203466 }
   - { name: "Numbers", id: 409203825 }
   - { name: "Pages", id: 409201541 }
   - { name: "Pocket", id: 568494494 }
   - { name: "Reeder", id: 880001334 }
-  - { name: "Speedtest", id: 1153157709 }
   - { name: "The Unarchiver", id: 425424353 }
-  - { name: "Theine", id: 955848755 }
   - { name: "Things", id: 904280696 }
   - { name: "WhatsApp", id: 1147396723 }
 
