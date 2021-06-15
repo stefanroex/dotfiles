@@ -29,5 +29,5 @@
     depth: 1
 
 - name: Vim - Install VIM packages
-  command: nvim +PlugInstall +qall
+  command: nvim --headless +PlugInstall +qall
   changed_when: false
