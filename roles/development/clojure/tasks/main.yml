@@ -14,3 +14,4 @@
     state: link
   loop:
     - lein
+    - clojure

@@ -78,16 +78,28 @@
   (keys :prefix "SPC l"
     "R" 'lsp-rename
     "r" 'lsp-find-references)
+
+  ;; performance tweaks
+  (setq lsp-enable-folding nil
+        lsp-enable-file-watchers nil
+        lsp-enable-text-document-color nil)
+
   (setq lsp-keymap-prefix "SPC l"
+        lsp-headerline-breadcrumb-enable nil
         lsp-enable-indentation nil
         lsp-completion-enable nil
+        lsp-enable-on-type-formatting nil
         lsp-enable-symbol-highlighting nil
         lsp-eldoc-enable-hover nil
         lsp-completion-provider :capf
         lsp-diagnostics-provider :none))
 
 (use-package lsp-ui
-  :ensure t)
+  :ensure t
+  :config
+  (setq lsp-ui-doc-enable nil
+        lsp-ui-sideline-enable nil
+        lsp-ui-peek-enable nil))
 
 (use-package cider
   :pin melpa-stable
