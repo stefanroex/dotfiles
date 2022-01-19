@@ -140,4 +140,7 @@
 ;; Increase how much data is read from process
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
+;; Disable compile warnings for gccemacs
+(setq native-comp-async-report-warnings-errors nil)
+
 (provide 'init-editor-custom)

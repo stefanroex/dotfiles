@@ -37,7 +37,7 @@
 (use-package evil-collection
   :after evil
   :init
-  (setq evil-collection-mode-list '(dired ibuffer ivy help eshell))
+  (setq evil-collection-mode-list '(dired ibuffer ivy help eshell magit))
   :config
   (evil-collection-init))
 

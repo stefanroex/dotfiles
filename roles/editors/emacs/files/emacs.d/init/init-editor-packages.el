@@ -274,7 +274,6 @@
     "gl" 'magit-log-head
     "gb" 'magit-blame)
   :config
-  (use-package evil-magit)
   (general-def 'transient-map        "q" 'transient-quit-one)
   (general-def 'transient-edit-map   "q" 'transient-quit-one)
   (general-def 'transient-sticky-map "q" 'transient-quit-seq)

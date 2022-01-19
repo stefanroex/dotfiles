@@ -85,10 +85,12 @@
         lsp-enable-text-document-color nil)
 
   (setq lsp-keymap-prefix "SPC l"
+        lsp-lens-enable nil
         lsp-headerline-breadcrumb-enable nil
         lsp-enable-indentation nil
         lsp-completion-enable nil
         lsp-enable-on-type-formatting nil
+        lsp-modeline-code-actions-enable nil
         lsp-enable-symbol-highlighting nil
         lsp-eldoc-enable-hover nil
         lsp-completion-provider :capf
@@ -105,6 +107,19 @@
   :pin melpa-stable
   :defer t
   :config
+  (defun portal.api/open ()
+    (interactive)
+    (cider-nrepl-sync-request:eval
+     "(require 'portal.api) (portal.api/tap) (portal.api/open)"))
+
+  (defun portal.api/clear ()
+    (interactive)
+    (cider-nrepl-sync-request:eval "(portal.api/clear)"))
+
+  (defun portal.api/close ()
+    (interactive)
+    (cider-nrepl-sync-request:eval "(portal.api/close)"))
+
   (setq cider-ns-refresh-before-fn "reloaded.repl/suspend"
         cider-ns-refresh-after-fn "reloaded.repl/resume")
 
@@ -174,6 +189,9 @@
     "j" 'cider-jack-in
     "l" 'cider-inspect-last-result
     "m" 'cider-macroexpand-1
+    "po" 'portal.api/open
+    "pc" 'portal.api/clear
+    "pq" 'portal.api/close
     "pf" 'cider-pprint-eval-defun-at-point
     "pl" 'cider-pprint-eval-last-sexp
     "q" 'cider-quit
@@ -207,7 +225,6 @@
     "r n" 'cljr-rename-file)
   (add-to-list 'cljr-magic-require-namespaces '("r"  . "reagent.core"))
   (add-to-list 'cljr-magic-require-namespaces '("rf" . "re-frame.core"))
-  (add-to-list 'cljr-magic-require-namespaces '("subs" . "bm.client.subs"))
-  (add-to-list 'cljr-magic-require-namespaces '("events" . "bm.client.events")))
+  (add-to-list 'cljr-magic-require-namespaces '("u" . "bm.tools.utils")))
 
 (provide 'init-clojure)
