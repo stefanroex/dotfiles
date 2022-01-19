@@ -41,6 +41,14 @@
   :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
              :main-opts ["-m" "antq.core"]}
 
+  :cider
+  {:extra-deps
+   {cider/cider-nrepl {:mvn/version "RELEASE"}
+    refactor-nrepl/refactor-nrepl {:mvn/version "RELEASE"}}
+   :main-opts ["-m" "nrepl.cmdline"
+               "--interactive"
+               "--middleware" "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]}
+
   :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "RELEASE"}}
           :main-opts ["-m" "nrepl.cmdline"]}
 
