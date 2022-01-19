@@ -19,6 +19,7 @@ roles/editors/emacs/files/emacs.d/smex-items
 roles/editors/emacs/files/emacs.d/tramp
 roles/editors/emacs/files/emacs.d/url/
 roles/editors/emacs/files/emacs.d/magithub
+roles/editors/emacs/files/emacs.d/eln-cache
 
 roles/editors/vim/files/vim/.netrwhist
 roles/editors/vim/files/vim/_backup
@@ -29,6 +30,8 @@ roles/editors/vim/files/vim/doc/tags
 roles/editors/vim/files/vim/doc/tags-ja
 roles/editors/vim/files/vim/plugged
 roles/editors/vim/files/vim/vendor/vim-plug
+
+roles/development/clojure/files
 
 roles/terminal/files/lein/repl-history
 roles/applications/files/alfred/Alfred.alfredpreferences/remote
