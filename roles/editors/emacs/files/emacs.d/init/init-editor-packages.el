@@ -51,8 +51,6 @@
       "k" 'kill-other-buffers
       "q" 'kill-buffer-and-window
       "w" 'delete-window
-      "z" 'next-code-buffer
-      "x" 'previous-code-buffer
       "B" 'ibuffer
       "O" 'open-iterm-in-project-root
       "v" 'open-emacs-config)))
@@ -248,7 +246,8 @@
   :mode (("\\.js$" . web-mode))
   :config
   (setq web-mode-enable-auto-quoting nil
-        web-mode-markup-indent-offset 2 web-mode-css-indent-offset 2
+        web-mode-markup-indent-offset 2
+        web-mode-css-indent-offset 2
         web-mode-code-indent-offset 2
         web-mode-attr-indent-offset 2
         web-mode-indent-style 2)
@@ -304,5 +303,13 @@
     "M-," 'smart-jump-back)
   :config
   (smart-jump-setup-default-registers))
+
+(use-package iflipb
+  :config
+  (setq iflipb-wrap-around t)
+  :init
+  (keys-l
+    "z" 'iflipb-previous-buffer
+    "x" 'iflipb-next-buffer))
 
 (provide 'init-editor-packages)

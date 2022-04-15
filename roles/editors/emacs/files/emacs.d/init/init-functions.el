@@ -8,32 +8,6 @@
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
-(defun non-code-buffer-q ()
-  (interactive)
-  (or
-   (string-equal major-mode "dired-mode")
-   (string-equal "*" (substring (buffer-name) 0 1))))
-
-(defun next-code-buffer ()
-  (interactive)
-  (next-buffer)
-  (let ((i 0))
-    (while (< i 20)
-      (if (non-code-buffer-q)
-          (progn (next-buffer)
-                 (setq i (1+ i)))
-        (progn (setq i 100))))))
-
-(defun previous-code-buffer ()
-  (interactive)
-  (previous-buffer)
-  (let ((i 0))
-    (while (< i 20)
-      (if (non-code-buffer-q)
-          (progn (previous-buffer)
-                 (setq i (1+ i)))
-        (progn (setq i 100))))))
-
 (defun kill-other-buffers ()
   "Kill all other buffers."
   (interactive)
