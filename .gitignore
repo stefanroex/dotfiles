@@ -39,3 +39,4 @@ roles/development/ruby/files/bundle/cache
 
 .ansible
 /roles/editors/emacs/files/emacs.d/transient/
+/roles/editors/emacs/files/emacs.d/history
