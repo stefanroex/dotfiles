@@ -5,8 +5,7 @@
 (use-package diminish
   :ensure t)
 
-(use-package better-defaults
-  :pin melpa-stable)
+(use-package better-defaults)
 
 (use-package exec-path-from-shell
   :pin melpa-stable
@@ -14,9 +13,7 @@
   (setq exec-path-from-shell-check-startup-files nil)
   (exec-path-from-shell-initialize))
 
-(use-package undo-tree
-  :diminish undo-tree-mode
-  :init (global-undo-tree-mode))
+(use-package undo-fu)
 
 (use-package doom-modeline
   :ensure t
@@ -181,7 +178,9 @@
   :defer t)
 
 (use-package markdown-mode
-  :defer t)
+  :defer t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode)))
 
 (use-package slim-mode
   :defer t)
@@ -280,8 +279,8 @@
   (keys :keymaps 'magit-status-mode-map
     "K" 'magit-discard)
   (add-hook 'git-commit-mode-hook 'evil-insert-state)
-  (setq magit-diff-refine-hunk t)
-  (setq magit-display-buffer-function 'magit-buffer-full-screen)
+  (setq magit-diff-refine-hunk t
+        magit-display-buffer-function 'magit-buffer-full-screen)
   (define-key magit-mode-map (kbd "SPC") nil)
   (global-auto-revert-mode t))
 

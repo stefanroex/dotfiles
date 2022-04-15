@@ -104,7 +104,6 @@
         lsp-ui-peek-enable nil))
 
 (use-package cider
-  :pin melpa-stable
   :defer t
   :config
   (defun portal.api/open ()
@@ -203,7 +202,6 @@
   (advice-add 'evil-search-highlight-persist-remove-all :after #'cider--remove-result-overlay))
 
 (use-package clj-refactor
-  :pin melpa-stable
   :defer t
   :init
   (setq cljr-auto-sort-ns t
