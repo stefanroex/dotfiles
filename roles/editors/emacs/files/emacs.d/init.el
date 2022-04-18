@@ -1,20 +1,33 @@
-;; Setup package.el
-(require 'package)
-(package-initialize)
+;; Core
+(add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
+(require 'stx-core-packages)
+(require 'stx-core-emacs-settings)
+(require 'stx-core-ui)
+(require 'stx-core-keybindings)
+(require 'stx-core-macos)
+(require 'stx-core-shell)
+
+;; Modules
+(add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
+(require 'stx-module-autocomplete)
+(require 'stx-module-clojure)
+(require 'stx-module-completion)
+(require 'stx-module-dashboard)
+(require 'stx-module-evil)
+(require 'stx-module-flycheck)
+(require 'stx-module-jump)
+(require 'stx-module-lisp)
+(require 'stx-module-magit)
+(require 'stx-module-profiler)
+(require 'stx-module-project)
+(require 'stx-module-ruby)
+(require 'stx-module-search)
+(require 'stx-module-treemacs)
+(require 'stx-module-web)
+
+(require 'stx-module-packages) ; WIP
 
 ;; Make sure all the auto generated custom config is in one place
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file)
-
-;; Load configuration
-(add-to-list 'load-path (expand-file-name (expand-file-name "init" user-emacs-directory)))
-
-(require 'init-use-package)
-(require 'init-editor-custom)
-(require 'init-functions)
-(require 'init-editor-packages)
-(require 'init-evil)
-(require 'init-clojure)
-(require 'init-ruby)
-(require 'init-lisp)
-(put 'dired-find-alternate-file 'disabled nil)
+(when (file-exists-p custom-file)
+  (load custom-file nil t))

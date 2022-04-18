@@ -1,11 +1,9 @@
 ;;;  -*- lexical-binding: t -*-
 (require 'subr-x)
 
-(use-package flycheck-clj-kondo
-  :ensure t)
+(use-package flycheck-clj-kondo)
 
 (use-package clojure-mode
-  :defer t
   :config
   (require 'flycheck-clj-kondo)
 
@@ -58,11 +56,9 @@
     ;; (componentWillUnmount 'defun)
     ))
 
-(use-package clojure-mode-extra-font-locking
-  :defer t)
+(use-package clojure-mode-extra-font-locking)
 
 (use-package lsp-mode
-  :ensure t
   :hook ((clojure-mode . lsp)
          (clojurec-mode . lsp)
          (clojurescript-mode . lsp)
@@ -97,14 +93,12 @@
         lsp-diagnostics-provider :none))
 
 (use-package lsp-ui
-  :ensure t
   :config
   (setq lsp-ui-doc-enable nil
         lsp-ui-sideline-enable nil
         lsp-ui-peek-enable nil))
 
 (use-package cider
-  :defer t
   :config
   (defun portal.api/open ()
     (interactive)
@@ -202,16 +196,16 @@
   (advice-add 'evil-search-highlight-persist-remove-all :after #'cider--remove-result-overlay))
 
 (use-package clj-refactor
-  :defer t
+  :hook ((clojure-mode . clj-refactor-mode)
+         (clojurec-mode . clj-refactor-mode)
+         (clojurescript-mode . clj-refactor-mode))
   :init
   (setq cljr-auto-sort-ns t
+	cljr-insert-newline-after-require nil
         cljr-favor-prefix-notation nil
         cljr-favor-private-functions nil
         cljr-project-clean-prompt nil
-        cljr-clojure-test-declaration
-        "[clojure.test :refer [deftest is testing]]")
-
-  (add-hook 'clojure-mode-hook #'clj-refactor-mode)
+        cljr-clojure-test-declaration "[clojure.test :refer [deftest is testing]]")
   :config
   (dolist (details cljr--all-helpers)
     (let ((key (car details))
@@ -225,4 +219,4 @@
   (add-to-list 'cljr-magic-require-namespaces '("rf" . "re-frame.core"))
   (add-to-list 'cljr-magic-require-namespaces '("u" . "bm.tools.utils")))
 
-(provide 'init-clojure)
+(provide 'stx-module-clojure)

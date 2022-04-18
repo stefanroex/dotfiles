@@ -16,6 +16,7 @@
     - openssl
     - pgcli
     - postgresql
+    - ripgrep
     - ssh-copy-id
     - terraform
     - the_silver_searcher

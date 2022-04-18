@@ -11,7 +11,6 @@
         rubocopfmt-rubocop-command "rubocop-daemon-wrapper"))
 
 (use-package rspec-mode
-  :defer t
   :config
   (setq rspec-use-bundler-when-possible nil)
   (keys-l :keymaps 'ruby-mode-map
@@ -20,13 +19,13 @@
     "l" 'rspec-rerun))
 
 (use-package inf-ruby
-  :defer t
   :init
   (add-hook 'ruby-mode-hook 'inf-ruby-switch-setup))
 
 (use-package projectile-rails
-  :defer t
   :config
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
-(provide 'init-ruby)
+(use-package slim-mode)
+
+(provide 'stx-module-ruby)
