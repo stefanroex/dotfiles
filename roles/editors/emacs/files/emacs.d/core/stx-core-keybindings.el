@@ -15,13 +15,28 @@
         (delq (current-buffer)
               (remove-if-not 'buffer-file-name (buffer-list)))))
 
+(defconst escape-maps
+  '(minibuffer-local-map
+    minibuffer-local-ns-map
+    minibuffer-local-completion-map
+    minibuffer-local-must-match-map
+    minibuffer-local-isearch-map
+    minibuffer-local-shell-command-map))
+
 (use-package general
   :demand
   :config
   (progn
     (general-auto-unbind-keys)
 
-    (general-define-key :states 'motion "SPC" nil)
+    (general-define-key
+     :states 'motion
+     "SPC" nil)
+
+    (general-define-key
+     :states nil
+     :keymaps escape-maps
+     "<escape>" 'abort-recursive-edit)
 
     (general-create-definer
       keys
