@@ -12,10 +12,7 @@
   :custom
   (rg-show-header nil)
   :custom-face
-  (rg-file-tag-face ((t (:inherit rg-filename-face))))
-  (rg-filename-face ((t (:foreground "systemTealColor"))))
-  (rg-line-number-face ((t (:foreground "systemGrayColor"))))
-  (rg-match-face ((t (:foreground "systemYellowColor"))))
+  (rg-match-face ((t (:inherit highlight))))
   :config
   (keys
     :keymaps 'rg-mode-map
