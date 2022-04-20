@@ -117,4 +117,7 @@
 ;; elisp-mode triggers prog-mode hooks which loads extra packages.
 (setq initial-major-mode 'fundamental-mode)
 
+;; No blinking cursor, it's hard to find sometimes
+(blink-cursor-mode 0)
+
 (provide 'stx-core-emacs-settings)
