@@ -13,8 +13,7 @@
         evil-want-keybinding nil
 	evil-want-fine-undo t
 	evil-undo-system 'undo-fu
-	evil-intercept-esc 'always
-	evil-shift-width 2)
+	evil-intercept-esc 'always)
   :config
   (evil-mode t))
 
