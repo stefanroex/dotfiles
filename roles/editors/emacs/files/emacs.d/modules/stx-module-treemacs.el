@@ -1,4 +1,4 @@
-(defun treemacs-toggle-only-current-project ()
+(defun stx/treemacs-toggle-only-current-project ()
   "Toggle treemacs in the current project exclusively"
   (interactive)
   (require 'treemacs)
@@ -10,15 +10,15 @@
 (use-package treemacs
   :general
   (keys-l
-    "a" 'treemacs-toggle-only-current-project)
+    "a" 'stx/treemacs-toggle-only-current-project)
   :config
-  (keys :keymaps 'treemacs-mode-map
+  (keys
+    :keymaps 'treemacs-mode-map
     "o" 'treemacs-RET-action
     "R" 'treemacs-refresh
     "r" 'treemacs-rename
     "d" 'treemacs-delete-file
     "i" 'treemacs-toggle-show-dotfiles)
-
   (setq treemacs-collapse-dirs 3
         treemacs-eldoc-display nil
         treemacs-project-follow-cleanup t
