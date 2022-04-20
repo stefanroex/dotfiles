@@ -38,6 +38,7 @@
         lsp-lens-enable nil
         lsp-headerline-breadcrumb-enable nil
         lsp-enable-indentation nil
+        lsp-use-plists t
         lsp-completion-enable nil
         lsp-enable-on-type-formatting nil
         lsp-modeline-code-actions-enable nil
