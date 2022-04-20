@@ -1,19 +1,18 @@
-(use-package dumb-jump
-  :commands 'dumb-jump-go
-  :init
-  (setq dumb-jump-selector 'ivy)
-  (keys
-    :keymaps 'prog-mode-map
-    :modes 'normal
-    "gD" 'dumb-jump-go))
-
 (use-package smart-jump
-  :commands (smart-jump smart-jump-go)
-  :init
+  :general
   (keys
     "M-." 'smart-jump-go
-    "M-," 'smart-jump-back)
+    "M-," 'smart-jump-back
+    "M-?" 'smart-jump-references)
   :config
   (smart-jump-setup-default-registers))
+
+(use-package dumb-jump
+  :ensure t
+  :init
+  (setq dumb-jump-aggressive nil
+	dumb-jump-selector 'ivy)
+  :config
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (provide 'stx-module-jump)
