@@ -5,7 +5,7 @@
       gc-cons-percentage 0.6)
 
 (defun startup/reset-gc ()
-  (setq gc-cons-threshold 33554432 ; 32mb
+  (setq gc-cons-threshold 100000000 ; 100mb
         gc-cons-percentage 0.1))
 
 (add-hook 'emacs-startup-hook 'startup/reset-gc)
