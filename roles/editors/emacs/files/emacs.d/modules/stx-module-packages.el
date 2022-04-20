@@ -7,3 +7,5 @@
     "x" 'iflipb-next-buffer))
 
 (provide 'stx-module-packages)
+
+(use-package string-edit)
