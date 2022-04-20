@@ -10,8 +10,7 @@
     (display-buffer buffer '(display-buffer-full-screen))))
 
 (use-package magit
-  :diminish 'auto-revert-mode
-  :init
+  :general
   (keys-l
     "gs" 'magit-status
     "gl" 'magit-log-head
