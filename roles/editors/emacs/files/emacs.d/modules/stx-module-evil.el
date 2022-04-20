@@ -38,11 +38,12 @@
     :states '(normal visual)
     "cc" 'evilnc-comment-or-uncomment-lines))
 
-(use-package evil-search-highlight-persist
-  :demand t
-  :config
-  (global-evil-search-highlight-persist t)
-  (keys :keymaps 'prog-mode-map
-    "RET" 'evil-search-highlight-persist-remove-all))
+;; TODO doesn't work?
+;; (use-package evil-search-highlight-persist
+;;   :demand t
+;;   :config
+;;   (global-evil-search-highlight-persist t)
+;;   (keys :keymaps 'prog-mode-map
+;;     "RET" 'evil-search-highlight-persist-remove-all))
 
 (provide 'stx-module-evil)
