@@ -1,5 +1,5 @@
 (use-package flycheck
-  :defer 1
+  :hook (prog-mode . flycheck-mode)
   :config
   (setq-default flycheck-disabled-checkers
                 '(emacs-lisp-checkdoc
@@ -10,7 +10,6 @@
                   scss))
   (setq flycheck-idle-change-delay 1
 	flycheck-emacs-lisp-load-path 'inherit
-        flycheck-check-syntax-automatically '(save mode-enabled idle-change))
-  (global-flycheck-mode))
+        flycheck-check-syntax-automatically '(save mode-enabled idle-change)))
 
 (provide 'stx-module-flycheck)
