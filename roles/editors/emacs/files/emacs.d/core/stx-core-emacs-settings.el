@@ -11,21 +11,26 @@
       inhibit-startup-screen t)
 
 ;; Spaces instead of tabs
-(setq c-basic-offset 2
-      js-indent-level 2
-      css-indent-offset 2
-      tab-width 2
-      indent-tabs-mode nil)
+(set-default 'indent-tabs-mode nil)
+
+;; Show me empty lines after buffer end
+(set-default 'indicate-empty-lines t)
 
 ;; No need for ~ files when editing
 (setq create-lockfiles nil)
 
-;; Disable backup files
-(setq make-backup-files nil)
-
 ;; Deal with temp files
-(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+(when (not (file-directory-p (expand-file-name "backups" user-emacs-directory)))
+  (make-directory (expand-file-name "backups" user-emacs-directory)))
+(when (not (file-directory-p (expand-file-name "auto-save-list" user-emacs-directory)))
+  (make-directory (expand-file-name "auto-save-list" user-emacs-directory)))
+
+;; Put backups and auto-save files in subdirectories, so the
+;; user-emacs-directory doesn't clutter
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name "backups" user-emacs-directory)))
+      auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t)))
 
 ;; just type y or n
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -101,5 +106,15 @@
   (setq-default recentf-max-menu-items 50
                 recentf-max-saved-items 100)
   (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
+
+;; Allow recursive minibuffers
+(setq enable-recursive-minibuffers t)
+
+;; No electric indent
+(setq electric-indent-mode nil)
+
+;; Set *scatch* buffer to fundamental-mode instead of elisp-mode.
+;; elisp-mode triggers prog-mode hooks which loads extra packages.
+(setq initial-major-mode 'fundamental-mode)
 
 (provide 'stx-core-emacs-settings)

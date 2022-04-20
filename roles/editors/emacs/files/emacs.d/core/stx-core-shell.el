@@ -1,7 +1,5 @@
 (use-package exec-path-from-shell
-  :demand
-  :init
-  (setq exec-path-from-shell-check-startup-files nil)
+  :demand t
   :config
   (exec-path-from-shell-initialize))
 
