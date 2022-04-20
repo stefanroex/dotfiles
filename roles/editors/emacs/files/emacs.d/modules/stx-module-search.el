@@ -10,6 +10,10 @@
     "s" 'stx/rg
     "S" 'stx/rg-literal)
   :config
+  (keys
+    :keymaps 'rg-mode-map
+    "C-n" 'next-error
+    "C-p" 'previous-error)
   (rg-define-search stx/rg
     :dir project
     :files "everything")
