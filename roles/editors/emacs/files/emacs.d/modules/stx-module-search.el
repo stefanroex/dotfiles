@@ -1,10 +1,21 @@
-(use-package ag
+;; (use-package ag
+;;   :config
+;;   (require 'exec-path-from-shell)
+;;   (setq ag-reuse-buffers t)
+;;   (define-key ag-mode-map (kbd "k") nil))
+
+(use-package rg
   :general
   (keys-l
-    "s" 'ag-project-regexp
-    "S" 'ag-project)
+    "s" 'stx/rg
+    "S" 'stx/rg-literal)
   :config
-  (setq ag-reuse-buffers t)
-  (define-key ag-mode-map (kbd "k") nil))
+  (rg-define-search stx/rg
+    :dir project
+    :files "everything")
+  (rg-define-search stx/rg-literal
+    :dir project
+    :format literal
+    :files "everything"))
 
 (provide 'stx-module-search)
