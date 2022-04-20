@@ -6,55 +6,9 @@
 (use-package clojure-mode
   :config
   (require 'flycheck-clj-kondo)
-
   (define-clojure-indent
-    (GET 'defun)
-    (POST 'defun)
-    (PATCH 'defun)
-    (DELETE 'defun)
-
     (assoc 1)
-    (do-at 1)
-    ;; Custom
-    (try-let 'defun)
-    (for-all 'defun)
-
-    ;; scope capture
-    (letsc 'defun)
-
-    ;; core.match
-    (match 'defun)
-
-    ;; midje
-    (fact 'defun)
-    (facts 'defun)
-    (fact-group 'defun)
-    (silent-fact 'defun)
-    (future-fact 'defun)
-    (tabular 'defun)
-    (against-background 'defun)
-    (provided 0)
-
-    ;; om & om-tools indenting
-    (display-name 'defun)
-    (init-state 'defun)
-    (will-mount 'defun)
-    (did-mount 'defun)
-    (will-unmount 'defun)
-    (render 'defun)
-    (render-state 'defun)
-    (should-update 'defun)
-    (will-update 'defun)
-    (will-receive-props 'defun)
-    (did-update 'defun)
-    ;; om.next
-    ;; (params 'defun)
-    ;; (query 'defun)
-    ;; (ident 'defun)
-    ;; (componentWillReceiveProps 'defun)
-    ;; (componentDidMount 'defun)
-    ;; (componentWillUnmount 'defun)
-    ))
+    (do-at 1)))
 
 (use-package clojure-mode-extra-font-locking)
 
