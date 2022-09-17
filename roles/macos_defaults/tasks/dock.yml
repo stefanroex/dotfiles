@@ -44,13 +44,3 @@
   homebrew:
     formula: dockutil
     state: present
-
-- name: Dock - Remove unused items
-  shell: dockutil --remove all
-  changed_when: false
-
-- name: Dock - Add items
-  shell: dockutil --add '{{ item }}'
-  changed_when: false
-  loop:
-  - "/Applications/Things3.app"

@@ -18,14 +18,6 @@
     type: bool
     value: false
 
-- name: General - Prevent Time Machine from prompting to use new hard drives as backup volume
-  notify: killall osx
-  osx_defaults:
-    domain: com.apple.TimeMachine
-    key: DoNotOfferNewDisksForBackup
-    type: bool
-    value: true
-
 - name: General - Avoid creating .DS_Store files on network volumes
   notify: killall osx
   osx_defaults:

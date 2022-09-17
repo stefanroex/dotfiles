@@ -44,9 +44,9 @@
 	required = true
 [init]
 	defaultBranch = main
-[diff]
-	tool = difft
-	external = difft
+# [diff]
+# 	tool = difft
+# 	external = difft
 [merge]
 	tool = difft
 [difftool]
