@@ -5,15 +5,14 @@
     state: installed
   ignore_errors: true
   loop:
-  - alfred
+  - 1password
   - aws-vault
   - chromedriver
   - firefox
   - google-chrome
-  - little-snitch
+  - raycast
+  - rectangle
   - slack
-  - spectacle
   - spotify
   - transmission
   - tunnelblick
-  - 1password

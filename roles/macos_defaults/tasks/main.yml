@@ -1,4 +1,4 @@
 ---
-- include: general.yml
-- include: dock.yml
-- include: finder.yml
+- import_tasks: general.yml
+- import_tasks: dock.yml
+- import_tasks: finder.yml

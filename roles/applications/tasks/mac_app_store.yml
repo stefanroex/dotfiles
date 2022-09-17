@@ -15,6 +15,7 @@
   register: mas_result
   changed_when: '"already installed" not in mas_result.stdout'
   loop:
+  - { name: "Amphetamine", id: 937984704 }
   - { name: "DaisyDisk", id: 411643860 }
   - { name: "Harvest", id: 506189836 }
   - { name: "Keynote", id: 409183694 }
@@ -23,12 +24,5 @@
   - { name: "Pocket", id: 568494494 }
   - { name: "Reeder", id: 880001334 }
   - { name: "The Unarchiver", id: 425424353 }
-  - { name: "Amphetamine", id: 937984704 }
   - { name: "Things", id: 904280696 }
   - { name: "WhatsApp", id: 1147396723 }
-
-- name: Mac App Store - Set Alfred settings dir
-  osx_defaults:
-    domain: com.runningwithcrayons.Alfred-Preferences-3
-    key: syncfolder
-    value: "{{ role_path }}/files/alfred"

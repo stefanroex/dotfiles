@@ -5,13 +5,11 @@
     state: present
   loop:
     - clojure
-    - leiningen
+    - borkdude/brew/babashka
+    - borkdude/brew/clj-kondo
 
 - name: Clojure - Copy dotfiles
   file:
-    src: "{{ role_path }}/files/{{ item }}"
-    dest: "~/.{{ item }}"
+    src: "{{ role_path }}/files/clojure"
+    dest: "~/.clojure"
     state: link
-  loop:
-    - lein
-    - clojure
