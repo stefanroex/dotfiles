@@ -16,6 +16,11 @@
     dest: "~/.vimrc"
     state: link
 
+- name: Ensure .config directory
+  file:
+    path: "~/.config"
+    state: directory
+
 - name: Vim - Copy .nvim
   file:
     src: "{{ role_path }}/files/vim"

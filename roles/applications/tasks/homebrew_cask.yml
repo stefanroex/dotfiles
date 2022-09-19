@@ -6,13 +6,17 @@
   ignore_errors: true
   loop:
   - 1password
+  - asana
   - aws-vault
   - chromedriver
   - firefox
   - google-chrome
+  - logseq
+  - microsoft-teams
+  - notion
   - raycast
   - rectangle
+  - signal
   - slack
   - spotify
-  - transmission
   - tunnelblick
