@@ -2,7 +2,8 @@
   :diminish projectile-mode
   :config
   (setq projectile-create-missing-test-files t
-        projectile-completion-system 'ivy)
+        ;; projectile-completion-system 'ivy
+        )
 
   (keys-l "p" 'projectile-command-map)
 
@@ -14,8 +15,8 @@
   ;; (advice-add 'projectile-get-repo-files :override #'advice-projectile-no-sub-project-files)
   (projectile-global-mode t))
 
-(use-package counsel-projectile
-  :config
-  (setq projectile-switch-project-action 'counsel-projectile-find-file))
+;; (use-package counsel-projectile
+;;   :config
+;;   (setq projectile-switch-project-action 'counsel-projectile-find-file))
 
 (provide 'stx-module-project)

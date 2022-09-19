@@ -88,10 +88,6 @@
 ;; Don't confirm when creating new file
 (setq confirm-nonexistent-file-or-buffer nil)
 
-;; Scroll in compilation mode
-(require 'compile)
-(setq compilation-scroll-output t)
-
 ;; Increase how much data is read from process
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
@@ -117,7 +113,12 @@
 ;; elisp-mode triggers prog-mode hooks which loads extra packages.
 (setq initial-major-mode 'fundamental-mode)
 
-;; No blinking cursor, it's hard to find sometimes
-(blink-cursor-mode 0)
+;; Do not allow the cursor in the minibuffer prompt
+(setq minibuffer-prompt-properties
+      '(read-only t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+;; Never split windows
+;; (advice-add 'window-splittable-p :before-while (lambda () nil))
 
 (provide 'stx-core-emacs-settings)

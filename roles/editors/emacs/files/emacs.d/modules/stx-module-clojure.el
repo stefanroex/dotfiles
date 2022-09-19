@@ -17,6 +17,8 @@
          (clojurec-mode . lsp)
          (clojurescript-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
+  :custom-face
+  (lsp-face-highlight-textual ((t (:inherit region))))
   :config
   (add-to-list 'lsp-file-watch-ignored "[/\\\\]node_modules$")
   (add-to-list 'lsp-file-watch-ignored "[/\\\\]target$")
@@ -44,6 +46,7 @@
         lsp-modeline-code-actions-enable nil
         lsp-enable-symbol-highlighting nil
         lsp-eldoc-enable-hover nil
+        lsp-idle-delay 0.3
         lsp-completion-provider :capf
         lsp-diagnostics-provider :none))
 
@@ -126,7 +129,7 @@
   (keys :keymaps cider-mode-maps
     :prefix "SPC c"
     ;; "J" 'cider-project-cljs
-    "c" 'cider-repl-switch-to-other
+    "c" 'lsp-execute-code-action
     "d" 'cider-doc-map
     "eb" 'cider-load-buffer
     "ef" 'cider-eval-defun-at-point
@@ -148,7 +151,9 @@
     "sr" 'cider-switch-to-repl-buffer
     "t" 'cider-test-run-project-tests)
 
-  (advice-add 'evil-search-highlight-persist-remove-all :after #'cider--remove-result-overlay))
+  (advice-add 'evil-search-highlight-persist-remove-all :after #'cider--remove-result-overlay)
+
+  )
 
 (use-package clj-refactor
   :hook ((clojure-mode . clj-refactor-mode)

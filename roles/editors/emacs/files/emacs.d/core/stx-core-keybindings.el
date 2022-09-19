@@ -52,6 +52,10 @@
       :keymaps 'emacs-lisp-mode-map
       "e" 'eval-last-sexp)
 
+    (keys
+      "C-n" 'next-error
+      "C-p" 'previous-error)
+
     (keys-l
       "hk" 'describe-key
       "hm" 'describe-mode
@@ -61,7 +65,6 @@
       "k" 'stx/kill-other-buffers
       "q" 'kill-buffer-and-window
       "w" 'delete-window
-      "B" 'ibuffer
       "O" 'open-iterm-in-project-root
       "v" 'stx/open-emacs-config)))
 

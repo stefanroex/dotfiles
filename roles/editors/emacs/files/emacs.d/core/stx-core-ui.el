@@ -9,8 +9,8 @@
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
 
-;; Prevent the cursor from blinking
-(blink-cursor-mode nil)
+;; No blinking cursor, it's hard to find sometimes
+(blink-cursor-mode -1)
 
 ;; Theme
 (use-package challenger-deep-theme

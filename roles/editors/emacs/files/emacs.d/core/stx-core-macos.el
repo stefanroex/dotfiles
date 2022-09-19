@@ -13,7 +13,7 @@
   (setq browse-url-browser-function 'browse-url-default-macosx-browser))
 
 (use-package reveal-in-osx-finder
-  :config
+  :general
   (keys-l "o" 'reveal-in-osx-finder))
 
 (provide 'stx-core-macos)

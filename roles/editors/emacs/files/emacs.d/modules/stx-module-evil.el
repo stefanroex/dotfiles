@@ -2,12 +2,12 @@
   :demand t
   :general
   (keys
-    "C-n" 'next-error
-    "C-p" 'previous-error
+    :keymap 'overwrite
     "C-h" 'evil-window-left
     "C-j" 'evil-window-down
     "C-k" 'evil-window-up
     "C-l" 'evil-window-right)
+
   :init
   (setq evil-want-integration t
         evil-want-keybinding nil
@@ -38,11 +38,11 @@
     "cc" 'evilnc-comment-or-uncomment-lines))
 
 ;; TODO doesn't work?
-;; (use-package evil-search-highlight-persist
-;;   :demand t
-;;   :config
-;;   (global-evil-search-highlight-persist t)
-;;   (keys :keymaps 'prog-mode-map
-;;     "RET" 'evil-search-highlight-persist-remove-all))
+(use-package evil-search-highlight-persist
+  :demand t
+  :config
+  (global-evil-search-highlight-persist t)
+  (keys :keymaps 'prog-mode-map
+    "RET" 'evil-search-highlight-persist-remove-all))
 
 (provide 'stx-module-evil)
