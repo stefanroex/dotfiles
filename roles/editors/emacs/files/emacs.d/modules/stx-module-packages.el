@@ -40,6 +40,6 @@
 
 (use-package string-edit)
 
-(use-package helpful)
+;; (use-package helpful)
 
 (provide 'stx-module-packages)
