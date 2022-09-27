@@ -28,14 +28,14 @@
 ;;                                orderless-prefixes
 ;;                                orderless-initialism)))
 
-(use-package hotfuzz
-  :demand t)
+;; (use-package hotfuzz
+;;   :demand t)
 
 (use-package fussy
   :demand t
   :config
-  (setq fussy-score-fn 'fussy-hotfuzz-score)
-  (setq fussy-filter-fn 'fussy-filter-fast)
+  ;; (setq fussy-score-fn 'fussy-hotfuzz-score)
+  ;; (setq fussy-filter-fn 'fussy-filter-default)
   (push 'fussy completion-styles)
   (setq
    ;; For example, project-find-file uses 'project-files which uses
