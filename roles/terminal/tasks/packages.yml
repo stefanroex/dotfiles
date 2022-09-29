@@ -10,12 +10,14 @@
   ignore_errors: true
   loop:
     - awscli
+    - chamber
     - git
     - jq
     - openssl
     - pgcli
     - postgresql
     - ripgrep
+    - saulpw/vd/visidata
     - ssh-copy-id
     - terraform
     - the_silver_searcher
