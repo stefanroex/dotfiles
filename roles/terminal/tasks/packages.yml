@@ -9,6 +9,7 @@
     state: present
   ignore_errors: true
   loop:
+    - 7zip
     - awscli
     - chamber
     - git
