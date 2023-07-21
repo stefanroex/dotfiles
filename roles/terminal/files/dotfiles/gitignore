@@ -46,4 +46,4 @@ rails_best_practices_output.html
 .dir-locals.el
 /.lsp/
 /.shadow-cljs/
-.clj-kondo
+.clj-kondo/.cache

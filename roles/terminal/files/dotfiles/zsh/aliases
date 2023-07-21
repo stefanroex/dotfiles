@@ -3,9 +3,7 @@ alias a='ahoy'
 alias aliases='nvim ~/.dotfiles/roles/terminal/files/dotfiles/zsh/aliases'
 alias amend="git commit --amend"
 alias ass='rm -rf tmp/cache && pow restart'
-alias authors="git ls-files | grep \.clj | while read f; do git blame -w --line-porcelain -- $f | grep -I '^author '; done | sort -f | uniq -ic | sort -n"
 alias cbundle='rm -rf vendor/bundle && bundle install --system --binstubs'
-alias code-owner="git ls-files | grep \.clj | grep src | while read f; do git blame -w --line-porcelain -- '$f'  | grep '^author ' | sort -f | uniq -ic | sort -n | tail -n 1 | xargs -I {} echo {} \"$f\"; done | sort -n"
 alias d='cd ~/.dotfiles'
 alias e='nvim'
 alias ga='git add . && git add -u && gs'
@@ -38,11 +36,9 @@ alias s='pow open && e'
 alias server='python -m SimpleHTTPServer'
 alias so='source ~/.dotfiles/zsh/aliases'
 alias startredis='redis-server /usr/local/etc/redis.conf &'
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias vi='nvim'
 alias z="zeus"
-
-alias -g M='| more'
-alias -g L='| less'
 
 # Heroku staging
 alias staging-console='heroku run console'

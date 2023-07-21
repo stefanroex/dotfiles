@@ -5,4 +5,3 @@ export AWS_CHAINED_SESSION_TOKEN_TTL=12h
 export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
-. "$HOME/.cargo/env"
