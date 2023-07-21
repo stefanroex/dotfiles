@@ -46,9 +46,11 @@
         lsp-modeline-code-actions-enable nil
         lsp-enable-symbol-highlighting nil
         lsp-eldoc-enable-hover nil
-        lsp-idle-delay 0.3
+        lsp-idle-delay 0.05
         lsp-completion-provider :capf
-        lsp-diagnostics-provider :none))
+        lsp-diagnostics-provider :none)
+
+  )
 
 (use-package lsp-ui
   :config
@@ -72,7 +74,8 @@
     (cider-nrepl-sync-request:eval "(portal.api/close)"))
 
   (setq cider-ns-refresh-before-fn "reloaded.repl/suspend"
-        cider-ns-refresh-after-fn "reloaded.repl/resume")
+        cider-ns-refresh-after-fn "reloaded.repl/resume"
+        cider-print-fn 'puget)
 
   (setq cider-prompt-for-symbol nil
         cider-repl-display-help-banner nil
@@ -135,7 +138,7 @@
     "ef" 'cider-eval-defun-at-point
     "ef" 'cider-load-file
     "el" 'cider-eval-last-sexp
-    "er" 'cider-eval-last-sexp-and-replace
+    "er" 'cider-pprint-eval-last-sexp-to-comment
     "i" 'cider-inspect
     "j" 'cider-jack-in
     "l" 'cider-inspect-last-result
