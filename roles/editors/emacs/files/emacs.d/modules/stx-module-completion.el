@@ -1,9 +1,5 @@
 (use-package vertico
   :demand t
-  :config
-  (general-def 'vertico-map
-    "C-j" 'vertico-next
-    "C-k" 'vertico-previous)
   :init
   (vertico-mode +1)
   (setq vertico-cycle t)
