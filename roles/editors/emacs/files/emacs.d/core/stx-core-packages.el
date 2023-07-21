@@ -1,8 +1,13 @@
 ;; Setup build-in package.el
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
+(setq package-archive-priorities '(("melpa-stable" . 10)
+                                   ("melpa" . 5)
+                                   ("org" . 1)
+                                   ("elpa" . 0)))
 (package-initialize)
 
 ;;; Bootstrapping use-package
