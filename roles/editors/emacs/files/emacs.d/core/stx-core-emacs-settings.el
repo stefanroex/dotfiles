@@ -58,7 +58,7 @@
       whitespace-style '(face tabs empty trailing lines-tail))
 
 ;; enabled line numbers
-(global-linum-mode)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 ;; revert buffers automatically when underlying files are changed externally
 (use-package autorevert
@@ -120,5 +120,8 @@
 
 ;; Never split windows
 ;; (advice-add 'window-splittable-p :before-while (lambda () nil))
+
+;; Disable warnings for emacs compile
+(setq warning-minimum-level :error)
 
 (provide 'stx-core-emacs-settings)

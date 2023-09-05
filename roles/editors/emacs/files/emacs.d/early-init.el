@@ -13,17 +13,12 @@
 ;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
 ;; packages are compiled ahead-of-time when they are installed and site files
 ;; are compiled when gccemacs is installed.
-(setq native-comp-deferred-compilation nil)
+(setq native-comp-jit-compilation nil)
 
 ;; Disable certain byte compiler warnings to cut down on the noise.
 ;; This is a personal choice and can be removed if you would like to see
 ;; any and all byte compiler warnings.
-(setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
-
-;; In Emacs 27+, package initialization occurs before `user-init-file' is
-;; loaded, but after `early-init-file'. Doom handles package initialization, so
-;; we must prevent Emacs from doing it early!
-(setq package-enable-at-startup nil)
+(setq byte-compile-warnings '(not obsolete free-vars unresolved noruntime lexical make-local))
 
 ;; Contrary to what many Emacs users have in their configs, you don't need
 ;; more than this to make UTF-8 the default coding system:
@@ -46,6 +41,7 @@
 ;; ugly flashes of unstyled Emacs.
 (setq-default inhibit-redisplay t
               inhibit-message t)
+
 (add-hook 'window-setup-hook
           (lambda ()
             (setq-default inhibit-redisplay nil
@@ -69,6 +65,7 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (setq ns-use-proxy-icon  nil)
 (setq frame-title-format nil)
+(setq frame-resize-pixelwise t)
 
 ;; Remove menu, toolbars etc
 (menu-bar-mode -1)
