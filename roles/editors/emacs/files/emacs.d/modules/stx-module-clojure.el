@@ -7,8 +7,14 @@
   :config
   (require 'flycheck-clj-kondo)
   (define-clojure-indent
-    (assoc 1)
-    (do-at 1)))
+   (with-tmp-taf-dir 1)
+   (with-test-system 1)
+   (with-tmp-dir 1)
+   (with-tmp-file 1)
+   (try-let 1)
+   (for-all 1)
+   (assoc 1)
+   (do-at 1)))
 
 (use-package clojure-mode-extra-font-locking)
 
@@ -20,8 +26,9 @@
   :custom-face
   (lsp-face-highlight-textual ((t (:inherit region))))
   :config
-  (add-to-list 'lsp-file-watch-ignored "[/\\\\]node_modules$")
-  (add-to-list 'lsp-file-watch-ignored "[/\\\\]target$")
+  (add-to-list 'lsp-file-watch-ignored "[/\\\\]node_modules")
+  (add-to-list 'lsp-file-watch-ignored "[/\\\\]resources")
+  (add-to-list 'lsp-file-watch-ignored "[/\\\\]target")
   (dolist (m '(clojure-mode
                clojurec-mode
                clojurescript-mode
@@ -40,7 +47,8 @@
         lsp-lens-enable nil
         lsp-headerline-breadcrumb-enable nil
         lsp-enable-indentation nil
-        lsp-use-plists t
+        ;; lsp-log-io t
+        ;; lsp-use-plists t
         lsp-completion-enable nil
         lsp-enable-on-type-formatting nil
         lsp-modeline-code-actions-enable nil
@@ -78,6 +86,7 @@
         cider-print-fn 'puget)
 
   (setq cider-prompt-for-symbol nil
+        cider-dynamic-indentation nil
         cider-repl-display-help-banner nil
         cider-eval-result-duration nil
         cider-repl-use-pretty-printing t

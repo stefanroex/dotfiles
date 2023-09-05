@@ -36,10 +36,7 @@
   (setq popper-window-height #'stx/popper-height)
 
   (popper-mode +1)
-  (popper-echo-mode +1))
-
-(use-package string-edit)
-
-;; (use-package helpful)
+  ;; (popper-echo-mode +1)
+  )
 
 (provide 'stx-module-packages)
