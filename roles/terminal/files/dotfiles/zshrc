@@ -21,5 +21,6 @@ export PATH="/usr/local/opt/node@10/bin:$PATH"
 export PATH="$HOME/Code/brightmotive/bin:$PATH"
 export PATH="$HOME/Library/Python/3.7/bin:$PATH"
 export PATH="$HOME/.cargo/env:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 eval "$(rbenv init - zsh)"
