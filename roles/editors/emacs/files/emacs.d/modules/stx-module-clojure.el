@@ -52,7 +52,7 @@
         lsp-completion-enable nil
         lsp-enable-on-type-formatting nil
         lsp-modeline-code-actions-enable nil
-        lsp-enable-symbol-highlighting nil
+        ;; lsp-enable-symbol-highlighting nil
         lsp-eldoc-enable-hover nil
         lsp-idle-delay 0.05
         lsp-completion-provider :capf
@@ -86,7 +86,8 @@
         cider-print-fn 'puget)
 
   (setq cider-prompt-for-symbol nil
-        cider-dynamic-indentation nil
+        cider-dynamic-indentation t
+        cider-test-fail-fast nil
         cider-repl-display-help-banner nil
         cider-eval-result-duration nil
         cider-repl-use-pretty-printing t
@@ -189,6 +190,14 @@
     "r n" 'cljr-rename-file)
   (add-to-list 'cljr-magic-require-namespaces '("r"  . "reagent.core"))
   (add-to-list 'cljr-magic-require-namespaces '("rf" . "re-frame.core"))
-  (add-to-list 'cljr-magic-require-namespaces '("u" . "bm.tools.utils")))
+  (add-to-list 'cljr-magic-require-namespaces '("u" . "bm.tools.utils"))
+  (add-to-list 'cljr-magic-require-namespaces '("ui.text-input"  . "bm.frontend.components.form.text-input"))
+  (add-to-list 'cljr-magic-require-namespaces '("ui.textarea"  . "bm.frontend.components.form.textarea"))
+  (add-to-list 'cljr-magic-require-namespaces '("ui.button"  . "bm.frontend.components.button"))
+  (add-to-list 'cljr-magic-require-namespaces '("ui.form"  . "bm.frontend.components.form.primitives"))
+  (add-to-list 'cljr-magic-require-namespaces '("ui.segmented-group"  . "bm.frontend.components.segmented-group"))
+  (add-to-list 'cljr-magic-require-namespaces '("ui.select"  . "bm.frontend.components.form.select"))
+  (add-to-list 'cljr-magic-require-namespaces '("ui.radios"  . "bm.frontend.components.form.radios"))
+  (add-to-list 'cljr-magic-require-namespaces '("styleguide"  . "bm.frontend-styleguide.macros")))
 
 (provide 'stx-module-clojure)
