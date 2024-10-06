@@ -2,7 +2,7 @@
 
 ## Installation
 
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/stefanroex/dotfiles/master/install.sh)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/stefanroex/dotfiles/main/install.sh)"
 
 ## License
 
