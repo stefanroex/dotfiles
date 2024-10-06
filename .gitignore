@@ -42,3 +42,4 @@ roles/development/ruby/files/bundle/cache
 /roles/editors/emacs/files/emacs.d/history
 /roles/editors/emacs/files/emacs.d/projects
 /roles/editors/emacs/files/emacs.d/workspace/.cache
+/roles/editors/emacs/files/emacs.d/flycheck_init.el
