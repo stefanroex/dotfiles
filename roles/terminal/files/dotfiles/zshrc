@@ -22,5 +22,7 @@ export PATH="$HOME/Code/brightmotive/bin:$PATH"
 export PATH="$HOME/Library/Python/3.7/bin:$PATH"
 export PATH="$HOME/.cargo/env:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+export PATH="$HOME/.atuin/bin/env:$PATH"
 
 eval "$(rbenv init - zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"

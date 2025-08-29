@@ -1,0 +1,19 @@
+[general]
+import = [
+  "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+[window]
+title = "Terminal"
+dynamic_title = true
+
+[font]
+normal = { family = "Inconsolata Nerd Font", style = "Regular" }
+size = 18
+offset = { x = 0, y = 8 }
+
+[keyboard]
+bindings = [
+  { key = "Right", mods = "Alt", chars = "\u001BF" },
+  { key = "Left",  mods = "Alt", chars = "\u001BB" },
+]

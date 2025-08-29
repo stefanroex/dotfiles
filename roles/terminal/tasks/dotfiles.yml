@@ -11,6 +11,7 @@
     dest: "~/.{{ item }}"
     state: link
   loop:
+    - config/alacritty
     - agignore
     - gitconfig
     - gitignore
