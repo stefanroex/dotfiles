@@ -6,6 +6,9 @@
 (use-package clojure-mode
   :config
   (require 'flycheck-clj-kondo)
+  (modify-syntax-entry ?? "w" clojure-mode-syntax-table)
+  (modify-syntax-entry ?! "w" clojure-mode-syntax-table)
+
   (define-clojure-indent
    (with-tmp-taf-dir 1)
    (with-test-system 1)
@@ -86,6 +89,7 @@
         cider-print-fn 'puget)
 
   (setq cider-prompt-for-symbol nil
+        cider-download-java-sources t
         cider-dynamic-indentation t
         cider-test-fail-fast nil
         cider-repl-display-help-banner nil
@@ -101,8 +105,8 @@
       clojure-mode-map
       clojurescript-mode-map))
 
-  (add-to-list 'evil-emacs-state-modes 'cider-inspector-mode)
-  (add-to-list 'evil-emacs-state-modes 'cider-connections-buffer-mode)
+  ;; (add-to-list 'evil-emacs-state-modes 'cider-inspector-mode)
+  ;; (add-to-list 'evil-emacs-state-modes 'cider-connections-buffer-mode)
   (evil-add-hjkl-bindings cider-connections-buffer-mode-map 'emacs)
 
   (keys :keymaps '(cider-inspector-mode-map)
