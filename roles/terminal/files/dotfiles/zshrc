@@ -6,6 +6,8 @@ source $HOME/.zsh/aliases
 source $HOME/.zsh/functions
 
 export fpath=(/usr/local/share/zsh/site-functions $fpath)
+export FPATH=$HOME/Code/brightmotive/dev-resources:$FPATH
+autoload -Uz compinit; compinit -i
 
 export EDITOR='nvim'
 export HOMEBREW_NO_ANALYTICS=1

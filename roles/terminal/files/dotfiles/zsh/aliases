@@ -33,7 +33,7 @@ alias retag='ctags -R --exclude=vendor * --exclude=.git --exclude=log *'
 alias rk="rake"
 alias rsync='rsync --progress'
 alias s='pow open && e'
-alias server='python -m SimpleHTTPServer'
+alias server='python3 -m http.server'
 alias so='source ~/.dotfiles/zsh/aliases'
 alias startredis='redis-server /usr/local/etc/redis.conf &'
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
