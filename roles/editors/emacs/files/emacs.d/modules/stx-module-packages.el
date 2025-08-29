@@ -39,4 +39,6 @@
   ;; (popper-echo-mode +1)
   )
 
+(use-package terraform-mode)
+
 (provide 'stx-module-packages)
