@@ -15,7 +15,7 @@
 
 (use-package prettier-js
   :hook
-  ((markdown-mode css-mode web-mode) . prettier-js-mode))
+  ((css-mode web-mode) . prettier-js-mode))
 
 (require 'web-mode)
 
