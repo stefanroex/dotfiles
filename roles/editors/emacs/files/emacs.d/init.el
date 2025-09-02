@@ -12,7 +12,6 @@
 (require 'stx-module-autocomplete)
 (require 'stx-module-clojure)
 (require 'stx-module-completion)
-(require 'stx-module-dashboard)
 (require 'stx-module-evil)
 (require 'stx-module-flycheck)
 (require 'stx-module-jump)
