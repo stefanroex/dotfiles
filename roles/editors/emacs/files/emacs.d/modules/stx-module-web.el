@@ -10,7 +10,6 @@
   :config
   (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
   (keys-l :keymaps 'web-mode-map "d" 'flow-type)
-  ;; (add-to-list 'company-dabbrev-code-modes 'web-mode)
   )
 
 (use-package prettier-js

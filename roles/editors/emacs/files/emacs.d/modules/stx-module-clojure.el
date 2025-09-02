@@ -126,9 +126,6 @@
   (define-key cider-repl-mode-map (kbd "<up>") 'cider-repl-previous-input)
   (define-key cider-repl-mode-map (kbd "<down>") 'cider-repl-next-input)
 
-  (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
-  (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
-
   (keys-l :keymaps cider-mode-maps
     "E" 'cider-pprint-eval-last-sexp
     "T" 'cider-test-run-project-tests
