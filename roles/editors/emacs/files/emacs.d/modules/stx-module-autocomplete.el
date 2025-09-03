@@ -6,7 +6,7 @@
   :custom
   (corfu-cycle t)
   (corfu-commit-on-ret t)
-  (corfu-preview-current nil)
+  (corfu-preview-current 'insert)
 
   :general
   (keys
