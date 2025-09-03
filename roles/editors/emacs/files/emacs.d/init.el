@@ -24,6 +24,7 @@
 (require 'stx-module-treemacs)
 (require 'stx-module-web)
 (require 'stx-module-buffer-name)
+(require 'stx-module-windows)
 
 (require 'stx-module-packages) ; WIP
 
