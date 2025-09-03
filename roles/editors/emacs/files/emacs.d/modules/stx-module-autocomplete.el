@@ -20,15 +20,15 @@
   (corfu-history-mode)
   (corfu-popupinfo-mode))
 
-(use-package corfu-candidate-overlay
-  :after corfu
-  :general
-  (keys
-    :states 'insert
-    [backtab] 'corfu-candidate-overlay-complete-at-point)
-  :init
-  (corfu-candidate-overlay-mode +1)
-  (setq corfu-popupinfo-delay 0.5))
+;; (use-package corfu-candidate-overlay
+;;   :after corfu
+;;   :general
+;;   (keys
+;;     :states 'insert
+;;     [backtab] 'corfu-candidate-overlay-complete-at-point)
+;;   :init
+;;   (corfu-candidate-overlay-mode +1)
+;;   (setq corfu-popupinfo-delay 0.5))
 
 (use-package kind-icon
   :after corfu
