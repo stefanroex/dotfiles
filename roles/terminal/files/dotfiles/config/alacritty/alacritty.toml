@@ -6,10 +6,14 @@ import = [
 [window]
 title = "Terminal"
 dynamic_title = true
+decorations_theme_variant = "Dark"
 
 [font]
-normal = { family = "Inconsolata Nerd Font", style = "Regular" }
-size = 18
+normal = { family = "iMWritingMono Nerd Font", style = "Regular" }
+bold = { family = "iMWritingMono Nerd Font", style = "Bold" }
+italic = { family = "iMWritingMono Nerd Font", style = "Regular Italic" }
+bold_italic = { family = "iMWritingMono Nerd Font", style = "Bold Italic" }
+size = 16
 offset = { x = 0, y = 8 }
 
 [keyboard]

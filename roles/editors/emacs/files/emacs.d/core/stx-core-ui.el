@@ -1,9 +1,16 @@
 ;; Most UI settings are set in early-init.el
 
 ;; font settings
-(set-face-attribute 'default t :font "Menlo")
-(set-face-attribute 'default nil :height 150)
-(setq-default line-spacing 4)
+(set-face-attribute 'default nil
+                    :font "iMWritingMono Nerd Font"
+                    :height 160
+                    :weight 'normal)
+
+(set-face-attribute 'bold nil
+                    :font "iMWritingMono Nerd Font"
+                    :weight 'bold)
+
+(setq-default line-spacing 5)
 
 ;; disable visible-bell
 (setq visible-bell nil)
