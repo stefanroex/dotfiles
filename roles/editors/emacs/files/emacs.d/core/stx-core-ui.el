@@ -19,6 +19,9 @@
 ;; No blinking cursor, it's hard to find sometimes
 (blink-cursor-mode -1)
 
+;; Don't open new frames if possible
+(setq ns-pop-up-frames nil)
+
 ;; Theme
 (use-package challenger-deep-theme
   :demand
