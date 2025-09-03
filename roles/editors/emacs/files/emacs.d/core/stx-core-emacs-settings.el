@@ -42,7 +42,7 @@
 ;; Automaticaly add newline at and of document
 (setq require-final-newline t)
 
-;; Disable highlighting of matching par
+;; Enable highlighting of matching par
 (setq show-paren-mode t)
 
 ;; warn when opening files bigger than 2MB

@@ -1,9 +1,3 @@
-;; (use-package ag
-;;   :config
-;;   (require 'exec-path-from-shell)
-;;   (setq ag-reuse-buffers t)
-;;   (define-key ag-mode-map (kbd "k") nil))
-
 (use-package rg
   :general
   (keys-l

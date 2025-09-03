@@ -8,7 +8,6 @@
   (smart-jump-setup-default-registers))
 
 (use-package dumb-jump
-  :ensure t
   :init
   (setq dumb-jump-aggressive nil
 	dumb-jump-selector 'ivy)
