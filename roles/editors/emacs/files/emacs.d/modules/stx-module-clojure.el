@@ -71,19 +71,6 @@
 
 (use-package cider
   :config
-  (defun portal.api/open ()
-    (interactive)
-    (cider-nrepl-sync-request:eval
-     "(require 'portal.api) (portal.api/tap) (portal.api/open)"))
-
-  (defun portal.api/clear ()
-    (interactive)
-    (cider-nrepl-sync-request:eval "(portal.api/clear)"))
-
-  (defun portal.api/close ()
-    (interactive)
-    (cider-nrepl-sync-request:eval "(portal.api/close)"))
-
   (setq cider-ns-refresh-before-fn "reloaded.repl/suspend"
         cider-ns-refresh-after-fn "reloaded.repl/resume"
         cider-print-fn 'puget)
@@ -154,9 +141,6 @@
     "j" 'cider-jack-in
     "l" 'cider-inspect-last-result
     "m" 'cider-macroexpand-1
-    "po" 'portal.api/open
-    "pc" 'portal.api/clear
-    "pq" 'portal.api/close
     "pf" 'cider-pprint-eval-defun-at-point
     "pl" 'cider-pprint-eval-last-sexp
     "q" 'cider-quit
