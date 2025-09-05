@@ -58,8 +58,9 @@
 
     (keys-l
       "hk" 'describe-key
-      "hm" 'describe-mode
+      "hb" 'describe-bindings
       "hf" 'describe-function
+      "hm" 'describe-mode
       "hv" 'describe-variable
       "SPC" 'stx/switch-to-other-buffer
       "k" 'stx/kill-other-buffers

@@ -46,7 +46,8 @@
   :general
   (keys
     :states '(nil normal emacs motion)
-    "C-;" 'embark-act))
+    :keymaps '(vertico-map prog-mode-map)
+    "M-RET" 'embark-act))
 
 (use-package embark-consult
   :hook
