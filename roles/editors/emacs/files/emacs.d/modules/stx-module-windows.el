@@ -47,4 +47,7 @@
                    ("*cider-inspect*" :align right :size 0.5 :select t)
                    ("\\*cider-repl.*" :align right :size 0.5 :regexp t :select t))))
 
+(use-package winner
+  :hook (after-init . winner-mode))
+
 (provide 'stx-module-windows)
