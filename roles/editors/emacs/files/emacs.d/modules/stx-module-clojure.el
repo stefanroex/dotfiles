@@ -1,6 +1,34 @@
 ;;;  -*- lexical-binding: t -*-
 (require 'subr-x)
 
+(defun stx/lsp--usage-count (title)
+  (if (string-match "× \\([0-9]+\\)$" title)
+      (string-to-number (match-string 1 title))
+    0))
+
+(defun stx/lsp--sort-usage-count (actions)
+  (seq-sort-by (lambda (a) (stx/lsp--usage-count (plist-get a :title))) #'> actions))
+
+(defun stx/lsp--retitle-action (action)
+  (let ((title (plist-get action :title)))
+    (string-match "^Add require '\\([^']+\\)'\\(?: × \\([0-9]+\\)\\)?$" title)
+    (let ((lib (match-string 1 title))
+          (cnt (match-string 2 title)))
+      (plist-put (copy-sequence action) :title (if cnt (format "%s (%s×)" lib cnt) lib)))))
+
+(defun stx/lsp-add-missing-libspec ()
+  (interactive)
+  (let ((actions (seq-filter (lambda (action)
+                               (string-prefix-p "Add require" (plist-get action :title)))
+                             (lsp-code-actions-at-point))))
+    (if (= (length actions) 1)
+        (lsp-execute-code-action
+         (car actions))
+      (lsp-execute-code-action
+       (lsp--select-action
+        (mapcar 'stx/lsp--retitle-action (stx/lsp--sort-usage-count actions)))))
+    (flycheck-buffer)))
+
 (use-package flycheck-clj-kondo)
 
 (use-package clojure-mode
@@ -39,7 +67,14 @@
     (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
   (keys :prefix "SPC l"
     "R" 'lsp-rename
+    "a" 'lsp-execute-code-action
+    "f" 'lsp-clojure-extract-function
+    "l" 'lsp-clojure-move-to-let
+    "c" 'lsp-clojure-clean-ns
     "r" 'lsp-find-references)
+
+  (keys :prefix "SPC"
+    "j" 'stx/lsp-add-missing-libspec)
 
   ;; performance tweaks
   (setq lsp-enable-folding nil
@@ -130,7 +165,7 @@
   (keys :keymaps cider-mode-maps
     :prefix "SPC c"
     ;; "J" 'cider-project-cljs
-    "c" 'lsp-execute-code-action
+    "c" 'cider-connect
     "d" 'cider-doc-map
     "eb" 'cider-load-buffer
     "ef" 'cider-eval-defun-at-point
@@ -160,6 +195,7 @@
   :init
   (setq cljr-auto-sort-ns t
 	cljr-insert-newline-after-require nil
+        cljr-magic-requires nil
         cljr-favor-prefix-notation nil
         cljr-favor-private-functions nil
         cljr-project-clean-prompt nil
@@ -172,17 +208,6 @@
         :keymaps '(clojure-mode-map clojurescript-mode-map)
         key fn)))
   (keys :prefix "SPC r"
-    "r n" 'cljr-rename-file)
-  (add-to-list 'cljr-magic-require-namespaces '("r"  . "reagent.core"))
-  (add-to-list 'cljr-magic-require-namespaces '("rf" . "re-frame.core"))
-  (add-to-list 'cljr-magic-require-namespaces '("u" . "bm.tools.utils"))
-  (add-to-list 'cljr-magic-require-namespaces '("ui.text-input"  . "bm.frontend.components.form.text-input"))
-  (add-to-list 'cljr-magic-require-namespaces '("ui.textarea"  . "bm.frontend.components.form.textarea"))
-  (add-to-list 'cljr-magic-require-namespaces '("ui.button"  . "bm.frontend.components.button"))
-  (add-to-list 'cljr-magic-require-namespaces '("ui.form"  . "bm.frontend.components.form.primitives"))
-  (add-to-list 'cljr-magic-require-namespaces '("ui.segmented-group"  . "bm.frontend.components.segmented-group"))
-  (add-to-list 'cljr-magic-require-namespaces '("ui.select"  . "bm.frontend.components.form.select"))
-  (add-to-list 'cljr-magic-require-namespaces '("ui.radios"  . "bm.frontend.components.form.radios"))
-  (add-to-list 'cljr-magic-require-namespaces '("styleguide"  . "bm.frontend-styleguide.macros")))
+    "r n" 'cljr-rename-file))
 
 (provide 'stx-module-clojure)
