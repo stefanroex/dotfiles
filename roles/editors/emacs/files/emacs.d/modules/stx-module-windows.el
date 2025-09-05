@@ -43,7 +43,7 @@
                    ("*rg*"            :align t :size 0.3 :select nil)
                    ("*xref*"          :align t :size 0.3 :select nil)
                    ("*Messages*"      :align t)
-                   ("*Help*"          :align t)
+                   ("*Help*"          :align right :select t)
                    ("*cider-inspect*" :align right :size 0.5 :select t)
                    ("\\*cider-repl.*" :align right :size 0.5 :regexp t :select t))))
 
