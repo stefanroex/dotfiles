@@ -14,7 +14,8 @@
   (vertico-cycle t)
 
   :init
-  (vertico-mode +1))
+  (vertico-mode +1)
+  (vertico-multiform-mode))
 
 (use-package consult
   :general
@@ -47,12 +48,17 @@
   (keys
     :states '(nil normal emacs motion)
     :keymaps '(vertico-map prog-mode-map)
-    "M-RET" 'embark-act))
+    "M-RET" 'embark-act)
+  :custom
+  (embark-prompter 'embark-completing-read-prompter)
+  (embark-indicators '(embark-minimal-indicator
+                       embark-highlight-indicator
+                       embark-isearch-highlight-indicator))
+  :config
+  (add-to-list 'vertico-multiform-categories '(embark-keybinding grid)))
 
 (use-package embark-consult
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
-
-(use-package wgrep)
 
 (provide 'stx-module-completion)
