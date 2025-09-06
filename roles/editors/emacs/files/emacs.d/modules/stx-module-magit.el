@@ -29,4 +29,15 @@
   (setq magit-diff-refine-hunk t
         magit-display-buffer-function 'magit-buffer-full-screen))
 
+(use-package forge
+  :after (magit evil-collection)
+  :general
+  (keys-l
+    "go" 'forge-browse)
+  :custom
+  (forge-add-default-bindings nil)
+  (forge-add-default-sections nil)
+  :config
+  (evil-collection-forge-setup))
+
 (provide 'stx-module-magit)
