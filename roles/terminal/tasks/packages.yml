@@ -9,10 +9,13 @@
     state: present
   ignore_errors: true
   loop:
-    - alacritty
     - 7zip
+    - alacritty
     - awscli
     - chamber
+    - eza 
+    - fd 
+    - fzf 
     - git
     - jq
     - openssl
@@ -22,7 +25,7 @@
     - saulpw/vd/visidata
     - ssh-copy-id
     - terraform
-    - the_silver_searcher
     - tokei
     - wget
+    - zoxide
     - zsh

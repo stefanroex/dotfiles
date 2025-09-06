@@ -1,58 +1,24 @@
 alias ...='../..'
-alias a='ahoy'
 alias aliases='nvim ~/.dotfiles/roles/terminal/files/dotfiles/zsh/aliases'
-alias amend="git commit --amend"
-alias ass='rm -rf tmp/cache && pow restart'
-alias cbundle='rm -rf vendor/bundle && bundle install --system --binstubs'
+alias cd="zd"
+alias ci="zi"
 alias d='cd ~/.dotfiles'
 alias e='nvim'
+alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 alias ga='git add . && git add -u && gs'
 alias gc='git commit'
-alias gci="git pull --rebase && rake && git push"
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias gdm='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d && git remote prune origin'
-alias gm='git commit -m'
-alias gph='git push staging master && hs run rake db:migrate && hs open'
-alias gphp='git push production master && hp run rake db:migrate && hp open'
 alias gs='git status'
 alias ip="curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+'"
-alias killruby='killall -9 ruby'
-alias logs='powder applog'
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias lsa='ls -a'
+alias lt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
 alias mkdir='mkdir -p'
-alias n='e notes.txt'
-alias pc='production-console'
-alias pow='powder'
-alias rbh="rbenv rehash"
-alias rdm="rake db:migrate"
-alias rdr="rake db:rollback"
-alias re='powder restart'
-alias restart_postgres="stoppostgres && startpostgres"
-alias restore='pg_restore --verbose --clean --no-acl --no-owner -h localhost -d `basename $PWD`_development '
-alias retag='ctags -R --exclude=vendor * --exclude=.git --exclude=log *'
-alias rk="rake"
 alias rsync='rsync --progress'
-alias s='pow open && e'
 alias server='python3 -m http.server'
 alias so='source ~/.dotfiles/zsh/aliases'
-alias startredis='redis-server /usr/local/etc/redis.conf &'
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias vi='nvim'
-alias z="zeus"
-
-# Heroku staging
-alias staging-console='heroku run console'
-alias staging-tail='heroku logs --tail'
-
-# Heroku production
-alias production-console='heroku run console --remote production'
-alias production-tail='heroku logs --tail --remote production'
-
-# Heroku databases
-alias db-pull-staging='hs pg:backups url | xargs curl -o staging.sql'
-alias db-pull-production='hp pg:backups url | xargs curl -o production.sql'
-
-alias db-copy-staging-to-development='db-pull-staging && restore staging.sql'
-alias db-copy-production-to-development='db-pull-production && restore production.sql'
-
-alias db-backups-capture='hp pgbackups capture'

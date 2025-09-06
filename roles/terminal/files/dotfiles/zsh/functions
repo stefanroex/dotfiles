@@ -1,15 +1,17 @@
-c() { cd ~/Code/$1; }
-_c() { _files -W ~/Code -/; }
-compdef _c c
-
-function hs() {
-  heroku "$@" --remote staging
-}
-
-function hp() {
-  heroku "$@" --remote production
-}
-
 function awsv() {
   aws-vault exec bm-$@
 }
+
+function zd() {
+  if [[ $# -eq 0 ]]; then
+    builtin cd ~ && return
+  elif [[ -d "$1" ]]; then
+    builtin cd "$1"
+  else
+    z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
+  fi
+}
+
+c() { cd ~/Code/$1; }
+_c() { _files -W ~/Code -/; }
+compdef _c c
