@@ -39,13 +39,14 @@
   :init
   (shackle-mode 1)
   :custom
-  (shackle-rules '((compilation-mode  :align t :size 0.3 :select nil)
-                   ("*rg*"            :align t :size 0.3 :select nil)
-                   ("*xref*"          :align t :size 0.3 :select nil)
-                   ("*Messages*"      :align t)
-                   ("*Help*"          :align right :select t)
-                   ("*cider-inspect*" :align right :size 0.5 :select t)
-                   ("\\*cider-repl.*" :align right :size 0.5 :regexp t :select t))))
+  (shackle-rules '((compilation-mode      :align t     :size 0.3 :select nil)
+                   ("*rg*"                :align t     :size 0.3 :select nil)
+                   ("*xref*"              :align t     :size 0.3 :select nil)
+                   ("*Messages*"          :align t)
+                   ("*Help*"              :align right           :select t)
+                   ("*cider-inspect*"     :align right :size 0.5 :select t)
+                   ("\\*Embark Export:.*" :align t     :size 0.3 :select nil :regexp t)
+                   ("\\*cider-repl.*"     :align right :size 0.5 :select t   :regexp t))))
 
 (use-package winner
   :hook (after-init . winner-mode))
