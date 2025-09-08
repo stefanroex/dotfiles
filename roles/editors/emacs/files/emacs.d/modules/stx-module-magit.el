@@ -14,6 +14,8 @@
   (general-def 'transient-sticky-map  "q" 'transient-quit-seq)
   (general-def 'magit-status-mode-map "K" 'magit-discard)
 
+  (remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
+
   (add-hook 'git-commit-mode-hook 'evil-insert-state)
   (setq magit-diff-refine-hunk t
         magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1
