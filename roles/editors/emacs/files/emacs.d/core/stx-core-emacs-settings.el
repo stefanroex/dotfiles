@@ -33,7 +33,8 @@
       `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t)))
 
 ;; just type y or n
-(defalias 'yes-or-no-p 'y-or-n-p)
+;; TODO: Doesn't seem to compile correcty?
+; (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; adjustable text-size
 (global-set-key (kbd "C-=") 'text-scale-increase)

@@ -1,13 +1,14 @@
 ---
 - name: Emacs - Add cask tap
   homebrew_tap:
-    name: railwaycat/emacsmacport
+    name: d12frosted/emacs-plus
     state: present
 
 - name: Emacs - Install
-  homebrew_cask:
-    name: emacs-mac
+  homebrew:
+    name: emacs-plus@30
     state: installed
+    install_options: with-no-frame-refocus, with-savchenkovaleriy-big-sur-curvy-3d-icon
 
 - name: Emacs - Install GNU utils
   homebrew:
