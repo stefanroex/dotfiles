@@ -11,10 +11,11 @@
   loop:
     - 7zip
     - awscli
+    - bat
     - chamber
-    - eza 
-    - fd 
-    - fzf 
+    - eza
+    - fd
+    - fzf
     - ghostty
     - git
     - jq
