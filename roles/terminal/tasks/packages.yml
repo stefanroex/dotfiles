@@ -10,12 +10,12 @@
   ignore_errors: true
   loop:
     - 7zip
-    - alacritty
     - awscli
     - chamber
     - eza 
     - fd 
     - fzf 
+    - ghostty
     - git
     - jq
     - openssl

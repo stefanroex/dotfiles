@@ -1,0 +1,11 @@
+theme = ChallengerDeepCustom
+
+font-family = "iMWritingMono Nerd Font Mono"
+font-size = 16
+font-thicken = true
+adjust-cell-height = "20%"
+adjust-cell-width = "-10%"
+
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
