@@ -4,4 +4,4 @@
     formula: "{{ item }}"
     state: present
   loop:
-    - yarn
+    - node
