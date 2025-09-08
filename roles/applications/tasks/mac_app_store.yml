@@ -21,5 +21,7 @@
   - { name: "Keynote", id: 409183694 }
   - { name: "Numbers", id: 409203825 }
   - { name: "Pages", id: 409201541 }
+  - { name: "Reeder", id: 880001334 }
+  - { name: "Tailscale", id: 1475387142 }
   - { name: "The Unarchiver", id: 425424353 }
   - { name: "Things", id: 904280696 }
