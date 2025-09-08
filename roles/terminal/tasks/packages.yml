@@ -20,7 +20,7 @@
     - jq
     - openssl
     - pgcli
-    - postgresql
+    - postgresql@17
     - ripgrep
     - saulpw/vd/visidata
     - ssh-copy-id
