@@ -4,35 +4,19 @@
     formula: neovim
     state: present
 
-- name: Vim - Copy .vim
+- name: Ensure .config/nvim directory
   file:
-    src: "{{ role_path }}/files/vim"
-    dest: "~/.vim"
-    state: link
-
-- name: Vim - Copy .vimrc
-  file:
-    src: "{{ role_path }}/files/vimrc"
-    dest: "~/.vimrc"
-    state: link
-
-- name: Ensure .config directory
-  file:
-    path: "~/.config"
+    path: "~/.config/nvim"
     state: directory
 
-- name: Vim - Copy .nvim
+- name: Vim - Copy nvim/lua
   file:
-    src: "{{ role_path }}/files/vim"
-    dest: "~/.config/nvim"
+    src: "{{ role_path }}/files/lua"
+    dest: "~/.config/nvim/lua"
     state: link
 
-- name: Vim - inject Vim Plug
-  git:
-    repo: "https://github.com/junegunn/vim-plug.git"
-    dest: "{{ role_path }}/files/vim/vendor/vim-plug"
-    depth: 1
-
-- name: Vim - Install VIM packages
-  command: nvim --headless +PlugInstall +qall
-  changed_when: false
+- name: Vim - Copy nvim/init.lua
+  file:
+    src: "{{ role_path }}/files/init.lua"
+    dest: "~/.config/nvim/init.lua"
+    state: link
