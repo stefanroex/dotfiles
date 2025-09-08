@@ -1,14 +1,3 @@
-(defun display-buffer-full-screen (buffer alist)
-  (delete-other-windows)
-  (set-window-dedicated-p nil nil)
-  (set-window-buffer nil buffer)
-  (get-buffer-window buffer))
-
-(defun magit-buffer-full-screen (buffer)
-  (if magit-display-buffer-noselect
-      (magit-display-buffer-traditional buffer)
-    (display-buffer buffer '(display-buffer-full-screen))))
-
 (use-package magit
   :general
   (keys-l
@@ -27,7 +16,8 @@
 
   (add-hook 'git-commit-mode-hook 'evil-insert-state)
   (setq magit-diff-refine-hunk t
-        magit-display-buffer-function 'magit-buffer-full-screen))
+        magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1
+        magit-bury-buffer-function 'magit-restore-window-configuration))
 
 (use-package forge
   :after (magit evil-collection)
