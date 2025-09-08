@@ -30,7 +30,9 @@
 (use-package challenger-deep-theme
   :demand
   :init
-  (load-theme 'challenger-deep t))
+  (load-theme 'challenger-deep t)
+
+  (set-face-attribute 'fringe nil :background "#100e23" :foreground "#565575"))
 
 ;; Modeline
 (use-package doom-modeline
