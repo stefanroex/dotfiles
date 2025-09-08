@@ -40,6 +40,9 @@
   (shackle-mode 1)
   :custom
   (shackle-rules '((compilation-mode      :align t     :size 0.3 :select nil)
+                   (magit-log-mode        :align right :size 0.7 :select t :regexp t)
+                   (magit-stash-mode      :align right :size 0.7 :select t :regexp t)
+                   (magit-revision-mode   :align right :size 0.7 :select t :regexp t)
                    ("*rg*"                :align t     :size 0.3 :select nil)
                    ("*xref*"              :align t     :size 0.3 :select nil)
                    ("*Messages*"          :align t)
