@@ -6,6 +6,7 @@
   ignore_errors: true
   loop:
   - 1password
+  - 1password-cli
   - asana
   - aws-vault
   - chromedriver
