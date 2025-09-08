@@ -22,6 +22,10 @@
 ;; Don't open new frames if possible
 (setq ns-pop-up-frames nil)
 
+;; Make some buffers slightly darker
+(use-package solaire-mode
+  :hook (after-init . solaire-global-mode))
+
 ;; Theme
 (use-package challenger-deep-theme
   :demand
