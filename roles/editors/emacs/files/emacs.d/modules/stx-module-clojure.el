@@ -57,9 +57,6 @@
   :custom-face
   (lsp-face-highlight-textual ((t (:inherit region))))
   :config
-  (add-to-list 'lsp-file-watch-ignored "[/\\\\]node_modules")
-  (add-to-list 'lsp-file-watch-ignored "[/\\\\]resources")
-  (add-to-list 'lsp-file-watch-ignored "[/\\\\]target")
   (dolist (m '(clojure-mode
                clojurec-mode
                clojurescript-mode
