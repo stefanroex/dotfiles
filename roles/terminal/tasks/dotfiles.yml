@@ -12,7 +12,7 @@
     state: link
   loop:
     - config/ghostty
-    - agignore
+    - rgignore
     - gitconfig
     - gitignore
     - profile
