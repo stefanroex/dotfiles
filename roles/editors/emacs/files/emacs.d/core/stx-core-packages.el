@@ -19,4 +19,15 @@
   :ensure nil ; build-in
   )
 
+(use-package compile-angel
+  :demand t
+  :config
+  (setq compile-angel-verbose t)
+  (add-to-list 'compile-angel-excluded-files "/init.el")
+  (add-to-list 'compile-angel-excluded-files "/early-init.el")
+  (add-to-list 'compile-angel-excluded-files "/custom.el")
+  (add-to-list 'compile-angel-excluded-files-regexps "/core/.*.el")
+  (add-to-list 'compile-angel-excluded-files-regexps "/modules/.*.el")
+  (compile-angel-on-load-mode 1))
+
 (provide 'stx-core-packages)
