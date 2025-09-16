@@ -1,4 +1,4 @@
-(use-package ruby-mode
+(use-package enh-ruby-mode
   :config
   (setq ruby-insert-encoding-magic-comment nil))
 
