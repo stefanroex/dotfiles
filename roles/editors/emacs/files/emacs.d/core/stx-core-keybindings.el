@@ -25,7 +25,7 @@
 
 (use-package general
   :demand
-  :config
+  :init
   (progn
     (general-auto-unbind-keys)
 
