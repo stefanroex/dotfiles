@@ -1,5 +1,4 @@
 (use-package web-mode
-  :mode "\\.js[x]?\\'"
   :custom
   (web-mode-enable-auto-quoting nil)
   (web-mode-markup-indent-offset 2)
