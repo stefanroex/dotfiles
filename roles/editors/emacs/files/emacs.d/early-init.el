@@ -10,10 +10,11 @@
 
 (add-hook 'emacs-startup-hook 'startup/reset-gc)
 
-;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
-;; packages are compiled ahead-of-time when they are installed and site files
-;; are compiled when gccemacs is installed.
-(setq native-comp-jit-compilation nil)
+;; Ensure Emacs loads the most recent byte-compiled files.
+(setq load-prefer-newer t)
+
+;; Make Emacs Native-compile .elc files asynchronously
+(setq native-comp-jit-compilation t)
 
 ;; Disable certain byte compiler warnings to cut down on the noise.
 ;; This is a personal choice and can be removed if you would like to see

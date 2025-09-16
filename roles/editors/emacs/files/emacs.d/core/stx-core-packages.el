@@ -5,6 +5,7 @@
                          ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/"))
+      package-native-compile t
       package-archive-priorities '(("melpa" . 10)
                                    ("melpa-stable" . 5)
                                    ("org" . 1)
