@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (use-package web-mode
   :custom
   (web-mode-enable-auto-quoting nil)

@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (defvar stx/popper-reference-buffers
   '("\\*Messages\\*"
     "Output\\*$"

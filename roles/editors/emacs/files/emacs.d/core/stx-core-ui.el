@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 ;; Most UI settings are set in early-init.el
 
 ;; font settings

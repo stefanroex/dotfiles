@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 ;; Core
 (add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
 (require 'stx-core-packages)

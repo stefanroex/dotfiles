@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 ;; cmd key for meta
 (setq mac-command-modifier 'meta
       mac-option-modifier 'none)

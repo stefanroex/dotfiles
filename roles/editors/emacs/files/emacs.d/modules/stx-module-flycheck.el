@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (defconst stx/flycheck-disabled-checkers
   '(emacs-lisp-checkdoc
     ruby-reek

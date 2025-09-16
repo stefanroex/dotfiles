@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (use-package enh-ruby-mode
   :config
   (setq ruby-insert-encoding-magic-comment nil))

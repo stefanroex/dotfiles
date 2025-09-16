@@ -1,4 +1,5 @@
 ;;;  -*- lexical-binding: t -*-
+
 (require 'subr-x)
 
 (defun stx/lsp--usage-count (title)

@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (require 'projectile)
 
 (defun buffer-file-name-rename-buffer* ()

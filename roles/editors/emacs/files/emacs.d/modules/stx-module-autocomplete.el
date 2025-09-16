@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (setq tab-always-indent 'complete
       completion-cycle-threshold nil
       completion-ignore-case t)

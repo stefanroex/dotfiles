@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (use-package smart-jump
   :general
   (keys

@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (defconst stx/lisp-mode-hooks
   '(cider-mode-hook
     cider-repl-mode-hook

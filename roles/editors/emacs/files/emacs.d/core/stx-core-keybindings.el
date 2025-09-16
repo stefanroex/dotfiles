@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (defun stx/open-emacs-config ()
   "Open the emacs packages file for quick changes."
   (interactive)

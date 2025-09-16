@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (defun stx/treemacs-toggle-only-current-project ()
   "Toggle treemacs in the current project exclusively"
   (interactive)

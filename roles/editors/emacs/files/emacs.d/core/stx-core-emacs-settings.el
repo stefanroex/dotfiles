@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 ;; Show column and linum in mode-line
 (line-number-mode 1)
 (column-number-mode 1)

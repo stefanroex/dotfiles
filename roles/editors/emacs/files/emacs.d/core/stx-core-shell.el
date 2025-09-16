@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (use-package exec-path-from-shell
   :demand t
   :custom

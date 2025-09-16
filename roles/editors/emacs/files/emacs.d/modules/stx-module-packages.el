@@ -1,3 +1,5 @@
+;;;  -*- lexical-binding: t -*-
+
 (use-package iflipb
   :init
   (setq iflipb-wrap-around t)
