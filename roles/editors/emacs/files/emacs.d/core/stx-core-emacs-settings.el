@@ -83,7 +83,7 @@
 (setq pop-up-frames nil)
 
 ;; sh indentation
-(setq sh-basic-offset 2)
+(setq-default sh-basic-offset 2)
 
 ;; Always follow symlinks
 (setq vc-follow-symlinks t)
@@ -125,6 +125,6 @@
 ;; (advice-add 'window-splittable-p :before-while (lambda () nil))
 
 ;; Disable warnings for emacs compile
-(setq warning-minimum-level :error)
+(setq-default warning-minimum-level :error)
 
 (provide 'stx-core-emacs-settings)
