@@ -22,7 +22,6 @@
 (require 'stx-module-profiler)
 (require 'stx-module-project)
 (require 'stx-module-ruby)
-(require 'stx-module-search)
 (require 'stx-module-treemacs)
 (require 'stx-module-web)
 (require 'stx-module-buffer-name)
