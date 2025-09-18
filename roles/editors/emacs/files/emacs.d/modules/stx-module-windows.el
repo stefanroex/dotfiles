@@ -23,10 +23,10 @@
    (floor (frame-height) 3)))
 
 (use-package popper
-  :general
-  (keys
-    "M-p" 'popper-toggle-latest
-    "M-P" 'popper-cycle)
+  :general-config
+  (:states '(normal emacs motion)
+   "M-p" 'popper-toggle-latest
+   "M-P" 'popper-cycle)
 
   :custom
   (popper-reference-buffers stx/popper-reference-buffers)

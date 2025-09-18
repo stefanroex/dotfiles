@@ -10,88 +10,82 @@
   (interactive)
   (switch-to-buffer (other-buffer)))
 
-(defun stx/kill-other-buffers ()
-  "Kill all other buffers."
-  (interactive)
-  (mapc 'kill-buffer
-        (delq (current-buffer)
-              (remove-if-not 'buffer-file-name (buffer-list)))))
-
-(defconst escape-maps
-  '(minibuffer-local-map
-    minibuffer-local-ns-map
-    minibuffer-local-completion-map
-    minibuffer-local-must-match-map
-    minibuffer-local-isearch-map
-    minibuffer-local-shell-command-map))
-
 (use-package general
   :demand
   :init
-  (progn
-    (general-auto-unbind-keys)
+  (general-auto-unbind-keys)
 
-    (general-define-key
-     :states 'motion
-     "SPC" nil)
+  ;; Define global SPC as prefix key
+  (general-define-key
+   :states 'motion
+   "SPC" nil))
 
-    (general-define-key
-     :states nil
-     :keymaps escape-maps
-     "<escape>" 'abort-recursive-edit)
+(use-package simple
+  :ensure nil
 
-    (general-create-definer
-      keys
-      :states '(normal emacs motion))
+  :general-config
+  (:states '(normal emacs motion)
+   "C-n" 'next-error
+   "C-p" 'previous-error))
 
-    (general-create-definer
-      keys-l
-      :prefix "SPC"
-      :states '(normal emacs motion))
+(use-package window
+  :ensure nil
 
-    (keys-l
-      :states 'normal
-      :keymaps 'emacs-lisp-mode-map
-      "e" 'eval-last-sexp)
+  :general-config
+  (:states '(normal emacs motion)
+   "SPC SPC" 'stx/switch-to-other-buffer
+   "SPC q" 'kill-buffer-and-window
+   "SPC v" 'stx/open-emacs-config
+   "SPC w" 'delete-window))
 
-    (keys
-      "C-n" 'next-error
-      "C-p" 'previous-error)
+(use-package help
+  :ensure nil
 
-    (keys-l
-      "hk" 'describe-key
-      "hb" 'describe-bindings
-      "hf" 'describe-function
-      "hm" 'describe-mode
-      "hv" 'describe-variable
-      "SPC" 'stx/switch-to-other-buffer
-      "k" 'stx/kill-other-buffers
-      "q" 'kill-buffer-and-window
-      "w" 'delete-window
-      "O" 'open-iterm-in-project-root
-      "v" 'stx/open-emacs-config)))
+  :general-config
+  (:states 'normal
+   "SPC hk" 'describe-key
+   "SPC hb" 'describe-bindings
+   "SPC hf" 'describe-function
+   "SPC hm" 'describe-mode
+   "SPC hv" 'describe-variable))
+
+;; (use-package minibuffer
+;;   :ensure nil
+;;   :general-config
+;;   (:states nil
+;;    :keymaps '(minibuffer-local-map
+;;               minibuffer-local-ns-map
+;;               minibuffer-local-completion-map
+;;               minibuffer-local-must-match-map
+;;               minibuffer-local-isearch-map
+;;               minibuffer-local-shell-command-map)
+;;    "<escape>" 'abort-recursive-edit))
 
 (use-package which-key
   :defer 1
   :diminish which-key-mode
-  :init
-  (keys-l
-    "h1" 'which-key-show-major-mode
-    "h2" 'which-key-show-minor-mode-keymap)
+
+  :general-config
+  (:states 'normal
+   "SPC h1" 'which-key-show-major-mode
+   "SPC h2" 'which-key-show-minor-mode-keymap)
+
+  :custom
+  (which-key-side-window-max-width 0.7)
+  (which-key-add-column-padding 1)
+
   :config
-  (setq which-key-side-window-max-width 0.7
-        which-key-add-column-padding 1)
   (which-key-mode +1)
   (which-key-setup-side-window-right))
 
 (use-package free-keys
   :general
-  (keys-l
-    "hu" 'free-keys)
-  :config
-  (keys
-    :keymaps 'free-keys-mode-map
-    "p" 'free-keys-set-prefix
-    "q" 'kill-buffer-and-window))
+  (:states 'normal
+   "SPC hu" 'free-keys)
+
+  :general-config
+  (:keymaps 'free-keys-mode-map
+   "p" 'free-keys-set-prefix
+   "q" 'kill-buffer-and-window))
 
 (provide 'stx-core-keybindings)

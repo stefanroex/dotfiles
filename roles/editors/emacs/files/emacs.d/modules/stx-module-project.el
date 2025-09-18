@@ -2,9 +2,16 @@
 
 (use-package projectile
   :diminish projectile-mode
+
+  :custom
+  (projectile-create-missing-test-files t)
+
+  :general-config
+  (:states '(normal emacs motion)
+   "SPC p" 'projectile-command-map
+   "SPC f" 'projectile-find-file)
+
   :config
-  (setq projectile-create-missing-test-files t)
-  (keys-l "p" 'projectile-command-map)
   (projectile-global-mode t))
 
 (provide 'stx-module-project)

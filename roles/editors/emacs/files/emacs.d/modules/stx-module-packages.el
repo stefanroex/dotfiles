@@ -1,13 +1,14 @@
 ;;;  -*- lexical-binding: t -*-
 
-(use-package iflipb
-  :init
-  (setq iflipb-wrap-around t)
-  :general
-  (keys-l
-    "z" 'iflipb-previous-buffer
-    "x" 'iflipb-next-buffer))
-
 (use-package terraform-mode)
+
+(use-package iflipb
+  :custom
+  (iflipb-wrap-around t)
+
+  :general
+  (:states '(normal emacs motion)
+   "SPC z" 'iflipb-previous-buffer
+   "SPC x" 'iflipb-next-buffer))
 
 (provide 'stx-module-packages)

@@ -1,32 +1,37 @@
 ;;;  -*- lexical-binding: t -*-
 
 (defun stx/treemacs-toggle-only-current-project ()
-  "Toggle treemacs in the current project exclusively"
+  "Toggle Treemacs for the current project exclusively."
   (interactive)
   (require 'treemacs)
-  (let ((visible (treemacs-current-visibility)))
-    (if (eq visible 'visible)
-        (treemacs)
-      (treemacs-display-current-project-exclusively))))
+  (if (eq (treemacs-current-visibility) 'visible)
+      (treemacs)
+    (treemacs-display-current-project-exclusively)))
 
 (use-package treemacs
   :general
-  (keys-l
-    "a" 'stx/treemacs-toggle-only-current-project)
+  (:states '(normal emacs motion)
+   "SPC a" 'stx/treemacs-toggle-only-current-project)
+
+  :general-config
+  (:keymaps 'treemacs-mode-map
+   :states '(normal emacs motion)
+   "o" 'treemacs-RET-action
+   "R" 'treemacs-refresh
+   "r" 'treemacs-rename-file
+   "d" 'treemacs-delete-file
+   "i" 'treemacs-toggle-show-dotfiles)
+
+  :custom
+  (treemacs-collapse-dirs 3)
+  (treemacs-eldoc-display nil)
+  (treemacs-follow-after-init t)
+  (treemacs-project-follow-cleanup t)
+
   :config
-  (keys
-    :keymaps 'treemacs-mode-map
-    "o" 'treemacs-RET-action
-    "R" 'treemacs-refresh
-    "r" 'treemacs-rename
-    "d" 'treemacs-delete-file
-    "i" 'treemacs-toggle-show-dotfiles)
-  (setq treemacs-collapse-dirs 3
-        treemacs-eldoc-display nil
-        treemacs-project-follow-cleanup t
-        treemacs-no-png-images t)
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode t)
   (treemacs-git-mode 'deferred))
 
 (use-package treemacs-evil

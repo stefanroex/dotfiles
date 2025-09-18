@@ -7,10 +7,9 @@
 (use-package vertico
   :demand t
 
-  :general
-  (keys-l
-    "f" 'projectile-find-file
-    "F" 'find-file)
+  :general-config
+  (:states '(normal emacs motion)
+   "SPC F" 'find-file)
 
   :custom
   (vertico-cycle t)
@@ -21,13 +20,14 @@
 
 (use-package consult
   :general
-  (keys-l
-    "B" 'consult-buffer
-    "b" 'consult-project-buffer
-    "y" 'consult-yank-pop
-    "i" 'consult-outline
-    "s" 'consult-ripgrep
-    "S" 'consult-ripgrep-at-point)
+  (:states '(normal emacs motion)
+   "SPC B" 'consult-buffer
+   "SPC S" 'consult-ripgrep-at-point
+   "SPC b" 'consult-project-buffer
+   "SPC i" 'consult-outline
+   "SPC s" 'consult-ripgrep
+   "SPC y" 'consult-yank-pop)
+
   :custom
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref))
@@ -47,10 +47,9 @@
 
 (use-package embark
   :general
-  (keys
-    :states '(nil normal emacs motion)
-    :keymaps '(vertico-map prog-mode-map)
-    "M-RET" 'embark-act)
+  (:states '(nil normal emacs motion)
+   :keymaps '(vertico-map prog-mode-map)
+   "M-RET" 'embark-act)
   :custom
   (embark-prompter 'embark-completing-read-prompter)
   (embark-indicators '(embark-minimal-indicator

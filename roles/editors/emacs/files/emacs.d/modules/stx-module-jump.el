@@ -2,17 +2,18 @@
 
 (use-package smart-jump
   :general
-  (keys
-    "M-." 'smart-jump-go
-    "M-," 'smart-jump-back
-    "M-?" 'smart-jump-references)
-  :config
+  (:states '(normal emacs motion)
+   "M-." 'smart-jump-go
+   "M-," 'smart-jump-back
+   "M-?" 'smart-jump-references)
+
+  :init
   (smart-jump-setup-default-registers))
 
 (use-package dumb-jump
-  :init
-  (setq dumb-jump-aggressive nil
-	dumb-jump-selector 'ivy)
+  :custom
+  (dumb-jump-aggressive nil)
+
   :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
