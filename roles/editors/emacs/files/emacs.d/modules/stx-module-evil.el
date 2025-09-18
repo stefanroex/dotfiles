@@ -15,13 +15,11 @@
   (evil-want-integration t)
   (evil-want-keybinding nil)
   (evil-want-fine-undo t)
-  (evil-undo-system 'undo-fu)
+  (evil-undo-system 'undo-redo)
   (evil-intercept-esc 'always)
 
   :config
   (evil-mode t))
-
-(use-package undo-fu)
 
 (use-package evil-collection
   :demand t

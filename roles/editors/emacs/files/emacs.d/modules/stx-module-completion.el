@@ -1,8 +1,14 @@
 ;;;  -*- lexical-binding: t -*-
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Functions
+
 (defun consult-ripgrep-at-point ()
   (interactive)
   (consult-ripgrep (projectile-project-root) (thing-at-point 'symbol)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Packages
 
 (use-package vertico
   :demand t

@@ -1,5 +1,8 @@
 ;;;  -*- lexical-binding: t -*-
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Functions
+
 (defun stx/treemacs-toggle-only-current-project ()
   "Toggle Treemacs for the current project exclusively."
   (interactive)
@@ -7,6 +10,9 @@
   (if (eq (treemacs-current-visibility) 'visible)
       (treemacs)
     (treemacs-display-current-project-exclusively)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Packages
 
 (use-package treemacs
   :general

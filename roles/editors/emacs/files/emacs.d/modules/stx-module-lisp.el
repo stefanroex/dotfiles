@@ -1,5 +1,8 @@
 ;;;  -*- lexical-binding: t -*-
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Functions
+
 ;; https://github.com/Fuco1/.emacs.d/blob/af82072196564fa57726bdbabf97f1d35c43b7f7/site-lisp/redef.el#L20-L94
 (defun stx/lisp-indent-function (indent-point state)
   (let ((normal-indent (current-column))
@@ -66,6 +69,9 @@
 (defun stx/add-lisp-mode-hook (mode)
   (dolist (hook stx/lisp-mode-hooks)
     (add-hook hook mode)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Packages
 
 (use-package paredit
   :init (stx/add-lisp-mode-hook 'paredit-mode))

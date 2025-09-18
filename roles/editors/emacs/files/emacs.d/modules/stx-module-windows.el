@@ -1,5 +1,8 @@
 ;;;  -*- lexical-binding: t -*-
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Functions
+
 (defvar stx/popper-reference-buffers
   '("\\*Messages\\*"
     "Output\\*$"
@@ -16,11 +19,27 @@
     help-mode
     compilation-mode))
 
+(defvar stx/shackle-rules
+  '((compilation-mode      :align t     :size 0.3 :select nil)
+    (magit-log-mode        :align right :size 0.7 :select t :regexp t)
+    (magit-stash-mode      :align right :size 0.7 :select t :regexp t)
+    (magit-revision-mode   :align right :size 0.7 :select t :regexp t)
+    ("*rg*"                :align t     :size 0.3 :select nil)
+    ("*xref*"              :align t     :size 0.3 :select nil)
+    ("*Messages*"          :align t)
+    ("*Help*"              :align right           :select t)
+    ("*cider-inspect*"     :align right :size 0.5 :select t)
+    ("\\*Embark Export:.*" :align t     :size 0.3 :select nil :regexp t)
+    ("\\*cider-repl.*"     :align right :size 0.5 :select t   :regexp t)))
+
 (defun stx/popper-height (win)
   (fit-window-to-buffer
    win
    (floor (frame-height) 2)
    (floor (frame-height) 3)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Packages
 
 (use-package popper
   :general-config
@@ -41,19 +60,10 @@
   :init
   (shackle-mode 1)
   :custom
-  (shackle-rules '((compilation-mode      :align t     :size 0.3 :select nil)
-                   (magit-log-mode        :align right :size 0.7 :select t :regexp t)
-                   (magit-stash-mode      :align right :size 0.7 :select t :regexp t)
-                   (magit-revision-mode   :align right :size 0.7 :select t :regexp t)
-                   ("*rg*"                :align t     :size 0.3 :select nil)
-                   ("*xref*"              :align t     :size 0.3 :select nil)
-                   ("*Messages*"          :align t)
-                   ("*Help*"              :align right           :select t)
-                   ("*cider-inspect*"     :align right :size 0.5 :select t)
-                   ("\\*Embark Export:.*" :align t     :size 0.3 :select nil :regexp t)
-                   ("\\*cider-repl.*"     :align right :size 0.5 :select t   :regexp t))))
+  (shackle-rules stx/shackle-rules))
 
 (use-package winner
-  :hook (after-init . winner-mode))
+  :hook
+  (after-init . winner-mode))
 
 (provide 'stx-module-windows)

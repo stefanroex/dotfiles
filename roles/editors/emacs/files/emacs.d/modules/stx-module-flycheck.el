@@ -9,10 +9,11 @@
     scss))
 
 (use-package flycheck
-  :hook (prog-mode . flycheck-mode)
-  :config
-  (setq-default flycheck-disabled-checkers stx/flycheck-disabled-checkers)
-  (setq flycheck-emacs-lisp-load-path 'inherit
-        flycheck-check-syntax-automatically '(save mode-enabled idle-change)))
+  :hook
+  (prog-mode . flycheck-mode)
+
+  :custom
+  (flycheck-disabled-checkers stx/flycheck-disabled-checkers)
+  (flycheck-emacs-lisp-load-path 'inherit))
 
 (provide 'stx-module-flycheck)

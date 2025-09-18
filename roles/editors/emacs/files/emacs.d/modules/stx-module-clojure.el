@@ -1,5 +1,8 @@
 ;;;  -*- lexical-binding: t -*-
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Functions
+
 (require 'subr-x)
 
 (defun stx/lsp--usage-count (title)
@@ -29,6 +32,9 @@
        (lsp--select-action
         (mapcar 'stx/lsp--retitle-action (stx/lsp--sort-usage-count actions)))))
     (flycheck-buffer)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Packages
 
 (use-package flycheck-clj-kondo)
 

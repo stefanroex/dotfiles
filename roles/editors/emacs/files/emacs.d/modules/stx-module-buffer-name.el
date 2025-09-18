@@ -1,5 +1,11 @@
 ;;;  -*- lexical-binding: t -*-
 
+;; Provides a function that renames buffers to include file paths
+;; relative to the project root. This makes it easier to distinguish
+;; between files with the same name (e.g. multiple `endpoint.clj`
+;; files in different locations) and improves both identification and
+;; searchability.
+
 (require 'projectile)
 
 (defun buffer-file-name-rename-buffer* ()
