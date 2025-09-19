@@ -1,6 +1,10 @@
 ;;;  -*- lexical-binding: t -*-
 
-(use-package terraform-mode)
+(use-package terraform-mode
+  :hook
+  (terraform-mode . lsp-deferred)
+  :custom
+  (terraform-format-on-save t))
 
 (use-package iflipb
   :custom
