@@ -7,15 +7,17 @@
   '("\\*Messages\\*"
     "Output\\*$"
     "\\*Async Shell Command\\*"
-    "\\*xref\\*"
-    "\\*rg\\*"
-    "\\*cider-test-report\\*"
+    "\\*Backtrace\\*"
+    "\\*Flycheck errors\\*"
+    "\\*Warnings\\*"
     "\\*cider-error\\*"
     "\\*cider-inspect\\*"
     "\\*cider-repl.*"
-    "\\*Backtrace\\*"
-    "\\*helpful.*"
+    "\\*cider-test-report\\*"
     "\\*ert\\*"
+    "\\*helpful.*"
+    "\\*rg\\*"
+    "\\*xref\\*"
     help-mode
     compilation-mode))
 
@@ -29,6 +31,7 @@
     ("*Messages*"          :align t)
     ("*Help*"              :align right           :select t)
     ("*cider-inspect*"     :align right :size 0.5 :select t)
+    ("*Flycheck errors*"   :align t     :size 0.3 :select nil)
     ("\\*Embark Export:.*" :align t     :size 0.3 :select nil :regexp t)
     ("\\*cider-repl.*"     :align right :size 0.5 :select t   :regexp t)))
 
@@ -44,8 +47,9 @@
 (use-package popper
   :general-config
   (:states '(normal emacs motion)
-   "M-p" 'popper-toggle-latest
-   "M-P" 'popper-cycle)
+   "M-p" 'popper-toggle
+   "M-P" 'popper-cycle
+   "M-K" 'popper-kill-latest-popup)
 
   :custom
   (popper-reference-buffers stx/popper-reference-buffers)
