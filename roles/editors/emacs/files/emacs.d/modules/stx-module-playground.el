@@ -11,4 +11,4 @@
    "SPC z" 'iflipb-previous-buffer
    "SPC x" 'iflipb-next-buffer))
 
-(provide 'stx-module-packages)
+(provide 'stx-module-playground)

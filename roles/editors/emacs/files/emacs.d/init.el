@@ -30,7 +30,7 @@
 (require 'stx-module-lang-terraform)
 (require 'stx-module-lang-web)
 
-(require 'stx-module-packages) ; WIP
+(require 'stx-module-playground) ; for experimenting with new config
 
 ;; Make sure all the auto generated custom config is in one place
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
