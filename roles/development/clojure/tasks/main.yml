@@ -5,6 +5,7 @@
     state: present
   loop:
     - clojure
+    - clojure-lsp
     - borkdude/brew/babashka
     - borkdude/brew/clj-kondo
     - borkdude/brew/jet
