@@ -6,4 +6,4 @@
   :custom
   (terraform-format-on-save t))
 
-(provide 'stx-module-terraform)
+(provide 'stx-module-lang-terraform)

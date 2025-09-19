@@ -104,4 +104,4 @@
    :states 'normal
    "SPC e" 'eval-last-sexp))
 
-(provide 'stx-module-lisp)
+(provide 'stx-module-lang-lisp)

@@ -156,4 +156,4 @@
   (:states '(normal emacs motion)
    "SPC rn" 'cljr-rename-file))
 
-(provide 'stx-module-clojure)
+(provide 'stx-module-lang-clojure)

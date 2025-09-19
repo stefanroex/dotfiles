@@ -13,21 +13,22 @@
 (add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
 (require 'stx-module-autocomplete)
 (require 'stx-module-buffer-name)
-(require 'stx-module-clojure)
 (require 'stx-module-completion)
 (require 'stx-module-evil)
 (require 'stx-module-flycheck)
 (require 'stx-module-jump)
-(require 'stx-module-lisp)
 (require 'stx-module-lsp)
 (require 'stx-module-magit)
 (require 'stx-module-profiler)
 (require 'stx-module-project)
-(require 'stx-module-ruby)
-(require 'stx-module-terraform)
 (require 'stx-module-treemacs)
-(require 'stx-module-web)
 (require 'stx-module-windows)
+
+(require 'stx-module-lang-clojure)
+(require 'stx-module-lang-lisp)
+(require 'stx-module-lang-ruby)
+(require 'stx-module-lang-terraform)
+(require 'stx-module-lang-web)
 
 (require 'stx-module-packages) ; WIP
 

@@ -24,4 +24,4 @@
   :hook
   ((css-mode web-mode) . prettier-js-mode))
 
-(provide 'stx-module-web)
+(provide 'stx-module-lang-web)

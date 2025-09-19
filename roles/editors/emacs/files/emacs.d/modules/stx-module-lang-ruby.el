@@ -7,4 +7,4 @@
 (use-package projectile-rails
   :hook (projectile-mode . projectile-rails-on))
 
-(provide 'stx-module-ruby)
+(provide 'stx-module-lang-ruby)
