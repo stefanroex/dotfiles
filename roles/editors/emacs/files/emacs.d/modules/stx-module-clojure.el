@@ -39,10 +39,26 @@
 (use-package flycheck-clj-kondo)
 
 (use-package clojure-mode
+  :hook
+  ((clojure-mode . lsp)
+   (clojurec-mode . lsp)
+   (clojurescript-mode . lsp))
+
+  :general-config
+  (:states '(normal emacs motion)
+   "SPC j" 'stx/lsp-add-missing-libspec
+   "SPC lc" 'lsp-clojure-clean-ns
+   "SPC lf" 'lsp-clojure-extract-function
+   "SPC ll" 'lsp-clojure-move-to-let)
+
   :config
   (require 'flycheck-clj-kondo)
   (modify-syntax-entry ?? "w" clojure-mode-syntax-table)
   (modify-syntax-entry ?! "w" clojure-mode-syntax-table)
+
+  (with-eval-after-load 'lsp
+    (dolist (m '(clojure-mode clojurec-mode clojurescript-mode))
+      (add-to-list 'lsp-language-id-configuration `(,m . "clojure"))))
 
   (define-clojure-indent
     (with-tmp-taf-dir 1)
@@ -55,52 +71,6 @@
     (do-at 1)))
 
 (use-package clojure-mode-extra-font-locking)
-
-(use-package lsp-mode
-  :hook
-  ((clojure-mode . lsp)
-   (clojurec-mode . lsp)
-   (clojurescript-mode . lsp)
-   (lsp-mode . lsp-enable-which-key-integration))
-
-  :custom-face
-  (lsp-face-highlight-textual ((t (:inherit region))))
-
-  :general-config
-  (:states '(normal emacs motion)
-   "SPC j" 'stx/lsp-add-missing-libspec
-   "SPC lR" 'lsp-rename
-   "SPC la" 'lsp-execute-code-action
-   "SPC lc" 'lsp-clojure-clean-ns
-   "SPC lf" 'lsp-clojure-extract-function
-   "SPC ll" 'lsp-clojure-move-to-let
-   "SPC lr" 'lsp-find-references)
-
-  :custom
-  (lsp-enable-folding nil)
-  (lsp-enable-file-watchers nil)
-  (lsp-enable-text-document-color nil)
-  (lsp-keymap-prefix nil)
-  (lsp-lens-enable nil)
-  (lsp-headerline-breadcrumb-enable nil)
-  (lsp-enable-indentation nil)
-  (lsp-completion-enable nil)
-  (lsp-enable-on-type-formatting nil)
-  (lsp-modeline-code-actions-enable nil)
-  (lsp-eldoc-enable-hover nil)
-  (lsp-idle-delay 0.05)
-  (lsp-completion-provider :capf)
-  (lsp-diagnostics-provider :none)
-
-  :config
-  (dolist (m '(clojure-mode clojurec-mode clojurescript-mode))
-    (add-to-list 'lsp-language-id-configuration `(,m . "clojure"))))
-
-(use-package lsp-ui
-  :custom
-  (lsp-ui-doc-enable nil)
-  (lsp-ui-peek-enable nil)
-  (lsp-ui-sideline-enable nil))
 
 (use-package cider
   :custom

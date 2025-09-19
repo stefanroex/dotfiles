@@ -19,6 +19,7 @@
 (require 'stx-module-flycheck)
 (require 'stx-module-jump)
 (require 'stx-module-lisp)
+(require 'stx-module-lsp)
 (require 'stx-module-magit)
 (require 'stx-module-profiler)
 (require 'stx-module-project)
