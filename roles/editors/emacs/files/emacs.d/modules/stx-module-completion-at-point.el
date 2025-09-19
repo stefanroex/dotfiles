@@ -31,4 +31,4 @@
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file))
 
-(provide 'stx-module-autocomplete)
+(provide 'stx-module-completion-at-point)

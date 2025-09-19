@@ -11,9 +11,9 @@
 
 ;; Modules
 (add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
-(require 'stx-module-autocomplete)
 (require 'stx-module-buffer-name)
 (require 'stx-module-completion)
+(require 'stx-module-completion-at-point)
 (require 'stx-module-evil)
 (require 'stx-module-flycheck)
 (require 'stx-module-jump)
