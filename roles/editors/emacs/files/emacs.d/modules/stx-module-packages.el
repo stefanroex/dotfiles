@@ -1,5 +1,7 @@
 ;;;  -*- lexical-binding: t -*-
 
+(use-package lua-mode)
+
 (use-package iflipb
   :custom
   (iflipb-wrap-around t)
