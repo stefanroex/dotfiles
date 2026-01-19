@@ -33,6 +33,7 @@
   (treemacs-eldoc-display nil)
   (treemacs-follow-after-init t)
   (treemacs-project-follow-cleanup t)
+  (treemacs-no-png-images t)
 
   :config
   (treemacs-follow-mode t)
@@ -45,10 +46,6 @@
 
 (use-package treemacs-projectile
   :after (treemacs projectile))
-
-(use-package treemacs-icons-dired
-  :after (treemacs dired)
-  :config (treemacs-icons-dired-mode))
 
 (use-package treemacs-magit
   :after (treemacs magit))
