@@ -1,4 +1,9 @@
 ---
+- name: Clojure - Add borkdude tap
+  homebrew_tap:
+    name: borkdude/brew
+    state: present
+
 - name: Clojure - Install packages
   homebrew:
     formula: "{{ item }}"
