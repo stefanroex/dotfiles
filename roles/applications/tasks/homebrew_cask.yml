@@ -10,6 +10,8 @@
   - asana
   - aws-vault
   - chromedriver
+  - claude-code
+  - cleanshot
   - firefox
   - google-chrome
   - karabiner-elements
@@ -21,4 +23,6 @@
   - sketch
   - slack
   - spotify
+  - transmission
   - transmit
+  - whatsapp
