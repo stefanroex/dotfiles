@@ -127,4 +127,7 @@
 ;; Disable warnings for emacs compile
 (setq-default warning-minimum-level :error)
 
+;; y or n answers
+(setopt use-short-answers t)
+
 (provide 'stx-core-emacs-settings)
