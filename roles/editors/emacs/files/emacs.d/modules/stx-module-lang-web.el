@@ -24,4 +24,6 @@
   :hook
   ((css-mode web-mode) . prettier-js-mode))
 
+(use-package lsp-tailwindcss)
+
 (provide 'stx-module-lang-web)
