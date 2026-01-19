@@ -17,9 +17,7 @@
       use-package-always-defer t)
 
 ;; Setup diminish to be used by other packages
-(use-package diminish
-  :ensure nil ; build-in
-  )
+(use-package diminish)
 
 (use-package compile-angel
   :demand t
