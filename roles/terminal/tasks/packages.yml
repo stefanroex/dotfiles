@@ -23,7 +23,7 @@
     - pgcli
     - postgresql@17
     - ripgrep
-    - saulpw/vd/visidata
+    - visidata
     - ssh-copy-id
     - terraform
     - tokei

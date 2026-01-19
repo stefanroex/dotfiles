@@ -31,7 +31,7 @@
   osx_defaults:
     domain: NSGlobalDomain
     key: KeyRepeat
-    type: int
+    type: float
     value: 2
 
 - name: General - Initial key repeat
@@ -39,7 +39,7 @@
   osx_defaults:
     domain: NSGlobalDomain
     key: InitialKeyRepeat
-    type: int
+    type: float
     value: 15
 
 - name: General - Trackpad tap to click
@@ -47,5 +47,5 @@
   osx_defaults:
     domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
     key: Clicking
-    type: bool
-    value: true
+    type: int
+    value: 1
