@@ -6,7 +6,7 @@
   :custom
   (projectile-create-missing-test-files t)
 
-  :general-config
+  :general
   (:states '(normal emacs motion)
    "SPC p" 'projectile-command-map
    "SPC f" 'projectile-find-file)
