@@ -1,6 +1,7 @@
 ;;;  -*- lexical-binding: t -*-
 
 (use-package projectile
+  :demand
   :diminish projectile-mode
 
   :custom

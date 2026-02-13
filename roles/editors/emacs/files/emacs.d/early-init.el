@@ -15,8 +15,8 @@
 ;; Ensure Emacs loads the most recent byte-compiled files.
 (setq load-prefer-newer t)
 
-;; Make Emacs Native-compile .elc files asynchronously
-(setq native-comp-jit-compilation t)
+;; Disable Emacs Native-compile .elc files asynchronously
+(setq native-comp-jit-compilation nil)
 
 ;; Disable certain byte compiler warnings to cut down on the noise.
 ;; This is a personal choice and can be removed if you would like to see

@@ -40,4 +40,12 @@
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
 
+(use-package nerd-icons
+  :commands nerd-icons-install-fonts
+  :functions font-available-p
+  :config
+  (when (and (display-graphic-p)
+             (not (find-font (font-spec :name "Symbols Nerd Font Mono"))))
+    (nerd-icons-install-fonts t)))
+
 (provide 'stx-core-ui)
