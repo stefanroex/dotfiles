@@ -4,12 +4,13 @@ alias cd="zd"
 alias ci="zi"
 alias d='cd ~/.dotfiles'
 alias e='nvim'
+alias amend='git commit --amend'
 alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 alias ga='git add . && git add -u && gs'
 alias gc='git commit'
 alias gd='git diff'
 alias gdc='git diff --cached'
-alias gdm='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d && git remote prune origin'
+alias gdm='git fetch --prune && git branch -vv | grep ": gone]" | awk "{print \$1}" | xargs -n 1 git branch -D'
 alias gs='git status'
 alias ip="curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+'"
 alias ls='eza -lh --group-directories-first --icons=auto'

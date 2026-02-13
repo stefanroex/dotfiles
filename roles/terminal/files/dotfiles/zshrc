@@ -24,7 +24,11 @@ export PATH="$HOME/Code/brightmotive/bin:$PATH"
 export PATH="$HOME/Library/Python/3.7/bin:$PATH"
 export PATH="$HOME/.cargo/env:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
+export ES_JAVA_HOME=$(brew --prefix openjdk)/libexec/openjdk.jdk/Contents/Home
 
 eval "$(rbenv init - zsh)"
 eval "$(zoxide init zsh)"
 source <(fzf --zsh)
+export PATH="$HOME/.local/bin:$PATH"
