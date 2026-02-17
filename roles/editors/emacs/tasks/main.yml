@@ -9,6 +9,11 @@
     name: emacs-plus@30
     state: installed
 
+- name: Emacs - Install font
+  homebrew_cask:
+    name: font-im-writing-nerd-font
+    state: installed
+
 - name: Emacs - Install GNU utils
   homebrew:
     formula: gnutls
