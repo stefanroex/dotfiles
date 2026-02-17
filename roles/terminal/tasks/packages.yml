@@ -3,6 +3,11 @@
   homebrew:
     update_homebrew: yes
 
+- name: Homebrew - Add elastic tap
+  homebrew_tap:
+    name: elastic/tap
+    state: present
+
 - name: Homebrew - Install packages
   homebrew:
     name:
@@ -10,7 +15,7 @@
       - awscli
       - bat
       - chamber
-      - elasticsearch-full
+      - elastic/tap/elasticsearch-full
       - eza
       - fd
       - fzf
