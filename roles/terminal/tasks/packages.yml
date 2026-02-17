@@ -5,38 +5,37 @@
 
 - name: Homebrew - Install packages
   homebrew:
-    formula: "{{ item }}"
+    name:
+      - 7zip
+      - awscli
+      - bat
+      - chamber
+      - elasticsearch-full
+      - eza
+      - fd
+      - fzf
+      - gh
+      - git
+      - heroku
+      - jq
+      - openjdk
+      - openssl
+      - pgcli
+      - postgresql@18
+      - ripgrep
+      - visidata
+      - shellcheck
+      - ssh-copy-id
+      - terraform
+      - tflint
+      - tokei
+      - tree
+      - valkey
+      - wget
+      - zoxide
+      - zsh
     state: present
   ignore_errors: true
-  loop:
-    - 7zip
-    - awscli
-    - bat
-    - chamber
-    - elasticsearch-full
-    - eza
-    - fd
-    - fzf
-    - gh
-    - git
-    - heroku
-    - jq
-    - openjdk
-    - openssl
-    - pgcli
-    - postgresql@18
-    - ripgrep
-    - visidata
-    - shellcheck
-    - ssh-copy-id
-    - terraform
-    - tflint
-    - tokei
-    - tree
-    - valkey
-    - wget
-    - zoxide
-    - zsh
 
 - name: Claude Code - Install
   shell: curl -fsSL https://claude.ai/install.sh | bash

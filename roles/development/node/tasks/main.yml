@@ -1,7 +1,5 @@
 ---
 - name: Node.js - Install packages
   homebrew:
-    formula: "{{ item }}"
+    name: node
     state: present
-  loop:
-    - node

@@ -6,14 +6,13 @@
 
 - name: Clojure - Install packages
   homebrew:
-    formula: "{{ item }}"
+    name:
+      - clojure
+      - clojure-lsp
+      - borkdude/brew/babashka
+      - borkdude/brew/clj-kondo
+      - borkdude/brew/jet
     state: present
-  loop:
-    - clojure
-    - clojure-lsp
-    - borkdude/brew/babashka
-    - borkdude/brew/clj-kondo
-    - borkdude/brew/jet
 
 - name: Clojure - Copy dotfiles
   file:

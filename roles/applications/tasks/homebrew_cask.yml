@@ -1,29 +1,28 @@
 ---
 - name: Homebrew casks - Install
   homebrew_cask:
-    name: "{{ item }}"
+    name:
+      - 1password
+      - 1password-cli
+      - asana
+      - aws-vault
+      - chromedriver
+      - claude
+      - cleanshot
+      - firefox
+      - ghostty
+      - github
+      - google-chrome
+      - monitorcontrol
+      - notion
+      - raycast
+      - rectangle
+      - signal
+      - sketch
+      - slack
+      - spotify
+      - transmission
+      - transmit
+      - whatsapp
     state: installed
   ignore_errors: true
-  loop:
-  - 1password
-  - 1password-cli
-  - asana
-  - aws-vault
-  - chromedriver
-  - claude
-  - cleanshot
-  - firefox
-  - ghostty
-  - github
-  - google-chrome
-  - monitorcontrol
-  - notion
-  - raycast
-  - rectangle
-  - signal
-  - sketch
-  - slack
-  - spotify
-  - transmission
-  - transmit
-  - whatsapp

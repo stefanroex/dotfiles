@@ -1,12 +1,11 @@
 ---
 - name: Ruby - Install packages
   homebrew:
-    formula: "{{ item }}"
+    name:
+      - rbenv
+      - ruby-build
     state: present
   ignore_errors: true
-  loop:
-    - rbenv
-    - ruby-build
 
 - name: Ruby - Copy dotfiles
   file:
