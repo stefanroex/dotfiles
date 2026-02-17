@@ -5,6 +5,11 @@
     dest: "~/.zprezto"
     depth: 1
 
+- name: Dotfiles - Ensure .config directory
+  file:
+    path: "~/.config"
+    state: directory
+
 - name: Dotfiles - Copy dotfiles
   file:
     src: "{{ role_path }}/files/dotfiles/{{ item }}"
