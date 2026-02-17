@@ -50,6 +50,11 @@
     type: bool
     value: false
 
+- name: General - Set wallpaper to Stone
+  copy:
+    src: "{{ role_path }}/files/wallpaper.plist"
+    dest: "~/Library/Application Support/com.apple.wallpaper/Store/Index.plist"
+
 - name: General - Trackpad tap to click
   notify: killall osx
   osx_defaults:
