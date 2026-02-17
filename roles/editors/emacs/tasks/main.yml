@@ -8,7 +8,6 @@
   homebrew:
     name: emacs-plus@30
     state: installed
-    install_options: with-no-frame-refocus, with-savchenkovaleriy-big-sur-curvy-3d-icon
 
 - name: Emacs - Install GNU utils
   homebrew:
