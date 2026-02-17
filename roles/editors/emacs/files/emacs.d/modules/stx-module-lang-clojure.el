@@ -42,7 +42,8 @@
   :hook
   ((clojure-mode . lsp)
    (clojurec-mode . lsp)
-   (clojurescript-mode . lsp))
+   (clojurescript-mode . lsp)
+   (edn-mode . lsp))
 
   :general-config
   (:states '(normal emacs motion)
@@ -56,9 +57,10 @@
   (modify-syntax-entry ?? "w" clojure-mode-syntax-table)
   (modify-syntax-entry ?! "w" clojure-mode-syntax-table)
 
-  (with-eval-after-load 'lsp
-    (dolist (m '(clojure-mode clojurec-mode clojurescript-mode))
-      (add-to-list 'lsp-language-id-configuration `(,m . "clojure"))))
+  (with-eval-after-load 'lsp-clojure
+    (add-to-list 'lsp-language-id-configuration '(edn-mode . "clojure"))
+    (nconc (lsp--client-major-modes (gethash 'clojure-lsp lsp-clients))
+           (list 'edn-mode)))
 
   (define-clojure-indent
     (with-tmp-taf-dir 1)
