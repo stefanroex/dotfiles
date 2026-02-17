@@ -3,10 +3,13 @@
   homebrew:
     update_homebrew: yes
 
-- name: Homebrew - Add elastic tap
+- name: Homebrew - Add taps
   homebrew_tap:
-    name: elastic/tap
+    name: "{{ item }}"
     state: present
+  loop:
+    - elastic/tap
+    - hashicorp/tap
 
 - name: Homebrew - Install packages
   homebrew:
@@ -31,7 +34,7 @@
       - visidata
       - shellcheck
       - ssh-copy-id
-      - terraform
+      - hashicorp/tap/terraform
       - tflint
       - tokei
       - tree
