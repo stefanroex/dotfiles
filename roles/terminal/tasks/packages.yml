@@ -13,20 +13,28 @@
     - awscli
     - bat
     - chamber
+    - elasticsearch-full
     - eza
     - fd
     - fzf
+    - gh
     - ghostty
     - git
+    - heroku
     - jq
+    - openjdk
     - openssl
     - pgcli
-    - postgresql@17
+    - postgresql@18
     - ripgrep
     - visidata
+    - shellcheck
     - ssh-copy-id
     - terraform
+    - tflint
     - tokei
+    - tree
+    - valkey
     - wget
     - zoxide
     - zsh
