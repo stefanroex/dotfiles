@@ -18,7 +18,6 @@
     - fd
     - fzf
     - gh
-    - ghostty
     - git
     - heroku
     - jq
@@ -38,3 +37,8 @@
     - wget
     - zoxide
     - zsh
+
+- name: Claude Code - Install
+  shell: curl -fsSL https://claude.ai/install.sh | bash
+  args:
+    creates: ~/.local/bin/claude

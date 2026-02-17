@@ -29,4 +29,6 @@ fi
 cd "$TARGET_DIR"
 git pull
 
+brew install --cask microsoft-teams
+
 ansible-playbook main.yml

@@ -10,13 +10,12 @@
   - asana
   - aws-vault
   - chromedriver
-  - claude-code
+  - claude
   - cleanshot
   - firefox
+  - ghostty
   - github
   - google-chrome
-  - karabiner-elements
-  - microsoft-teams
   - monitorcontrol
   - notion
   - raycast
