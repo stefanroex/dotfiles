@@ -42,6 +42,14 @@
     type: float
     value: 15
 
+- name: General - Click wallpaper to show desktop only in Stage Manager
+  notify: killall osx
+  osx_defaults:
+    domain: com.apple.WindowManager
+    key: EnableStandardClickToShowDesktop
+    type: bool
+    value: false
+
 - name: General - Trackpad tap to click
   notify: killall osx
   osx_defaults:
