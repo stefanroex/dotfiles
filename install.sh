@@ -14,7 +14,8 @@ if ! xcode-select --print-path &> /dev/null; then
 fi
 
 if test ! $(which brew); then
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 if test ! $(which ansible); then
@@ -26,5 +27,6 @@ if [ ! -d "$TARGET_DIR" ]; then
 fi
 
 cd "$TARGET_DIR"
+git pull
 
 ansible-playbook main.yml
