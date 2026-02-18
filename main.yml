@@ -9,3 +9,4 @@
     - development/clojure
     - development/node
     - development/ruby
+    - development/claude

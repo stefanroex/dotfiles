@@ -1,0 +1,21 @@
+{
+  "cleanupPeriodDays": 30,
+  "env": {
+    "DISABLE_TELEMETRY": "1",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "Bash(git add*)",
+      "Bash(git status*)",
+      "Bash(git commit*)"
+    ],
+    "deny": [
+      "~/.ssh/id_*",
+      "~/.aws/credentials"
+    ]
+  },
+  "alwaysThinkingEnabled": true,
+  "skipDangerousModePermissionPrompt": true
+}

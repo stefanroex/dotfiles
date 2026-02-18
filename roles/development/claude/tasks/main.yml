@@ -1,0 +1,17 @@
+---
+- name: Claude - Ensure ~/.claude directory
+  file:
+    path: "~/.claude"
+    state: directory
+
+- name: Claude - Link CLAUDE.md
+  file:
+    src: "{{ role_path }}/files/CLAUDE.md"
+    dest: "~/.claude/CLAUDE.md"
+    state: link
+
+- name: Claude - Link settings.json
+  file:
+    src: "{{ role_path }}/files/settings.json"
+    dest: "~/.claude/settings.json"
+    state: link
