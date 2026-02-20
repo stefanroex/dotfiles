@@ -12,6 +12,8 @@
 
 (add-hook 'emacs-startup-hook 'startup/reset-gc)
 
+(setenv "LSP_USE_PLISTS" "true")
+
 ;; Ensure Emacs loads the most recent byte-compiled files.
 (setq load-prefer-newer t)
 
