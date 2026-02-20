@@ -35,6 +35,7 @@
       - shellcheck
       - ssh-copy-id
       - hashicorp/tap/terraform
+      - hashicorp/tap/terraform-ls
       - tflint
       - tokei
       - tree
