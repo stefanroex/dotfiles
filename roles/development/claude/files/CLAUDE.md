@@ -2,7 +2,6 @@
 
 ## General
 
-- For multi-file changes, present a plan before implementing.
 - Add tests for new features and bug fixes. Skip for config changes, refactoring with existing coverage, or trivial edits.
 - Always run tests before considering a task done.
 - When working with Clojure, add a namespace docstring covering non-obvious architectural decisions or constraints. Skip if the namespace purpose is obvious from its name and contents.
