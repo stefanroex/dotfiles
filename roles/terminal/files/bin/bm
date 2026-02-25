@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+root=$(git rev-parse --show-toplevel 2>/dev/null) || { echo "bm: not in a git repository"; exit 1; }
+[[ -x "$root/bin/bm" ]] || { echo "bm: bin/bm not found in $root"; exit 1; }
+exec "$root/bin/bm" "$@"

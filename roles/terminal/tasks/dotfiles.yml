@@ -10,6 +10,19 @@
     path: "~/.config"
     state: directory
 
+- name: Dotfiles - Ensure .local/bin directory
+  file:
+    path: "~/.local/bin"
+    state: directory
+
+- name: Dotfiles - Copy bin scripts
+  file:
+    src: "{{ role_path }}/files/bin/{{ item }}"
+    dest: "~/.local/bin/{{ item }}"
+    state: link
+  loop:
+    - bm
+
 - name: Dotfiles - Copy dotfiles
   file:
     src: "{{ role_path }}/files/dotfiles/{{ item }}"
