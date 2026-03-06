@@ -4,11 +4,16 @@
     name: borkdude/brew
     state: present
 
+- name: Clojure - Add clojure-lsp tap
+  homebrew_tap:
+    name: clojure-lsp/brew
+    state: present
+
 - name: Clojure - Install packages
   homebrew:
     name:
       - clojure
-      - clojure-lsp
+      - clojure-lsp/brew/clojure-lsp-native
       - borkdude/brew/babashka
       - borkdude/brew/clj-kondo
       - borkdude/brew/jet
