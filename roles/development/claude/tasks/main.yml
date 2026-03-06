@@ -15,3 +15,9 @@
     src: "{{ role_path }}/files/settings.json"
     dest: "~/.claude/settings.json"
     state: link
+
+- name: Claude - Link statusline-command.sh
+  file:
+    src: "{{ role_path }}/files/statusline-command.sh"
+    dest: "~/.claude/statusline-command.sh"
+    state: link

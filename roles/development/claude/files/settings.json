@@ -2,20 +2,78 @@
   "cleanupPeriodDays": 30,
   "env": {
     "DISABLE_TELEMETRY": "1",
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "ENABLE_LSP_TOOL": "1"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(git add*)",
       "Bash(git status*)",
-      "Bash(git commit*)"
+      "Bash(git commit*)",
+      "Bash(chmod +x:*)"
     ],
     "deny": [
       "~/.ssh/id_*",
       "~/.aws/credentials"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "model": "opus",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "clj-paren-repair-claude-hook --cljfmt"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "clj-paren-repair-claude-hook --cljfmt"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "clj-paren-repair-claude-hook --cljfmt"
+          }
+        ]
+      }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "sh ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "playwright@claude-plugins-official": false,
+    "code-review@claude-plugins-official": false,
+    "feature-dev@claude-plugins-official": false,
+    "clojure-lsp@clojure-lsp-marketplace": true,
+    "skill-creator@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "clojure-lsp-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "Bigsy/claude-clojure-lsp"
+      }
+    }
+  },
   "alwaysThinkingEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "effortLevel": "high"
 }
