@@ -38,6 +38,7 @@ roles/applications/files/alfred/Alfred.alfredpreferences/remote
 roles/development/ruby/files/bundle/cache
 
 .ansible
+.claude
 /roles/editors/emacs/files/emacs.d/transient/
 /roles/editors/emacs/files/emacs.d/history
 /roles/editors/emacs/files/emacs.d/projects
