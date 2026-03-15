@@ -24,7 +24,8 @@
   (lsp-eldoc-enable-hover nil)
   (lsp-idle-delay 0.05)
   (lsp-completion-provider :capf)
-  (lsp-diagnostics-provider :none))
+  (lsp-diagnostics-provider :none)
+  (lsp-format-buffer-on-save t))
 
 (use-package lsp-ui
   :custom
