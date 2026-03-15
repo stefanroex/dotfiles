@@ -19,6 +19,21 @@ return {
       "<leader>f",
       "<cmd>Telescope find_files sort_mru=true sort_lastused=true<cr>",
       desc = "Find files",
+    },
+    {
+      "<leader>s",
+      "<cmd>Telescope live_grep<cr>",
+      desc = "Search (ripgrep)",
+    },
+    {
+      "<leader>S",
+      "<cmd>Telescope grep_string<cr>",
+      desc = "Search word under cursor",
+    },
+    {
+      "<leader>i",
+      "<cmd>Telescope lsp_document_symbols<cr>",
+      desc = "Buffer outline",
     }
   }
 }

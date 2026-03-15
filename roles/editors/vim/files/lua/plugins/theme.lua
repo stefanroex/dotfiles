@@ -1,10 +1,14 @@
 return {
- {
-    "challenger-deep-theme/vim",
+  {
+    "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    config = function()
-      vim.cmd.colorscheme("challenger_deep")
+    opts = {
+      style = "moon",
+    },
+    config = function(_, opts)
+      require("tokyonight").setup(opts)
+      vim.cmd.colorscheme("tokyonight-moon")
     end
   }
 }

@@ -2,8 +2,8 @@ return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
   opts_extend = { "ensure_installed" },
-  opts =  {
-    ensure_installed = { 
+  opts = {
+    ensure_installed = {
       "bash",
       "c",
       "clojure",
@@ -31,7 +31,7 @@ return {
       "yaml",
     },
     highlight = { enable = true },
-    indent = { enable = true },  
+    indent = { enable = true },
   },
   config = function(_, opts)
     require("nvim-treesitter").setup(opts)

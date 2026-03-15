@@ -12,6 +12,7 @@ return {
   config = function ()
     require("neo-tree").setup({
       filesystem = {
+        follow_current_file = { enabled = true },
         filtered_items = {
           never_show = {
             ".DS_Store",
