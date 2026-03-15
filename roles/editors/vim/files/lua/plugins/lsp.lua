@@ -3,21 +3,22 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "hrsh7th/cmp-nvim-lsp",
+    "saghen/blink.cmp",
     "j-hui/fidget.nvim",
     { "folke/lazydev.nvim", ft = "lua", opts = {} },
   },
   config = function()
-    local cmp_lsp = require("cmp_nvim_lsp")
-    local capabilities = vim.tbl_deep_extend(
-      "force",
-      {},
-      vim.lsp.protocol.make_client_capabilities(),
-      cmp_lsp.default_capabilities()
-    )
-
     require("fidget").setup({})
     require("mason").setup()
+    require("mason-lspconfig").setup({
+      ensure_installed = { "lua_ls", "clojure_lsp", "ruff" },
+    })
+
+    vim.lsp.config("*", {
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
+    })
+
+    vim.lsp.enable({ "lua_ls", "clojure_lsp", "ruff" })
 
     local function lsp_code_action(action_name)
       return function()
@@ -69,26 +70,6 @@ return {
           })
         end
       end,
-    })
-
-    require('mason-lspconfig').setup({
-      ensure_installed = {
-        "lua_ls",
-        "clojure_lsp",
-        "ruff",
-      },
-      handlers = {
-        function(server_name)
-          require('lspconfig')[server_name].setup({
-            capabilities = capabilities,
-          })
-        end,
-        lua_ls = function()
-          require('lspconfig').lua_ls.setup({
-            capabilities = capabilities,
-          })
-        end
-      }
     })
   end
 }

@@ -1,9 +1,8 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
-  opts_extend = { "ensure_installed" },
-  opts = {
-    ensure_installed = {
+  config = function()
+    require("nvim-treesitter").install({
       "bash",
       "c",
       "clojure",
@@ -11,7 +10,6 @@ return {
       "html",
       "javascript",
       "json",
-      "jsonc",
       "lua",
       "luadoc",
       "luap",
@@ -29,11 +27,14 @@ return {
       "vimdoc",
       "xml",
       "yaml",
-    },
-    highlight = { enable = true },
-    indent = { enable = true },
-  },
-  config = function(_, opts)
-    require("nvim-treesitter").setup(opts)
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      callback = function()
+        if pcall(vim.treesitter.start) then
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+      end,
+    })
   end,
 }
