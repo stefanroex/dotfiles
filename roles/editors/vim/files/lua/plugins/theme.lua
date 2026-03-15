@@ -1,14 +1,11 @@
 return {
   {
-    "folke/tokyonight.nvim",
+    "embark-theme/vim",
+    name = "embark",
     lazy = false,
     priority = 1000,
-    opts = {
-      style = "moon",
-    },
-    config = function(_, opts)
-      require("tokyonight").setup(opts)
-      vim.cmd.colorscheme("tokyonight-moon")
+    config = function()
+      vim.cmd.colorscheme("embark")
     end
   }
 }

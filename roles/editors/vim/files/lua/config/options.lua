@@ -12,10 +12,3 @@ vim.opt.signcolumn = "yes"
 vim.opt.scrolloff = 8
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "clojure" },
-  callback = function()
-    vim.opt_local.iskeyword = "@,48-57,_,192-255"
-  end,
-})
