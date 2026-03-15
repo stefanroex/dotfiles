@@ -42,6 +42,7 @@ Use conventional commits: `<type>: <subject>`
 - Functions/aliases: descriptive names over cryptic abbreviations
 - Configuration: inline comments for non-obvious settings only
 - When refactoring or optimizing, start with the SIMPLEST possible implementation. Do not over-engineer solutions with extra abstractions, wrappers, or duplicated logic.
+- Keep functions at a consistent level of abstraction. Extract lower-level logic into helper fns and inline data into constants. Functions should be scannable at a glance.
 
 ## Debugging
 
@@ -50,19 +51,18 @@ Use conventional commits: `<type>: <subject>`
 ### Clojure specific
 - Separate pure data transformations from side effects (external calls, state mutation). Logging and throwing are not side effects.
 - Prefer transducers with `into` over chained `->>` filter/map when building collections. When using functions that don't support transducers, prefer `->>` for readability.
-- Prefer small functions with extracted helper fns over larger functions.
 - Public functions at bottom, private helpers above
 - One deftest per related function (consolidate related tests)
 - deftest should mimic the name of the function it tests without any -test suffix or other additions
 - Prefer `(is (= expected actual))` over predicates like `contains?`, `count`, or key access. Only dissoc/strip keys when the full output would be too noisy.
 - Section comments with visual separators if namespace is large:
   ```clojure
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;; Public
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Public
   ```
   or for private pure functions of a namespace:
   ```clojure
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;; Helpers
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Helpers
   ```
 

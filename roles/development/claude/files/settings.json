@@ -1,8 +1,6 @@
 {
   "cleanupPeriodDays": 30,
   "env": {
-    "DISABLE_TELEMETRY": "1",
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
     "ENABLE_LSP_TOOL": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
@@ -20,7 +18,6 @@
     ],
     "defaultMode": "acceptEdits"
   },
-  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -61,10 +58,12 @@
   },
   "enabledPlugins": {
     "playwright@claude-plugins-official": false,
-    "code-review@claude-plugins-official": false,
+    "code-review@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": false,
     "clojure-lsp@clojure-lsp-marketplace": true,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": true,
+    "mailerlite@brightmotive-claude-plugins": true,
+    "newsletter-writer@brightmotive-claude-plugins": true
   },
   "extraKnownMarketplaces": {
     "clojure-lsp-marketplace": {
@@ -72,9 +71,16 @@
         "source": "github",
         "repo": "Bigsy/claude-clojure-lsp"
       }
+    },
+    "brightmotive-claude-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "brightin/claude-plugins"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
-  "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "autoUpdatesChannel": "latest",
+  "skipDangerousModePermissionPrompt": true
 }

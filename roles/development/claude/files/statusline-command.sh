@@ -100,11 +100,14 @@ render_branch() {
 }
 
 render_context() {
-  local pct="$1"
+  local pct="$1" used_tokens="$2" total_tokens="$3"
   local color="$GRAY"
-  [ "$pct" -gt 80 ] 2>/dev/null && color="$RED" || { [ "$pct" -gt 50 ] 2>/dev/null && color="$YELLOW"; }
+  [ "$used_tokens" -gt 300000 ] 2>/dev/null && color="$RED" || { [ "$used_tokens" -gt 150000 ] 2>/dev/null && color="$YELLOW"; }
 
-  section "$color" "$I_CTX" "${pct}%"
+  local used_k=$(( (used_tokens + 500) / 1000 ))
+  local total_k=$(( (total_tokens + 500) / 1000 ))
+
+  section "$color" "$I_CTX" "${pct}% (${used_k}k/${total_k}k)"
   printf " "
 
   local filled=$((pct * 10 / 100))
@@ -124,6 +127,8 @@ CWD=$(field '.workspace.current_dir')
 DIR=$(basename "$CWD")
 MODEL=$(field '.model.display_name')
 PCT=$(field '.context_window.used_percentage // 0' | cut -d. -f1)
+USED_TOKENS=$(( PCT * $(field '.context_window.context_window_size // 0') / 100 ))
+TOTAL_TOKENS=$(field '.context_window.context_window_size // 0')
 
 GIT_BRANCH=""
 IS_WORKTREE=false
@@ -142,4 +147,4 @@ printf "%s %s %s %s %s %s %s" \
   "$(render_dir "$DIR" "$IS_WORKTREE")" "$(sep)" \
   "$(render_branch "$GIT_BRANCH" "$PR_NUM" "$PR_URL" "$REPO")" "$(sep)" \
   "$(section "$GRAY" "$I_MODEL" "$MODEL")" "$(sep)" \
-  "$(render_context "$PCT")"
+  "$(render_context "$PCT" "$USED_TOKENS" "$TOTAL_TOKENS")"
