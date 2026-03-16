@@ -11,3 +11,9 @@ vim.opt.signcolumn = "yes"
 vim.opt.scrolloff = 8
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.autoread = true
+
+-- Auto-reload files changed outside of Neovim (e.g. by coding agents)
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+  command = "checktime",
+})

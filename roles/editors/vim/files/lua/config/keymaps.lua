@@ -34,6 +34,18 @@ map("n", "<leader>v", "<cmd>e " .. vim.fn.stdpath("config") .. "/init.lua<cr>", 
 map("n", "<leader>o", reveal_in_finder, { desc = "Reveal in Finder" })
 map("n", "<leader>go", open_on_github, { desc = "Open on GitHub" })
 
+-- Yank with file path (for pasting into agent prompts)
+local function yank_with_path(absolute)
+  local path = absolute and vim.fn.expand("%:p") or vim.fn.expand("%:.")
+  local lines = vim.fn.getregion(vim.fn.getpos("'<"), vim.fn.getpos("'>"), { type = vim.fn.visualmode() })
+  local content = path .. "\n" .. table.concat(lines, "\n")
+  vim.fn.setreg("+", content)
+  print("Yanked with " .. (absolute and "absolute" or "relative") .. " path")
+end
+
+map("v", "<leader>yr", function() yank_with_path(false) end, { desc = "Yank with relative path" })
+map("v", "<leader>ya", function() yank_with_path(true) end, { desc = "Yank with absolute path" })
+
 -- Clear search highlight with Enter in normal file buffers
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
