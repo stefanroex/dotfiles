@@ -17,20 +17,12 @@ return {
     vim.g["conjure#mapping#def_word"] = "gd"
     vim.g["conjure#mapping#connect_port_host"] = "c"
   end,
-  config = function()
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "clojure", "fennel", "lua" },
-      callback = function(ev)
-        local opts = function(desc)
-          return { buffer = ev.buf, desc = desc }
-        end
-        vim.keymap.set("n", "<leader>e", "<cmd>ConjureEvalCurrentForm<cr>", opts("Eval current form"))
-        vim.keymap.set("n", "<leader>eb", "<cmd>ConjureEvalBuf<cr>", opts("Eval buffer"))
-        vim.keymap.set("n", "<leader>er", "<cmd>ConjureEvalRootForm<cr>", opts("Eval root form"))
-        vim.keymap.set("n", "<leader>ew", "<cmd>ConjureEvalWord<cr>", opts("Eval word"))
-        vim.keymap.set("v", "<leader>e", "<cmd>ConjureEvalVisual<cr>", opts("Eval selection"))
-        vim.keymap.set("n", "<leader>ei", "<cmd>ConjureEvalInterrupt<cr>", opts("Eval interrupt"))
-      end,
-    })
-  end,
+  keys = {
+    { "<leader>e", "<cmd>ConjureEvalCurrentForm<cr>", ft = { "clojure", "fennel", "lua" }, desc = "Eval current form" },
+    { "<leader>eb", "<cmd>ConjureEvalBuf<cr>", ft = { "clojure", "fennel", "lua" }, desc = "Eval buffer" },
+    { "<leader>er", "<cmd>ConjureEvalRootForm<cr>", ft = { "clojure", "fennel", "lua" }, desc = "Eval root form" },
+    { "<leader>ew", "<cmd>ConjureEvalWord<cr>", ft = { "clojure", "fennel", "lua" }, desc = "Eval word" },
+    { "<leader>e", "<cmd>ConjureEvalVisual<cr>", mode = "v", ft = { "clojure", "fennel", "lua" }, desc = "Eval selection" },
+    { "<leader>ei", "<cmd>ConjureEvalInterrupt<cr>", ft = { "clojure", "fennel", "lua" }, desc = "Eval interrupt" },
+  },
 }

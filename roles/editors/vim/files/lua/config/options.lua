@@ -1,9 +1,5 @@
-local home = os.getenv("HOME")
-package.cpath = package.cpath .. ";" .. home .. "/.luarocks/lib/lua/5.1/?.so"
-package.path = package.path .. ";" .. home .. "/.luarocks/share/lua/5.1/?.lua"
-
 vim.opt.clipboard = "unnamedplus"
-vim.opt.nu = true
+vim.opt.number = true
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2

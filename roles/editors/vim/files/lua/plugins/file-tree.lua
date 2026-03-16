@@ -9,28 +9,26 @@ return {
   keys = {
     { "<leader>a", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
   },
-  config = function ()
-    require("neo-tree").setup({
-      filesystem = {
-        follow_current_file = { enabled = true },
-        filtered_items = {
-          never_show = {
-            ".DS_Store",
-          },
+  opts = {
+    filesystem = {
+      follow_current_file = { enabled = true },
+      filtered_items = {
+        never_show = {
+          ".DS_Store",
         },
-        window = {
-          mappings = {
-            ["o"] = { "open", nowait = true },
-            ["oc"] = "none",
-            ["od"] = "none",
-            ["og"] = "none",
-            ["om"] = "none",
-            ["on"] = "none",
-            ["os"] = "none",
-            ["ot"] = "none",
-          }
+      },
+      window = {
+        mappings = {
+          ["o"] = { "open", nowait = true },
+          ["oc"] = "none",
+          ["od"] = "none",
+          ["og"] = "none",
+          ["om"] = "none",
+          ["on"] = "none",
+          ["os"] = "none",
+          ["ot"] = "none",
         }
       }
-    })
-  end,
+    }
+  },
 }
