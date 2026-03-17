@@ -69,7 +69,6 @@
     (with-tmp-file 1)
     (try-let 1)
     (for-all 1)
-    (assoc 1)
     (do-at 1)))
 
 (use-package clojure-mode-extra-font-locking)
