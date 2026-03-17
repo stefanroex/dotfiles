@@ -29,8 +29,9 @@
     dest: "~/.{{ item }}"
     state: link
   loop:
-    - config/process-compose
     - config/ghostty
+    - config/process-compose
+    - config/worktrunk
     - rgignore
     - gitconfig
     - gitignore

@@ -43,6 +43,7 @@
       - tree
       - valkey
       - wget
+      - worktrunk
       - zoxide
       - zsh
     state: present

@@ -1,0 +1,8 @@
+post-switch = "bash ~/.config/worktrunk/post-switch.sh {{ branch | sanitize }} {{ worktree_path }} {{ repo }}"
+
+post-remove = "bash ~/.config/worktrunk/post-remove.sh {{ branch | sanitize }} {{ repo }}"
+
+post-start = "wt step copy-ignored"
+
+[commit.generation]
+command = "CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p --no-session-persistence --model=haiku --tools='' --disable-slash-commands --setting-sources='' --system-prompt=''"
