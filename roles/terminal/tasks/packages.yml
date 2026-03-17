@@ -9,6 +9,7 @@
     state: present
   loop:
     - elastic/tap
+    - f1bonacc1/tap
     - hashicorp/tap
 
 - name: Homebrew - Install packages
@@ -30,6 +31,7 @@
       - openssl
       - pgcli
       - postgresql@18
+      - f1bonacc1/tap/process-compose
       - ripgrep
       - visidata
       - shellcheck

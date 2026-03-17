@@ -1,0 +1,17 @@
+shortcuts:
+  log_follow:
+    shortcut: "f"
+  log_screen:
+    shortcut: "l"
+  log_wrap:
+    shortcut: "w"
+  process_start:
+    shortcut: "s"
+  process_screen:
+    shortcut: "p"
+  process_restart:
+    shortcut: "r"
+  process_stop:
+    shortcut: "x"
+  quit:
+    shortcut: "q"
