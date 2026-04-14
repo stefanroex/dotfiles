@@ -68,6 +68,9 @@
     (with-tmp-dir 1)
     (with-tmp-file 1)
     (try-let 1)
+    (assoc 1)
+    (into 1)
+    (assoc-some 1)
     (for-all 1)
     (do-at 1)))
 
