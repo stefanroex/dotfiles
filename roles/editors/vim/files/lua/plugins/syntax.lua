@@ -7,6 +7,7 @@ return {
       "c",
       "clojure",
       "diff",
+      "go",
       "html",
       "javascript",
       "json",

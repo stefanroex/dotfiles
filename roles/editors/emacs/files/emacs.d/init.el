@@ -25,6 +25,7 @@
 (require 'stx-module-windows)
 
 (require 'stx-module-lang-clojure)
+(require 'stx-module-lang-go)
 (require 'stx-module-lang-lisp)
 (require 'stx-module-lang-ruby)
 (require 'stx-module-lang-terraform)
