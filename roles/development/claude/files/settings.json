@@ -16,8 +16,9 @@
       "~/.ssh/id_*",
       "~/.aws/credentials"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
+  "model": "fable",
   "hooks": {
     "PreToolUse": [
       {
@@ -58,12 +59,13 @@
   },
   "enabledPlugins": {
     "playwright@claude-plugins-official": false,
-    "code-review@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": false,
-    "clojure-lsp@clojure-lsp-marketplace": true,
+    "clojure-lsp@clojure-lsp-marketplace": false,
     "skill-creator@claude-plugins-official": true,
+    "newsletter-writer@brightmotive-claude-plugins": true,
+    "autoresearch@autoresearch": true,
+    "isms@brightmotive-claude-plugins": true,
     "mailerlite@brightmotive-claude-plugins": true,
-    "newsletter-writer@brightmotive-claude-plugins": true
+    "screenshots@brightmotive-claude-plugins": true
   },
   "extraKnownMarketplaces": {
     "clojure-lsp-marketplace": {
@@ -76,12 +78,24 @@
       "source": {
         "source": "github",
         "repo": "brightin/claude-plugins"
+      },
+      "autoUpdate": true
+    },
+    "autoresearch": {
+      "source": {
+        "source": "github",
+        "repo": "uditgoenka/autoresearch"
       }
     }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
+  "showClearContextOnPlanAccept": true,
   "autoUpdatesChannel": "latest",
-  "voiceEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "autoCompactEnabled": false,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
 }
