@@ -1,4 +1,5 @@
 ---
 - import_tasks: dotfiles.yml
+- import_tasks: launchd.yml
 - import_tasks: packages.yml
 - import_tasks: zsh.yml

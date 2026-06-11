@@ -22,6 +22,7 @@
     state: link
   loop:
     - bm
+    - bm-cmux-status
 
 - name: Dotfiles - Copy dotfiles
   file:

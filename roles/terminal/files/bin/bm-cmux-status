@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Mirrors the Brightmotive dev REPL's HTTP port into a cmux status pill.
+# Runs as a launchd agent (com.stefanroex.bm-cmux-status): for every cmux
+# workspace whose directory is a brightmotive worktree, it asks
+# bin/bm dev:repl --status for the HTTP port and sets or clears the
+# workspace's bm-http pill accordingly.
+set -euo pipefail
+
+CMUX=/Applications/cmux.app/Contents/Resources/bin/cmux
+STATUS_KEY=bm-http
+
+window_ids() {
+  "$CMUX" list-windows --json | jq -r '.[].id'
+}
+
+workspaces_in() {
+  # One "uuid<TAB>directory" line per workspace in the given window.
+  "$CMUX" workspace list --json --id-format both --window "$1" |
+    jq -r '.workspaces[] | [.id, .current_directory] | @tsv'
+}
+
+brightmotive_worktree() {
+  [[ -f "$1/src/bm/services.edn" ]]
+}
+
+repl_http_port() {
+  (cd "$1" && ./bin/bm dev:repl --status 2>/dev/null) |
+    sed -n 's/.*HTTP on port \([0-9]*\).*/\1/p'
+}
+
+update_pill() {
+  local workspace=$1 port=$2
+  if [[ -n "$port" ]]; then
+    "$CMUX" set-status "$STATUS_KEY" "$port" --workspace "$workspace" --icon terminal --color '#fff' >/dev/null
+  else
+    "$CMUX" clear-status "$STATUS_KEY" --workspace "$workspace" >/dev/null
+  fi
+}
+
+all_workspaces() {
+  window_ids | while read -r window; do
+    workspaces_in "$window"
+  done
+}
+
+"$CMUX" ping >/dev/null 2>&1 || exit 0
+
+while IFS=$'\t' read -r workspace dir; do
+  brightmotive_worktree "$dir" || continue
+  update_pill "$workspace" "$(repl_http_port "$dir")" &
+done < <(all_workspaces)
+wait

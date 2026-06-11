@@ -1,0 +1,12 @@
+---
+- name: Launchd - Install bm-cmux-status agent
+  copy:
+    src: "{{ role_path }}/files/launchagents/com.stefanroex.bm-cmux-status.plist"
+    dest: "~/Library/LaunchAgents/com.stefanroex.bm-cmux-status.plist"
+  register: bm_cmux_status_plist
+
+- name: Launchd - Reload bm-cmux-status agent
+  shell: |
+    launchctl bootout gui/$(id -u)/com.stefanroex.bm-cmux-status 2>/dev/null || true
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.stefanroex.bm-cmux-status.plist
+  when: bm_cmux_status_plist.changed
