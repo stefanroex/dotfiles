@@ -47,3 +47,5 @@ rails_best_practices_output.html
 /.lsp/
 /.shadow-cljs/
 .clj-kondo/.cache
+
+**/.claude/settings.local.json
