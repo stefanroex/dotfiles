@@ -25,6 +25,7 @@ map("n", "<leader>z", "<cmd>bp<cr>", { desc = "Prev buffer" })
 map("n", "<leader>x", "<cmd>bn<cr>", { desc = "Next buffer" })
 map("n", "<leader>w", "<cmd>bp<cr><cmd>bd#<cr>", { desc = "Delete buffer (keep window)" })
 map("n", "<leader>q", "<cmd>bd<cr>", { desc = "Delete buffer (close window)" })
+map("n", "<leader>xq", "<cmd>cclose<cr>", { desc = "Close quickfix" })
 
 -- Editing
 map({ "n", "v" }, "<leader>cc", "gcc<esc>", { desc = "Comment code", remap = true })
