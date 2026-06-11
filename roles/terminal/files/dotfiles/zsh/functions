@@ -15,3 +15,10 @@ function zd() {
 c() { cd ~/Code/$1; }
 _c() { _files -W ~/Code -/; }
 compdef _c c
+
+# GitHub Desktop's `github` shim launches Electron-as-Node, which logs a noisy
+# "Node.js environment variables are disabled" error when NODE_OPTIONS is set in
+# the environment (as it is inside Claude Code). Strip it for just this launch.
+github() {
+  env -u NODE_OPTIONS github "$@"
+}
