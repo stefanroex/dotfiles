@@ -22,3 +22,68 @@ compdef _c c
 github() {
   env -u NODE_OPTIONS github "$@"
 }
+
+# Remove every git worktree AND local branch whose name starts with a prefix.
+# Clears scratch branches in bulk, e.g. the "claude/" worktrees agents leave
+# behind. Previews and asks before deleting. Worktrees with uncommitted changes
+# are kept unless -f is given (which also skips the prompt).
+# Usage: cleanup-worktrees [-f] <prefix>    # e.g. cleanup-worktrees claude/
+cleanup-worktrees() {
+  emulate -L zsh
+
+  local force=0
+  if [[ "$1" == "-f" || "$1" == "--force" ]]; then force=1; shift; fi
+
+  if [[ -z "$1" ]]; then
+    print -u2 "usage: cleanup-worktrees [-f] <prefix>   e.g. cleanup-worktrees claude/"
+    return 1
+  fi
+  git rev-parse --git-dir >/dev/null 2>&1 || { print -u2 "not inside a git repository"; return 1; }
+
+  local prefix=${1%\*}                       # tolerate a trailing '*' (claude/* -> claude/)
+  local pat="${prefix}*"
+
+  local worktrees branches
+  worktrees=$(git worktree list --porcelain | awk -v p="refs/heads/$prefix" '
+    /^worktree /{ wt = substr($0, 10) }
+    /^branch /  { if (index(substr($0, 8), p) == 1) print wt }')
+  branches=$(git branch --format='%(refname:short)' --list "$pat")
+
+  if [[ -z "$worktrees" && -z "$branches" ]]; then
+    print "Nothing matches \"$prefix\"."
+    return 0
+  fi
+
+  print "Worktrees to remove:"
+  print -r -- "${worktrees:-(none)}" | sed 's/^/  /'
+  print "Branches to delete:"
+  print -r -- "${branches:-(none)}" | sed 's/^/  /'
+  local unmerged=$(git branch --list "$pat" --no-merged | grep -c .)
+  (( unmerged )) && print "Note: $unmerged of these branch(es) are not merged into the current branch."
+
+  if (( ! force )); then
+    print -n "Proceed? [y/N] "
+    local reply; read -r reply
+    [[ "$reply" == [yY]* ]] || { print "Aborted."; return 1; }
+  fi
+
+  local -a force_flag
+  (( force )) && force_flag=(--force)
+
+  local item
+  for item in ${(f)worktrees}; do
+    [[ -n "$item" ]] || continue
+    if git worktree remove "${force_flag[@]}" "$item"; then
+      print "removed worktree: $item"
+    else
+      print -u2 "kept worktree (uncommitted changes or locked): $item"
+    fi
+  done
+
+  for item in ${(f)branches}; do
+    [[ -n "$item" ]] || continue
+    git branch -D "$item"
+  done
+
+  git worktree prune
+}
