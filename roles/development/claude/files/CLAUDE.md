@@ -7,10 +7,6 @@
 - When you do a git commit, always display the full commit subject and body to me in our conversation so i can actually read it.
 - Always prefer the MINIMAL fix or change. Do not refactor, restructure, or expand scope unless explicitly asked. When fixing a bug, fix only that bug.
 
-## Shell
-
-- zsh has `noclobber` set: `>` won't overwrite an existing file (fails `zsh: file exists`). Use `>|` to overwrite, `>>` to append.
-
 ## Git Commits
 
 Use conventional commits: `<type>: <subject>`
