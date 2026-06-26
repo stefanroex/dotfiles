@@ -64,7 +64,8 @@
     "autoresearch@autoresearch": true,
     "isms@brightmotive-claude-plugins": true,
     "mailerlite@brightmotive-claude-plugins": true,
-    "screenshots@brightmotive-claude-plugins": true
+    "screenshots@brightmotive-claude-plugins": true,
+    "datadog@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "clojure-lsp-marketplace": {
