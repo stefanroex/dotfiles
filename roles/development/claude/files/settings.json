@@ -89,7 +89,7 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "showClearContextOnPlanAccept": true,
   "autoUpdatesChannel": "latest",
   "skipDangerousModePermissionPrompt": true,
